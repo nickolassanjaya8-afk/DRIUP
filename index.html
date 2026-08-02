@@ -17,19 +17,24 @@
   </header>
 
   <main class="container">
-    <section class="games">
-      <article class="game-card">
-        <img src="assets/ff-logo.svg" alt="Logo FF" class="game-logo">
-        <h2>Free Fire</h2>
-        <p class="desc">Top up Diamond Free Fire cepat dan terpercaya.</p>
-        <button class="btn" data-game="Free Fire">Top Up Free Fire</button>
+    <!-- Updated cards grid (replaces previous .games section) -->
+    <section class="games cards-grid">
+      <article class="card">
+        <div class="thumb">
+          <img src="assets/images/game1.svg" alt="Mobile Legends thumbnail">
+        </div>
+        <div class="card-caption">
+          <div class="card-title">Mobile Legends:<br>Bang Bang</div>
+        </div>
       </article>
 
-      <article class="game-card">
-        <img src="assets/ml-logo.svg" alt="Logo ML" class="game-logo">
-        <h2>Mobile Legends</h2>
-        <p class="desc">Top up Diamonds Mobile Legends dengan mudah.</p>
-        <button class="btn" data-game="Mobile Legends">Top Up Mobile Legends</button>
+      <article class="card">
+        <div class="thumb">
+          <img src="assets/images/game2.svg" alt="Free Fire thumbnail">
+        </div>
+        <div class="card-caption">
+          <div class="card-title">Free Fire<br>Top-up</div>
+        </div>
       </article>
     </section>
 
@@ -76,13 +81,28 @@
     const result = document.getElementById('result');
     const cancel = document.getElementById('cancel');
 
-    buttons.forEach(b => b.addEventListener('click', () => {
-      const g = b.getAttribute('data-game');
-      gameInput.value = g;
-      result.innerHTML = '';
-      orderSection.classList.remove('hidden');
-      orderSection.scrollIntoView({behavior: 'smooth'});
-    }));
+    // Fallback: if user clicks card, open order form and set game name
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const titleEl = card.querySelector('.card-title');
+        const name = titleEl ? titleEl.textContent.replace(/\n/g, ' ').trim() : 'Game';
+        gameInput.value = name;
+        result.innerHTML = '';
+        orderSection.classList.remove('hidden');
+        orderSection.scrollIntoView({behavior: 'smooth'});
+      });
+    });
+
+    if(buttons){
+      buttons.forEach(b => b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const g = b.getAttribute('data-game');
+        gameInput.value = g;
+        result.innerHTML = '';
+        orderSection.classList.remove('hidden');
+        orderSection.scrollIntoView({behavior: 'smooth'});
+      }));
+    }
 
     cancel.addEventListener('click', () => {
       orderSection.classList.add('hidden');
@@ -91,7 +111,7 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const data = new FormData(form);
-      const summary = `Pesanan diterima:\nGame: ${data.get('game')}\nID Pemain: ${data.get('playerId')}\nPaket: ${data.get('package')} Diamonds\nEmail: ${data.get('email') || '-'}\n\n(Tips: ini hanya demo statis; hubungkan API/payment gateway untuk proses nyata.)`;
+      const summary = `Pesanan diterima:\nGame: ${data.get('game')}\nID Pemain: ${data.get('playerId')}\nPaket: ${data.get('package')} Diamonds\nEmail: ${data.get('email') || '-'}\n\n(Tips: ini hanyalah demo — hubungi penjual untuk pembayaran nyata)`;
       result.innerText = summary;
       result.classList.add('visible');
       window.scrollTo({ top: result.offsetTop - 20, behavior: 'smooth' });
