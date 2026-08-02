@@ -1,4 +1,4 @@
-/* styles.css - Simple, modern, human-like design */
+/* styles.css - Simple, modern, human-like design (updated with card UI) */
 :root{
   --bg:#0f1724; /* dark navy */
   --card:#0b1220;
@@ -14,12 +14,13 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe U
 .banner{height:84px;width:auto;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
 .brand h1{margin:0;font-size:28px;letter-spacing:1px}
 .tag{margin:4px 0 0;color:var(--muted);font-size:13px}
+/* legacy grid for previous cards (kept for compatibility) */
 .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:22px}
 .game-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),var(--glass));padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);text-align:center;border:1px solid rgba(255,255,255,0.03)}
 .game-logo{height:84px;width:auto;margin-bottom:10px}
 .game-card h2{margin:6px 0 4px}
 .desc{color:var(--muted);font-size:14px;margin:0 0 12px}
-.btn{display:inline-block;padding:10px 16px;border-radius:9px;border:0;background:linear-gradient(90deg,var(--accent),#ff9a6a);color:#081018;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(255,152,88,0.12)}
+.btn{display:inline-block;padding:10px 16px;border-radius:9px;border:0;background:linear-gradient(90deg,var(--accent),#ff9a6a);color:#081018;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.35)}
 .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);box-shadow:none}
 .btn.primary{background:linear-gradient(90deg,var(--accent-2),#5be08f);color:#062014}
 .order{margin-top:30px;background:linear-gradient(180deg,rgba(122,121,130,0.02),var(--glass));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
@@ -31,3 +32,73 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe U
 .result.visible{display:block}
 .site-footer{padding:18px;text-align:center;color:var(--muted);margin-top:34px}
 @media (max-width:520px){.brand h1{font-size:20px}.banner{height:64px}}
+
+/* --- Card UI baru: gaya seperti mockup --- */
+:root{
+  --bg-purple: #2e0b35;      /* halaman / blok background */
+  --card-surface: #3a1f3f;   /* area bawah caption */
+  --muted-light: #dfe8f4;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+  background: transparent;
+  padding: 6px 0 0;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(2,6,23,0.55);
+  text-align: center;
+  display:flex;
+  flex-direction:column;
+  cursor: pointer;
+}
+
+/* thumbnail area (atas) */
+.card .thumb{
+  background: linear-gradient(120deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  padding:8px;
+}
+.card .thumb img{
+  display:block;
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+}
+
+/* caption area (bawah) — gelap ungu */
+.card-caption{
+  background: var(--card-surface);
+  padding:16px 12px;
+  color: #fff;
+  margin-top:8px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Judul multi-baris, tengah, tebal */
+.card-title{
+  font-weight:700;
+  font-size:15px;
+  line-height:1.1;
+  color:var(--muted-light);
+}
+
+/* optional: klik/tombol behavior (jika mau ada) */
+.card:hover{
+  transform: translateY(-6px);
+  transition: transform .18s ease;
+}
+
+/* responsive tweaks */
+@media (max-width:420px){
+  .card .thumb img{ height:100px }
+  .card-title{ font-size:14px }
+}
