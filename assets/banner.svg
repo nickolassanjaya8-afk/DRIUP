@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="160" viewBox="0 0 720 160" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0" stop-color="#ff9a6a"/>
+      <stop offset="1" stop-color="#ffd36b"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0" stop-color="#7bd389"/>
+      <stop offset="1" stop-color="#3fc7a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="160" rx="12" fill="url(#g1)" opacity="0.95" />
+  <rect x="12" y="12" width="696" height="136" rx="10" fill="#071023" opacity="0.22" />
+  <text x="36" y="98" fill="white" font-family="Inter, Arial" font-size="48" font-weight="700">DRIUP</text>
+  <text x="36" y="126" fill="#dbeef0" font-family="Inter, Arial" font-size="14">Top up cepat & aman — Free Fire & Mobile Legends</text>
+  <g transform="translate(520,16)">
+    <rect x="0" y="0" width="180" height="128" rx="10" fill="url(#g2)" opacity="0.18"/> 
+    <text x="20" y="78" fill="white" font-family="Inter, Arial" font-size="22" font-weight="600">Fast • Secure</text>
+  </g>
+</svg>

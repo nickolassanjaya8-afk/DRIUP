@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none">
+  <defs>
+    <linearGradient id="b" x1="0" x2="1">
+      <stop offset="0" stop-color="#7bd389"/>
+      <stop offset="1" stop-color="#37c3a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="18" fill="#071022"/>
+  <polygon points="80,36 98,96 62,96" fill="url(#b)"/>
+  <text x="80" y="124" text-anchor="middle" fill="#e6eef6" font-family="Inter, Arial" font-size="34" font-weight="700">ML</text>
+</svg>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DRIUP - Top Up FF &amp; ML</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <img src="assets/banner.svg" alt="DRIUP banner" class="banner">
+    <div class="brand">
+      <h1>DRIUP</h1>
+      <p class="tag">Top up cepat & aman — Free Fire & Mobile Legends</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="games">
+      <article class="game-card">
+        <img src="assets/ff-logo.svg" alt="Logo FF" class="game-logo">
+        <h2>Free Fire</h2>
+        <p class="desc">Top up Diamond Free Fire cepat dan terpercaya.</p>
+        <button class="btn" data-game="Free Fire">Top Up Free Fire</button>
+      </article>
+
+      <article class="game-card">
+        <img src="assets/ml-logo.svg" alt="Logo ML" class="game-logo">
+        <h2>Mobile Legends</h2>
+        <p class="desc">Top up Diamonds Mobile Legends dengan mudah.</p>
+        <button class="btn" data-game="Mobile Legends">Top Up Mobile Legends</button>
+      </article>
+    </section>
+
+    <section id="order" class="order hidden">
+      <h3 id="order-title">Form Top Up</h3>
+      <form id="order-form">
+        <label>Game
+          <input type="text" name="game" id="game" readonly>
+        </label>
+        <label>ID Pemain
+          <input type="text" name="playerId" id="playerId" placeholder="Masukkan ID pemain" required>
+        </label>
+        <label>Paket
+          <select name="package" id="package">
+            <option value="50">50 Diamonds - Rp 10.000</option>
+            <option value="100">100 Diamonds - Rp 18.000</option>
+            <option value="500">500 Diamonds - Rp 85.000</option>
+          </select>
+        </label>
+        <label>Email (opsional)
+          <input type="email" name="email" id="email" placeholder="user@example.com">
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Pesan Sekarang</button>
+          <button type="button" id="cancel" class="btn ghost">Batal</button>
+        </div>
+      </form>
+      <div id="result" class="result"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> DRIUP — All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Simple interactivity: buka form top up dan tunjukkan ringkasan pesanan.
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const buttons = document.querySelectorAll('.btn[data-game]');
+    const orderSection = document.getElementById('order');
+    const gameInput = document.getElementById('game');
+    const form = document.getElementById('order-form');
+    const result = document.getElementById('result');
+    const cancel = document.getElementById('cancel');
+
+    buttons.forEach(b => b.addEventListener('click', () => {
+      const g = b.getAttribute('data-game');
+      gameInput.value = g;
+      result.innerHTML = '';
+      orderSection.classList.remove('hidden');
+      orderSection.scrollIntoView({behavior: 'smooth'});
+    }));
+
+    cancel.addEventListener('click', () => {
+      orderSection.classList.add('hidden');
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const summary = `Pesanan diterima:\nGame: ${data.get('game')}\nID Pemain: ${data.get('playerId')}\nPaket: ${data.get('package')} Diamonds\nEmail: ${data.get('email') || '-'}\n\n(Tips: ini hanya demo statis; hubungkan API/payment gateway untuk proses nyata.)`;
+      result.innerText = summary;
+      result.classList.add('visible');
+      window.scrollTo({ top: result.offsetTop - 20, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

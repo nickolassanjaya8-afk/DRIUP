@@ -1,0 +1,33 @@
+/* styles.css - Simple, modern, human-like design */
+:root{
+  --bg:#0f1724; /* dark navy */
+  --card:#0b1220;
+  --muted:#9aa4b2;
+  --accent:#ffb86b;
+  --accent-2:#7bd389;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,var(--bg),#081018)}
+.container{max-width:1100px;margin:28px auto;padding:24px}
+.site-header{display:flex;align-items:center;gap:18px;padding:20px 24px}
+.banner{height:84px;width:auto;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+.brand h1{margin:0;font-size:28px;letter-spacing:1px}
+.tag{margin:4px 0 0;color:var(--muted);font-size:13px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:22px}
+.game-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),var(--glass));padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);text-align:center;border:1px solid rgba(255,255,255,0.03)}
+.game-logo{height:84px;width:auto;margin-bottom:10px}
+.game-card h2{margin:6px 0 4px}
+.desc{color:var(--muted);font-size:14px;margin:0 0 12px}
+.btn{display:inline-block;padding:10px 16px;border-radius:9px;border:0;background:linear-gradient(90deg,var(--accent),#ff9a6a);color:#081018;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(255,152,88,0.12)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);box-shadow:none}
+.btn.primary{background:linear-gradient(90deg,var(--accent-2),#5be08f);color:#062014}
+.order{margin-top:30px;background:linear-gradient(180deg,rgba(122,121,130,0.02),var(--glass));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.order.hidden{display:none}
+.order label{display:block;margin:10px 0;font-size:14px;color:var(--muted)}
+.order input[type="text"],.order input[type="email"],.order select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef6}
+.form-actions{display:flex;gap:10px;margin-top:12px}
+.result{white-space:pre-wrap;margin-top:12px;padding:12px;background:rgba(11,18,28,0.6);border-radius:8px;color:var(--muted);display:none}
+.result.visible{display:block}
+.site-footer{padding:18px;text-align:center;color:var(--muted);margin-top:34px}
+@media (max-width:520px){.brand h1{font-size:20px}.banner{height:64px}}
