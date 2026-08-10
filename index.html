@@ -23,79 +23,27 @@
       border: 1px solid #3d3530;
       box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
-
     /* ===== HEADER STICKY ===== */
     .sticky-header {
-      position: sticky;
-      top: 0;
-      background: rgba(38,33,30,0.92);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      padding: 12px 0;
-      border-bottom: 2px solid #3d3530;
-      margin: -24px -20px 20px -20px;
-      padding-left: 20px;
-      padding-right: 20px;
-      border-top-left-radius: 28px;
-      border-top-right-radius: 28px;
+      position: sticky; top: 0; background: rgba(38,33,30,0.92); backdrop-filter: blur(8px);
+      z-index: 100; padding: 12px 0; border-bottom: 2px solid #3d3530;
+      margin: -24px -20px 20px -20px; padding-left: 20px; padding-right: 20px;
+      border-top-left-radius: 28px; border-top-right-radius: 28px;
     }
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-    }
-    .header .logo {
-      font-size: 22px;
-      font-weight: 700;
-      color: #e6b87e;
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-    }
+    .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; }
+    .header .logo { font-size: 22px; font-weight: 700; color: #e6b87e; cursor: pointer; user-select: none; display: flex; align-items: center; }
     .header .logo .admin-badge {
-      font-size: 11px;
-      background: #6a9e7a;
-      color: #1a1614;
-      padding: 2px 10px;
-      border-radius: 30px;
-      margin-left: 8px;
-      display: none;
-      font-weight: 600;
+      font-size: 11px; background: #6a9e7a; color: #1a1614; padding: 2px 10px;
+      border-radius: 30px; margin-left: 8px; display: none; font-weight: 600;
     }
     .header .logo .admin-badge.show { display: inline-block; }
-    .nav {
-      display: flex;
-      gap: 16px;
-      font-weight: 500;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .nav a {
-      color: #a79a8e;
-      text-decoration: none;
-      font-size: 14px;
-      cursor: pointer;
-      padding: 4px 0;
-      border-bottom: 2px solid transparent;
-      transition: 0.2s;
-    }
+    .nav { display: flex; gap: 16px; font-weight: 500; align-items: center; flex-wrap: wrap; }
+    .nav a { color: #a79a8e; text-decoration: none; font-size: 14px; cursor: pointer; padding: 4px 0; border-bottom: 2px solid transparent; transition: 0.2s; }
     .nav a:hover { color: #d6c9bc; }
-    .nav a.active {
-      color: #e6b87e;
-      border-bottom-color: #e6b87e;
-    }
+    .nav a.active { color: #e6b87e; border-bottom-color: #e6b87e; }
     .nav .cek-btn, .nav .all-btn, .nav .manage-btn {
-      background: #3d3530;
-      padding: 5px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-      color: #d6c9bc;
-      border: 1px solid #5a4d44;
-      cursor: pointer;
-      transition: 0.2s;
+      background: #3d3530; padding: 5px 14px; border-radius: 30px; font-size: 13px;
+      color: #d6c9bc; border: 1px solid #5a4d44; cursor: pointer; transition: 0.2s;
     }
     .nav .cek-btn:hover, .nav .all-btn:hover, .nav .manage-btn:hover { background: #5a4d44; }
     .nav .all-btn, .nav .manage-btn { display: none; }
@@ -107,525 +55,137 @@
     @keyframes fade { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
 
     /* ===== HOME ===== */
-    .home-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
-    }
-    .game-card-home {
-      background: #2e2723;
-      border-radius: 20px;
-      padding: 24px 12px 20px;
-      text-align: center;
-      border: 1px solid #3d3530;
-      transition: 0.2s;
-    }
+    .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .game-card-home { background: #2e2723; border-radius: 20px; padding: 24px 12px 20px; text-align: center; border: 1px solid #3d3530; transition: 0.2s; cursor: pointer; }
     .game-card-home:hover { transform: translateY(-3px); border-color: #5a4d44; }
-    .game-card-home img {
-      max-width: 80px;
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: contain;
-      border-radius: 16px;
-      background: #1a1614;
-      padding: 8px;
-      margin-bottom: 12px;
-    }
+    .game-card-home img { max-width: 80px; width: 100%; aspect-ratio: 1/1; object-fit: contain; border-radius: 16px; background: #1a1614; padding: 8px; margin-bottom: 12px; }
     .game-card-home h3 { font-size: 18px; font-weight: 600; color: #e6ddd6; }
     .game-card-home p { color: #a79a8e; font-size: 13px; margin-bottom: 16px; }
-    .btn-home {
-      background: #e6b87e;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 40px;
-      color: #1a1614;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    .btn-home { background: #e6b87e; border: none; padding: 10px 24px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; }
     .btn-home:hover { background: #f0ca94; }
 
     /* ===== DETAIL & PAKET ===== */
-    .detail-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
+    .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
     .detail-header h2 { font-size: 22px; font-weight: 600; color: #e6ddd6; }
     .detail-header .game-icon { font-size: 28px; }
-
-    .package-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .package-item {
-      background: #2e2723;
-      border-radius: 16px;
-      padding: 16px 8px;
-      text-align: center;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    
+    .section-subtitle { color: #e6b87e; margin: 12px 0; font-size: 16px; font-weight: 600; }
+    .package-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .package-item { background: #2e2723; border-radius: 16px; padding: 16px 8px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: 0.2s; }
     .package-item:hover { border-color: #5a4d44; background: #352d28; }
-    .package-item.selected {
-      border-color: #e6b87e;
-      background: #3d322a;
-    }
+    .package-item.selected { border-color: #e6b87e; background: #3d322a; }
     .package-item .diamond { font-size: 17px; font-weight: 600; color: #e6ddd6; margin-bottom: 4px; }
     .package-item .price { color: #a79a8e; font-size: 13px; margin-bottom: 12px; }
     .package-item .check-mark { color: #e6b87e; font-weight: 600; font-size: 13px; display: none; }
     .package-item.selected .check-mark { display: inline-block; }
-    .package-item .btn-add {
-      background: #3d3530;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 30px;
-      color: #d6c9bc;
-      font-weight: 500;
-      font-size: 13px;
-      cursor: pointer;
-      width: 100%;
-      transition: 0.2s;
-    }
+    .package-item .btn-add { background: #3d3530; border: none; padding: 8px 12px; border-radius: 30px; color: #d6c9bc; font-weight: 500; font-size: 13px; cursor: pointer; width: 100%; transition: 0.2s; }
     .package-item:not(.selected) .btn-add { display: inline-block; }
     .package-item:not(.selected) .btn-add:hover { background: #4f443e; color: #f0e6dc; }
     .package-item.selected .btn-add { display: none; }
 
     /* ===== KERANJANG ===== */
-    .cart-section {
-      background: #1e1916;
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid #3d3530;
-      margin-bottom: 24px;
-    }
-    .cart-section .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+    .cart-section { background: #1e1916; border-radius: 20px; padding: 20px; border: 1px solid #3d3530; margin-bottom: 24px; }
+    .cart-section .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .cart-section h3 { font-size: 17px; font-weight: 600; color: #e6b87e; }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px dashed #3d3530;
-      font-size: 14px;
-    }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #3d3530; font-size: 14px; }
     .cart-item:last-child { border-bottom: none; }
     .cart-item .name { color: #d6c9bc; font-weight: 500; }
-    .cart-item .qty { color: #a79a8e; }
     .cart-item .subtotal { color: #f0e6dc; font-weight: 600; }
-    .cart-item .remove-btn {
-      background: none;
-      border: none;
-      color: #b87a6a;
-      font-size: 16px;
-      cursor: pointer;
-      padding: 0 6px;
-      transition: 0.2s;
-    }
+    .cart-item .remove-btn { background: none; border: none; color: #b87a6a; font-size: 16px; cursor: pointer; padding: 0 6px; transition: 0.2s; }
     .cart-item .remove-btn:hover { color: #e8a090; }
-    .cart-total {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      border-top: 1px solid #3d3530;
-      margin-top: 8px;
-      color: #e6b87e;
-    }
+    .cart-total { display: flex; justify-content: space-between; padding-top: 14px; font-size: 16px; font-weight: 600; border-top: 1px solid #3d3530; margin-top: 8px; color: #e6b87e; }
     .cart-empty { color: #7a6e62; text-align: center; padding: 16px 0; font-style: italic; font-size: 14px; }
-    .btn-checkout {
-      background: #e6b87e;
-      border: none;
-      padding: 12px 0;
-      border-radius: 40px;
-      color: #1a1614;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 16px;
-      transition: 0.2s;
-    }
+    .btn-checkout { background: #e6b87e; border: none; padding: 12px 0; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 15px; cursor: pointer; width: 100%; margin-top: 16px; transition: 0.2s; }
     .btn-checkout:hover:not(:disabled) { background: #f0ca94; }
     .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; background: #9c8465; }
 
     /* ===== FORM CHECKOUT ===== */
-    .form-section {
-      background: #1e1916;
-      border-radius: 20px;
-      padding: 20px 16px;
-      border: 1px solid #3d3530;
-    }
+    .form-section { background: #1e1916; border-radius: 20px; padding: 20px 16px; border: 1px solid #3d3530; }
     .form-block { margin-bottom: 24px; }
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #3d3530;
-    }
+    .section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #3d3530; }
     .section-title .icon { font-size: 18px; }
     .section-title span.text { font-weight: 600; color: #e6b87e; font-size: 16px; }
-    
     .form-group { margin-bottom: 14px; }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: #c4b5a6;
-      margin-bottom: 6px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: #2e2723;
-      border: 2px solid #3d3530;
-      color: #f0e6dc;
-      font-size: 15px;
-      outline: none;
-      transition: 0.2s;
-    }
-    .form-group input:focus {
-      border-color: #e6b87e;
-      box-shadow: 0 0 0 3px rgba(230,184,126,0.15);
-    }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; color: #c4b5a6; margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 15px; outline: none; transition: 0.2s; }
+    .form-group input:focus { border-color: #e6b87e; box-shadow: 0 0 0 3px rgba(230,184,126,0.15); }
     .form-group input::placeholder { color: #6a5e52; }
-    .form-group .error-message {
-      color: #d97a6a;
-      font-size: 12px;
-      margin-top: 5px;
-      display: none;
-    }
-    .form-group.error input {
-      border-color: #d97a6a;
-      background: rgba(217,122,106,0.05);
-    }
+    .form-group .error-message { color: #d97a6a; font-size: 12px; margin-top: 5px; display: none; }
+    .form-group.error input { border-color: #d97a6a; background: rgba(217,122,106,0.05); }
     .form-group.error .error-message { display: block; }
     .zone-field { display: none; }
     .zone-field.show { display: block; }
 
-    /* ===== METODE PEMBAYARAN (hanya QRIS) ===== */
+    /* ===== METODE PEMBAYARAN ===== */
     .payment-options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-    .pm-item {
-      flex: 0 0 auto;
-      padding: 10px 24px;
-      background: #2e2723;
-      border-radius: 14px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      color: #a79a8e;
-      border: 2px solid #3d3530;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .pm-item.active {
-      border-color: #e6b87e;
-      background: #3d3530;
-      color: #f0e6dc;
-    }
+    .pm-item { flex: 0 0 auto; padding: 10px 24px; background: #2e2723; border-radius: 14px; text-align: center; font-size: 14px; font-weight: 500; color: #a79a8e; border: 2px solid #3d3530; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+    .pm-item.active { border-color: #e6b87e; background: #3d3530; color: #f0e6dc; }
     .pm-item img { max-width: 32px; height: auto; border-radius: 6px; background: #fff; padding: 2px; }
-    .payment-detail {
-      margin-top: 14px;
-      padding: 16px;
-      background: #2e2723;
-      border-radius: 14px;
-      border: 1px solid #3d3530;
-      text-align: center;
-      display: block;
-    }
-    .payment-detail img {
-      max-width: 150px;
-      border-radius: 10px;
-      border: 1px solid #3d3530;
-      margin-bottom: 10px;
-    }
+    .payment-detail { margin-top: 14px; padding: 16px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; display: block; }
+    .payment-detail img { max-width: 150px; border-radius: 10px; border: 1px solid #3d3530; margin-bottom: 10px; }
     .payment-detail .info-text { color: #c4b5a6; font-size: 14px; line-height: 1.5; }
 
     /* ===== TOTAL & TOMBOL ===== */
-    .total-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #2e2723;
-      padding: 14px 16px;
-      border-radius: 14px;
-      margin: 20px 0 10px;
-      border: 1px solid #3d3530;
-    }
+    .total-bar { display: flex; justify-content: space-between; align-items: center; background: #2e2723; padding: 14px 16px; border-radius: 14px; margin: 20px 0 10px; border: 1px solid #3d3530; }
     .total-bar .label { color: #c4b5a6; font-size: 15px; }
     .total-bar .amount { font-size: 19px; font-weight: 700; color: #e6b87e; }
-    .btn-order {
-      width: 100%;
-      padding: 14px;
-      background: #e6b87e;
-      border: none;
-      border-radius: 40px;
-      color: #1a1614;
-      font-weight: 700;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
+    .btn-order { width: 100%; padding: 14px; background: #e6b87e; border: none; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-order:hover:not(:disabled) { background: #f0ca94; transform: translateY(-2px); }
     .btn-order:disabled { opacity: 0.4; cursor: not-allowed; }
-    .security-note {
-      text-align: center;
-      color: #7a6e62;
-      font-size: 12px;
-      padding: 14px 0 4px;
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .security-note { text-align: center; color: #7a6e62; font-size: 12px; padding: 14px 0 4px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
-    /* ===== MODAL ===== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(5px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 999;
-    }
+    /* ===== MODAL & ADMIN STYLES ===== */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 999; }
     .modal-overlay.open { display: flex; }
-    .modal-box {
-      max-width: 450px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #26211e;
-      border-radius: 24px;
-      padding: 24px 18px 18px;
-      border: 1px solid #3d3530;
-      text-align: center;
-      animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    .modal-box { max-width: 450px; width: 100%; max-height: 90vh; overflow-y: auto; background: #26211e; border-radius: 24px; padding: 24px 18px 18px; border: 1px solid #3d3530; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .modal-box.wide { max-width: 700px; }
-    @keyframes pop {
-      0% { opacity:0; transform:scale(0.9) translateY(20px); }
-      100% { opacity:1; transform:scale(1) translateY(0); }
-    }
+    @keyframes pop { 0% { opacity:0; transform:scale(0.9) translateY(20px); } 100% { opacity:1; transform:scale(1) translateY(0); } }
     .modal-box .check { font-size: 48px; margin-bottom: 8px; }
     .modal-box h2 { font-size: 20px; font-weight: 600; color: #e6ddd6; }
     .modal-box p { color: #a79a8e; margin: 6px 0 18px; font-size: 14px; }
-    .modal-box .detail-info {
-      background: #1e1916;
-      padding: 14px;
-      border-radius: 14px;
-      font-size: 14px;
-      color: #d6c9bc;
-      margin-bottom: 16px;
-      border: 1px solid #3d3530;
-      text-align: left;
-      line-height: 1.6;
-    }
-    .btn-close-modal {
-      background: #3d3530;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      color: #f0e6dc;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.2s;
-      width: 100%;
-    }
+    .modal-box .detail-info { background: #1e1916; padding: 14px; border-radius: 14px; font-size: 14px; color: #d6c9bc; margin-bottom: 16px; border: 1px solid #3d3530; text-align: left; line-height: 1.6; }
+    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; width: 100%; }
     .btn-close-modal:hover { background: #5a4d44; }
 
-    /* ===== TIMELINE ===== */
+    /* Admin Tabs */
+    .manage-tab-btn { background: #3d3530; color: #d6c9bc; border: 1px solid #5a4d44; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 5px; transition: 0.2s;}
+    .manage-tab-btn.active { background: #e6b87e; color: #1a1614; border-color: #e6b87e;}
+    .manage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2e2723; }
+    .manage-item .info { color: #d6c9bc; font-size: 14px; }
+    .manage-item .btn-del { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 12px; cursor: pointer; }
+    .manage-item .btn-del:hover { background: #d97a6a; }
+    .manage-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .manage-form input { flex: 1; min-width: 80px; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 14px; outline: none; }
+    .manage-form input:focus { border-color: #e6b87e; }
+    .manage-form button { background: #e6b87e; border: none; padding: 10px 20px; border-radius: 40px; color: #1a1614; font-weight: 600; cursor: pointer; }
+    
+    /* Table Status Orders */
     .status-timeline { text-align: left; padding: 6px 0 14px; }
-    .status-step {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 6px 0;
-      position: relative;
-    }
-    .status-step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 7px;
-      top: 24px;
-      bottom: -6px;
-      width: 2px;
-      background: #3d3530;
-    }
+    .status-step { display: flex; align-items: center; gap: 14px; padding: 6px 0; position: relative; }
+    .status-step:not(:last-child)::after { content: ''; position: absolute; left: 7px; top: 24px; bottom: -6px; width: 2px; background: #3d3530; }
     .status-step.done:not(:last-child)::after { background: #6a9e7a; }
-    .status-step .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #3d3530;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 2;
-    }
+    .status-step .dot { width: 14px; height: 14px; border-radius: 50%; background: #3d3530; flex-shrink: 0; position: relative; z-index: 2; }
     .status-step .dot.done { background: #6a9e7a; }
     .status-step .dot.active { background: #e6b87e; box-shadow: 0 0 0 4px rgba(230,184,126,0.2); }
     .status-step .step-label { color: #a79a8e; font-size: 14px; }
     .status-step .step-label.active-label { color: #f0e6dc; font-weight: 600; }
     .status-step .step-label.done-label { color: #6a9e7a; font-weight: 500; }
-
-    .btn-confirm {
-      background: #6a9e7a;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 40px;
-      color: #1a1614;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
-      transition: 0.2s;
-    }
-    .btn-confirm:hover { background: #7fb88e; }
-
-    /* ===== TABLE ADMIN ===== */
-    .order-table {
-      width: 100%;
-      text-align: left;
-      font-size: 13px;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
+    .btn-confirm { background: #6a9e7a; border: none; padding: 10px 18px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; }
+    .order-table { width: 100%; text-align: left; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
     .order-table th { color: #a79a8e; font-weight: 600; padding: 8px 6px; border-bottom: 2px solid #3d3530; }
     .order-table td { padding: 10px 6px; border-bottom: 1px solid #2e2723; color: #d6c9bc; }
-    .order-table .status-badge {
-      padding: 3px 8px;
-      border-radius: 30px;
-      font-size: 11px;
-      font-weight: 600;
-      display: inline-block;
-    }
+    .order-table .status-badge { padding: 3px 8px; border-radius: 30px; font-size: 11px; font-weight: 600; display: inline-block; }
     .order-table .status-menunggu { background: rgba(230,184,126,0.2); color: #e6b87e; }
-    .order-table .status-diproses { background: rgba(212,163,115,0.2); color: #d4a373; }
     .order-table .status-selesai { background: rgba(106,158,122,0.2); color: #6a9e7a; }
-    .order-table .btn-sm {
-      background: #6a9e7a;
-      border: none;
-      padding: 5px 12px;
-      border-radius: 30px;
-      color: #1a1614;
-      font-weight: 600;
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .order-table .btn-sm:hover:not(:disabled) { background: #7fb88e; }
-    .order-table .btn-sm:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    /* ===== MANAJEMEN PAKET ===== */
-    .manage-section {
-      background: #1e1916;
-      border-radius: 20px;
-      padding: 20px;
-      margin-top: 20px;
-      border: 1px solid #3d3530;
-    }
-    .manage-section h3 { color: #e6b87e; margin-bottom: 16px; }
-    .manage-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #2e2723;
-    }
-    .manage-item .info { color: #d6c9bc; font-size: 14px; }
-    .manage-item .btn-del {
-      background: #b87a6a;
-      border: none;
-      padding: 4px 12px;
-      border-radius: 30px;
-      color: #1a1614;
-      font-weight: 600;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .manage-item .btn-del:hover { background: #d97a6a; }
-    .manage-form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .manage-form input {
-      flex: 1;
-      min-width: 80px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: #2e2723;
-      border: 2px solid #3d3530;
-      color: #f0e6dc;
-      font-size: 15px;
-      outline: none;
-    }
-    .manage-form input:focus { border-color: #e6b87e; }
-    .manage-form button {
-      background: #e6b87e;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      color: #1a1614;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .manage-form button:hover { background: #f0ca94; }
-    .manage-close {
-      display: inline-block;
-      margin-top: 16px;
-      color: #a79a8e;
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: underline;
-    }
-    .manage-close:hover { color: #d6c9bc; }
-
-    footer {
-      text-align: center;
-      color: #6a5e52;
-      font-size: 13px;
-      padding: 20px 0 8px;
-      margin-top: 24px;
-      border-top: 1px solid #2e2723;
-    }
-
+    .order-table .btn-sm { background: #6a9e7a; border: none; padding: 5px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 11px; cursor: pointer; }
+    
+    footer { text-align: center; color: #6a5e52; font-size: 13px; padding: 20px 0 8px; margin-top: 24px; border-top: 1px solid #2e2723; }
+    
     @media (max-width: 600px) {
       body { padding: 0; }
       .container { border-radius: 0; border: none; min-height: 100vh; padding: 12px 14px 20px; }
       .sticky-header { margin: -12px -14px 16px -14px; padding: 14px; border-radius: 0; }
-      .header .logo { font-size: 19px; }
-      .home-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .package-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 10px; }
-      .form-section { padding: 16px 12px; }
-      .modal-box { padding: 20px 14px; }
-      .manage-form input { min-width: 60px; }
     }
   </style>
 </head>
@@ -655,14 +215,14 @@
     <h2 style="font-size:22px; font-weight:600; margin-bottom:4px; color:#e6b87e;">Top Up Game Murah & Instan</h2>
     <p style="color:#a79a8e; margin-bottom:16px; font-size:14px;">DRIUP solusi top-up diamond Mobile Legends & Free Fire.</p>
     <div class="home-grid">
-      <div class="game-card-home" onclick="navigateTo('ml')" style="cursor: pointer;">
+      <div class="game-card-home" onclick="navigateTo('ml')">
         <img src="ML.PNG" alt="ML" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <div style="display:none; font-size:48px; margin-bottom:12px;">🎯</div>
         <h3>ML</h3>
         <p>Mobile Legends<br/>Diamond, skin, bundle</p>
         <button class="btn-home">Top Up</button>
       </div>
-      <div class="game-card-home" onclick="navigateTo('ff')" style="cursor: pointer;">
+      <div class="game-card-home" onclick="navigateTo('ff')">
         <img src="FF.PNG" alt="FF" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <div style="display:none; font-size:48px; margin-bottom:12px;">🔥</div>
         <h3>FREE FIRE</h3>
@@ -676,11 +236,18 @@
   <div class="page" id="page-detail">
     <div class="detail-header">
       <span class="game-icon" id="detailIcon">🎯</span>
-      <h2 id="detailTitle">Mobile Legends Diamond</h2>
+      <h2 id="detailTitle">Mobile Legends</h2>
     </div>
 
-    <!-- PILIH PAKET -->
+    <!-- PILIH PAKET DIAMOND -->
+    <div class="section-subtitle">💎 Pilih Diamond</div>
     <div class="package-grid" id="packageGrid"></div>
+
+    <!-- PILIH PAKET WDP -->
+    <div id="wdpSection" style="display: none;">
+      <div class="section-subtitle">🎟️ Weekly Diamond Pass (WDP)</div>
+      <div class="package-grid" id="wdpGrid"></div>
+    </div>
 
     <!-- KERANJANG -->
     <div class="cart-section">
@@ -700,13 +267,8 @@
 
     <!-- FORM CHECKOUT -->
     <div class="form-section" id="checkoutForm">
-      
-      <!-- 🎮 BAGIAN 1: DATA GAME -->
       <div class="form-block">
-        <div class="section-title">
-          <span class="icon">🎮</span>
-          <span class="text">Data Game</span>
-        </div>
+        <div class="section-title"><span class="icon">🎮</span><span class="text">Data Game</span></div>
         <div class="form-group" id="idGameGroup">
           <label for="idGame">ID Game</label>
           <input type="text" id="idGame" placeholder="Masukkan ID game" autocomplete="off" />
@@ -719,12 +281,8 @@
         </div>
       </div>
 
-      <!-- 👤 BAGIAN 2: DATA PEMBELI -->
       <div class="form-block">
-        <div class="section-title">
-          <span class="icon">👤</span>
-          <span class="text">Data Pembeli</span>
-        </div>
+        <div class="section-title"><span class="icon">👤</span><span class="text">Data Pembeli</span></div>
         <div class="form-group" id="namaGroup">
           <label for="namaLengkap">Nama Lengkap</label>
           <input type="text" id="namaLengkap" placeholder="Nama sesuai rekening" autocomplete="name" />
@@ -737,12 +295,8 @@
         </div>
       </div>
 
-      <!-- 💳 BAGIAN 3: PEMBAYARAN (HANYA QRIS) -->
       <div class="form-block">
-        <div class="section-title">
-          <span class="icon">💳</span>
-          <span class="text">Metode Pembayaran</span>
-        </div>
+        <div class="section-title"><span class="icon">💳</span><span class="text">Metode Pembayaran</span></div>
         <div class="payment-options" id="paymentOptions">
           <div class="pm-item active" data-pm="qris">
             <img src="QRIS.PNG" alt="QRIS" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
@@ -755,7 +309,6 @@
         </div>
       </div>
 
-      <!-- TOTAL -->
       <div class="total-bar">
         <span class="label">Total Pembayaran</span>
         <span class="amount" id="checkoutTotal">Rp 0</span>
@@ -799,7 +352,7 @@
     </div>
     <button class="btn-order" onclick="cekPesanan()">Cek Sekarang</button>
     <div id="cekResult" style="margin-top:16px; text-align:left;"></div>
-    <button class="btn-close-modal" onclick="closeCekModal()">Tutup</button>
+    <button class="btn-close-modal" onclick="closeCekModal()" style="margin-top:10px;">Tutup</button>
   </div>
 </div>
 
@@ -808,24 +361,49 @@
   <div class="modal-box wide">
     <h2 style="margin-bottom:14px;">📋 Daftar Semua Pesanan</h2>
     <div id="allOrdersList"></div>
-    <button class="btn-close-modal" onclick="closeAllOrdersModal()">Tutup</button>
+    <button class="btn-close-modal" onclick="closeAllOrdersModal()" style="margin-top:15px;">Tutup</button>
   </div>
 </div>
 
-<!-- MODAL MANAJEMEN PAKET (ADMIN) -->
+<!-- MODAL MANAJEMEN PAKET + WDP (ADMIN) -->
 <div class="modal-overlay" id="manageModal">
   <div class="modal-box wide">
-    <h2 style="margin-bottom:8px;">⚙️ Kelola Harga & Katalog</h2>
-    <div id="manageContent" class="manage-section" style="background:transparent; border:none; padding:0; text-align:left;">
-      <div id="packageList"></div>
+    <h2 style="margin-bottom:16px;">⚙️ Kelola Paket & Harga</h2>
+    
+    <!-- Pilihan game -->
+    <div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #3d3530; padding-bottom:10px;">
+      <button class="manage-tab-btn active" id="gameTabML" onclick="switchManageGame('ml')">🎯 ML</button>
+      <button class="manage-tab-btn" id="gameTabFF" onclick="switchManageGame('ff')">🔥 FF</button>
+    </div>
+
+    <!-- Tabs Tipe Produk -->
+    <div style="display: flex; margin-bottom: 15px;">
+      <button class="manage-tab-btn active" id="tabDiamondBtn" onclick="switchManageTab('diamond')">Diamond</button>
+      <button class="manage-tab-btn" id="tabWDPBtn" onclick="switchManageTab('wdp')">WDP</button>
+    </div>
+
+    <!-- KONTEN TAB DIAMOND -->
+    <div id="manageDiamondContent">
+      <div id="packageList" style="text-align: left;"></div>
       <div class="manage-form">
-        <input type="number" id="newDiamond" placeholder="Diamond (cth: 150)" min="1" />
-        <input type="number" id="newPrice" placeholder="Harga (cth: 20000)" min="1" step="100" />
+        <input type="number" id="newDiamond" placeholder="Jml Diamond (Min 1)" min="1" />
+        <input type="number" id="newPrice" placeholder="Harga Rp (Min 100)" min="100" />
         <button onclick="addPackage()">➕ Tambah</button>
       </div>
-      <div style="margin-top:12px; color:#7a6e62; font-size:13px;">Klik tombol <span style="color:#b87a6a;">✕</span> untuk hapus paket.</div>
-      <span class="manage-close" onclick="toggleManage()">Tutup</span>
     </div>
+
+    <!-- KONTEN TAB WDP -->
+    <div id="manageWDPContent" style="display: none;">
+      <div id="wdpList" style="text-align: left;"></div>
+      <div class="manage-form">
+        <input type="number" id="newWDP" placeholder="Jml WDP (Min 1)" min="1" />
+        <input type="number" id="newWDPPrice" placeholder="Harga Rp (Min 100)" min="100" />
+        <button onclick="addWDPackage()">➕ Tambah</button>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; color:#7a6e62; font-size:13px;">Klik tombol <span style="color:#b87a6a;">✕</span> untuk hapus paket.</div>
+    <button class="btn-close-modal" onclick="document.getElementById('manageModal').classList.remove('open')" style="margin-top:15px;">Tutup Panel</button>
   </div>
 </div>
 
@@ -851,169 +429,209 @@
     }
   }
 
-  // ===== DATA PAKET (disimpan di localStorage) =====
-  const DEFAULT_PACKAGES = [
+  // ===== DEFAULT DATA =====
+  const DEFAULT_ML = [
     { diamond: 10, price: 1500 }, { diamond: 20, price: 2800 },
-    { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 },
-    { diamond: 200, price: 23000 }, { diamond: 500, price: 55000 }
+    { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }
   ];
+  const DEFAULT_FF = [
+    { diamond: 10, price: 1200 }, { diamond: 20, price: 2400 },
+    { diamond: 50, price: 5800 }, { diamond: 100, price: 11000 }
+  ];
+  const DEFAULT_WDP_ML = [
+    { wdp: 1, price: 27000 }, { wdp: 2, price: 53000 }, { wdp: 3, price: 79000 }
+  ];
+  const DEFAULT_WDP_FF = []; // FF tidak pakai WDP
 
-  function getPackages() {
+  // GETTER & SETTER LOCALSTORAGE
+  function getPackages(game) {
     try {
-      const data = localStorage.getItem('driup_packages');
-      if (data) {
-        const parsed = JSON.parse(data);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
+      const data = localStorage.getItem(`driup_packages_${game}`);
+      if (data) return JSON.parse(data);
     } catch(e) {}
-    return DEFAULT_PACKAGES;
+    return game === 'ml' ? [...DEFAULT_ML] : [...DEFAULT_FF];
+  }
+  function savePackages(game, pkg) {
+    localStorage.setItem(`driup_packages_${game}`, JSON.stringify(pkg));
   }
 
-  function savePackages(pkg) {
-    localStorage.setItem('driup_packages', JSON.stringify(pkg));
+  function getWDPackages(game) {
+    try {
+      const data = localStorage.getItem(`driup_wdp_${game}`);
+      if (data) return JSON.parse(data);
+    } catch(e) {}
+    return game === 'ml' ? [...DEFAULT_WDP_ML] : [...DEFAULT_WDP_FF];
+  }
+  function saveWDPackages(game, pkg) {
+    localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg));
   }
 
-  let packages = getPackages();
+  // ===== STATE GLOBAL =====
+  let currentGame = 'ml';
+  let cart = []; // Format baru keamanan: { type: 'diamond'|'wdp', id: number, quantity: 1 }
+  let manageGame = 'ml';
+  let manageTab = 'diamond';
 
   // ===== DATA PESANAN =====
   let orders = [];
-  function loadOrders() {
-    try { orders = JSON.parse(localStorage.getItem('driup_orders')) || []; }
-    catch { orders = []; }
-  }
+  try { orders = JSON.parse(localStorage.getItem('driup_orders')) || []; } catch {}
   function saveOrders() { localStorage.setItem('driup_orders', JSON.stringify(orders)); }
-  loadOrders();
 
-  // ===== STATE =====
-  let currentGame = 'ml';
-  let cart = [];
-
-  // ===== DOM REFS =====
+  // ===== NAVIGASI HALAMAN =====
   const navLinks = document.querySelectorAll('.nav a');
   const pages = { home: document.getElementById('page-home'), detail: document.getElementById('page-detail') };
-  const detailIcon = document.getElementById('detailIcon');
-  const detailTitle = document.getElementById('detailTitle');
-  const packageGrid = document.getElementById('packageGrid');
-  const cartItemsDiv = document.getElementById('cartItems');
-  const cartTotalSpan = document.getElementById('cartTotal');
-  const cartItemCount = document.getElementById('cartItemCount');
-  const btnCheckout = document.getElementById('btnCheckout');
-  const checkoutTotal = document.getElementById('checkoutTotal');
-  const orderButtonTotal = document.getElementById('orderButtonTotal');
-  const zoneGroup = document.getElementById('zoneGroup');
-  const paymentDetail = document.getElementById('paymentDetail');
-  const btnOrder = document.getElementById('btnOrder');
-
-  // ===== NAVIGASI =====
+  
   function navigateTo(page) {
-    if (page !== 'home' && page !== currentGame) { cart = []; syncCartAndGrid(); }
-    navLinks.forEach(l => { l.classList.toggle('active', l.dataset.page === page); });
+    if (page !== 'home' && page !== currentGame) { 
+        cart = []; // Reset keranjang jika ganti game
+    }
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === page));
     if (page === 'home') {
       pages.home.classList.add('active'); pages.detail.classList.remove('active');
     } else {
       pages.home.classList.remove('active'); pages.detail.classList.add('active');
-      currentGame = page; renderDetail(); syncCartAndGrid();
+      currentGame = page; 
+      renderDetail(); 
     }
   }
   navLinks.forEach(l => l.addEventListener('click', e => {
     e.preventDefault(); if(l.dataset.page) navigateTo(l.dataset.page);
   }));
 
-  // ===== RENDER DETAIL (paket) =====
+  // ===== RENDER DETAIL FRONTEND =====
   function renderDetail() {
+    // Info Header Game
     if(currentGame === 'ml') {
-      detailIcon.textContent = '🎯'; detailTitle.textContent = 'Mobile Legends Diamond';
-      zoneGroup.classList.add('show');
+      document.getElementById('detailIcon').textContent = '🎯'; 
+      document.getElementById('detailTitle').textContent = 'Mobile Legends';
+      document.getElementById('zoneGroup').classList.add('show');
+      document.getElementById('wdpSection').style.display = 'block'; // Munculkan WDP
     } else {
-      detailIcon.textContent = '🔥'; detailTitle.textContent = 'Free Fire Diamond';
-      zoneGroup.classList.remove('show');
+      document.getElementById('detailIcon').textContent = '🔥'; 
+      document.getElementById('detailTitle').textContent = 'Free Fire';
+      document.getElementById('zoneGroup').classList.remove('show');
+      document.getElementById('wdpSection').style.display = 'none'; // Sembunyikan WDP
     }
+
+    // Render Diamond Biasa
+    const packageGrid = document.getElementById('packageGrid');
     packageGrid.innerHTML = '';
-    packages.forEach(pkg => {
-      const sel = cart.some(i => i.diamond === pkg.diamond);
+    getPackages(currentGame).forEach(pkg => {
+      const sel = cart.some(i => i.type === 'diamond' && i.id === pkg.diamond);
       const el = document.createElement('div');
-      el.className = `package-item ${sel?'selected':''}`;
-      el.dataset.diamond = pkg.diamond;
-      el.dataset.price = pkg.price;
+      el.className = `package-item ${sel ? 'selected' : ''}`;
       el.innerHTML = `
         <div class="diamond">${pkg.diamond} 💎</div>
         <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
-        <button class="btn-add">+ Pilih</button>
-        <span class="check-mark">✓</span>
+        <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
       `;
-      el.addEventListener('click', e => {
-        if(!e.target.classList.contains('btn-add')) togglePackage(pkg.diamond, pkg.price);
-      });
-      el.querySelector('.btn-add').addEventListener('click', e => {
-        e.stopPropagation(); togglePackage(pkg.diamond, pkg.price);
-      });
+      el.addEventListener('click', () => toggleItemCart('diamond', pkg.diamond));
       packageGrid.appendChild(el);
     });
-  }
 
-  // ===== KERANJANG =====
-  function togglePackage(d, p) {
-    const idx = cart.findIndex(i => i.diamond === d);
-    if(idx >= 0) cart.splice(idx, 1);
-    else cart.push({ diamond: d, price: p, quantity: 1 });
-    syncCartAndGrid();
-  }
-
-  function hapusItem(d) {
-    cart = cart.filter(i => i.diamond !== d);
-    syncCartAndGrid();
-  }
-
-  function syncCartAndGrid() {
+    // Render WDP 
+    if(currentGame === 'ml') {
+      const wdpGrid = document.getElementById('wdpGrid');
+      wdpGrid.innerHTML = '';
+      getWDPackages(currentGame).forEach(pkg => {
+        const sel = cart.some(i => i.type === 'wdp' && i.id === pkg.wdp);
+        const el = document.createElement('div');
+        el.className = `package-item ${sel ? 'selected' : ''}`;
+        el.innerHTML = `
+          <div class="diamond">${pkg.wdp} WDP</div>
+          <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
+          <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
+        `;
+        el.addEventListener('click', () => toggleItemCart('wdp', pkg.wdp));
+        wdpGrid.appendChild(el);
+      });
+    }
     renderCart();
-    updateTotal();
-    // Update selected state di grid
-    document.querySelectorAll('.package-item').forEach(el => {
-      const d = parseInt(el.dataset.diamond);
-      el.classList.toggle('selected', cart.some(i => i.diamond === d));
-    });
+  }
+
+  // ===== LOGIKA KERANJANG & KEAMANAN HARGA =====
+  function toggleItemCart(type, id) {
+    const idx = cart.findIndex(i => i.type === type && i.id === id);
+    if(idx >= 0) cart.splice(idx, 1);
+    else cart.push({ type, id, quantity: 1 });
+    renderDetail(); // Render ulang frontend
+  }
+
+  function hapusItemCart(type, id) {
+    cart = cart.filter(i => !(i.type === type && i.id === id));
+    renderDetail();
+  }
+
+  // SECURITY FIX: Ambil harga real-time dari database/lokal storage
+  function getCartTruePrices() {
+      const pkgs = getPackages(currentGame);
+      const wdps = getWDPackages(currentGame);
+      let calculatedCart = [];
+      let total = 0;
+      
+      cart.forEach(item => {
+          let truePrice = 0;
+          let label = '';
+          
+          if (item.type === 'diamond') {
+              const f = pkgs.find(p => p.diamond === item.id);
+              if(f) { truePrice = f.price; label = `${item.id} 💎`; }
+          } else if (item.type === 'wdp') {
+              const f = wdps.find(p => p.wdp === item.id);
+              if(f) { truePrice = f.price; label = `${item.id} WDP`; }
+          }
+
+          if(truePrice > 0) { // Abaikan produk jika terhapus dari database admin
+              const sub = truePrice * item.quantity;
+              total += sub;
+              calculatedCart.push({ ...item, label, truePrice, sub });
+          }
+      });
+      return { calculatedCart, total };
   }
 
   function renderCart() {
-    if(!cart.length) {
+    const cartItemsDiv = document.getElementById('cartItems');
+    const { calculatedCart, total } = getCartTruePrices();
+
+    if(!calculatedCart.length) {
       cartItemsDiv.innerHTML = `<div class="cart-empty">Belum ada pilihan</div>`;
-      cartTotalSpan.textContent = 'Rp 0'; cartItemCount.textContent = '0';
-      btnCheckout.disabled = btnOrder.disabled = true; return;
+      document.getElementById('cartTotal').textContent = 'Rp 0'; 
+      document.getElementById('checkoutTotal').textContent = 'Rp 0';
+      document.getElementById('orderButtonTotal').textContent = 'Rp 0';
+      document.getElementById('cartItemCount').textContent = '0 item';
+      document.getElementById('btnCheckout').disabled = true;
+      document.getElementById('btnOrder').disabled = true;
+      return;
     }
-    let total=0, html='';
-    cart.forEach(i => {
-      const sub = i.price * i.quantity;
-      total += sub;
+
+    let html = '';
+    calculatedCart.forEach(i => {
       html += `<div class="cart-item">
-        <span class="name">${i.diamond} 💎</span>
-        <span class="subtotal">Rp ${sub.toLocaleString('id-ID')}</span>
-        <button class="remove-btn" onclick="hapusItem(${i.diamond})">✕</button>
+        <span class="name">${i.label}</span>
+        <span class="subtotal">Rp ${i.sub.toLocaleString('id-ID')}</span>
+        <button class="remove-btn" onclick="hapusItemCart('${i.type}', ${i.id})">✕</button>
       </div>`;
     });
+
     cartItemsDiv.innerHTML = html;
-    cartTotalSpan.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-    cartItemCount.textContent = cart.length;
-    btnCheckout.disabled = btnOrder.disabled = false;
+    const totalStr = `Rp ${total.toLocaleString('id-ID')}`;
+    document.getElementById('cartTotal').textContent = totalStr;
+    document.getElementById('checkoutTotal').textContent = totalStr;
+    document.getElementById('orderButtonTotal').textContent = totalStr;
+    document.getElementById('cartItemCount').textContent = `${calculatedCart.length} item`;
+    document.getElementById('btnCheckout').disabled = false;
+    document.getElementById('btnOrder').disabled = false;
   }
 
-  function updateTotal() {
-    const t = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    const str = `Rp ${t.toLocaleString('id-ID')}`;
-    checkoutTotal.textContent = orderButtonTotal.textContent = str;
-    btnOrder.disabled = !cart.length;
-  }
+  function scrollToForm() { document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); }
 
-  function scrollToForm() {
-    document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // ===== VALIDASI =====
+  // ===== PROSES PEMESANAN =====
   function validateForm() {
     let ok = true;
-    const idg = document.getElementById('idGame'), n = document.getElementById('namaLengkap'),
-          wa = document.getElementById('waNumber'), zone = document.getElementById('zoneGame');
-    const fields = [idg, n, wa];
-    if (currentGame === 'ml') fields.push(zone);
+    const fields = [document.getElementById('idGame'), document.getElementById('namaLengkap'), document.getElementById('waNumber')];
+    if (currentGame === 'ml') fields.push(document.getElementById('zoneGame'));
+    
     fields.forEach(inp => {
       const g = inp.closest('.form-group');
       if (!inp.value.trim()) { ok = false; g.classList.add('error'); }
@@ -1023,33 +641,35 @@
     return ok;
   }
 
-  // ===== PESAN SEKARANG =====
   function pesanSekarang() {
-    if (!cart.length) return alert('Keranjang kosong!');
+    const { calculatedCart, total } = getCartTruePrices();
+    if (!calculatedCart.length) return alert('Keranjang kosong/produk tidak valid!');
     if (!validateForm()) return;
-    const idg = document.getElementById('idGame').value.trim(),
-          nama = document.getElementById('namaLengkap').value.trim(),
-          wa = document.getElementById('waNumber').value.trim(),
-          zone = document.getElementById('zoneGame').value.trim();
-    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    const id = 'DRIUP-' + Date.now().toString().slice(-6);
+
+    const orderId = 'DRIUP-' + Date.now().toString().slice(-6);
     orders.unshift({
-      id,
+      id: orderId,
       game: currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire',
-      total,
+      items: calculatedCart.map(c => c.label).join(', '),
+      total: total,
       status: 'Menunggu Pembayaran',
       tgl: new Date().toLocaleDateString('id-ID'),
-      data: { idg, zone, nama, wa, pm: 'QRIS' }
+      data: {
+        idg: document.getElementById('idGame').value.trim(),
+        zone: document.getElementById('zoneGame').value.trim(),
+        nama: document.getElementById('namaLengkap').value.trim(),
+        wa: document.getElementById('waNumber').value.trim()
+      }
     });
     saveOrders();
 
-    // Ringkasan
+    // Tampil Modal Sukses
     document.getElementById('orderSummary').innerHTML = `
-      <strong>ID Pesanan:</strong> ${id}<br>
+      <strong>ID Pesanan:</strong> ${orderId}<br>
       <strong>Game:</strong> ${currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire'}<br>
       <strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}
     `;
-    // Timeline
+    
     const steps = ['Menunggu Pembayaran', 'Diproses', 'Selesai'];
     document.getElementById('statusTimeline').innerHTML = steps.map((s, i) => `
       <div class="status-step ${i===0?'done':''}">
@@ -1057,18 +677,16 @@
         <span class="step-label ${i===0?'active-label':''}">${s}</span>
       </div>
     `).join('');
-    // Tombol admin
+    
     if (isAdmin) {
       document.getElementById('adminActionArea').innerHTML = `
-        <button class="btn-confirm" onclick="konfirmasiPesanan('${id}'); closeModal();">
+        <button class="btn-confirm" onclick="konfirmasiPesanan('${orderId}'); closeModal();">
           ✅ Tandai Selesai (Admin)
-        </button>
-      `;
-    } else {
-      document.getElementById('adminActionArea').innerHTML = '';
-    }
+        </button>`;
+    } else { document.getElementById('adminActionArea').innerHTML = ''; }
+
     document.getElementById('successModal').classList.add('open');
-    cart = []; syncCartAndGrid();
+    cart = []; renderDetail(); // Kosongkan keranjang
     ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
   }
 
@@ -1077,201 +695,164 @@
     navigateTo('home');
   }
 
-  // ===== CEK PESANAN =====
-  function openCekModal() {
-    document.getElementById('cekModal').classList.add('open');
-    document.getElementById('cekResult').innerHTML = '';
-    document.getElementById('cekId').value = '';
-    document.getElementById('cekError').style.display = 'none';
-  }
-  function closeCekModal() {
-    document.getElementById('cekModal').classList.remove('open');
-  }
+  // ===== CEK & KELOLA ORDER (ADMIN & USER) =====
+  function openCekModal() { document.getElementById('cekModal').classList.add('open'); document.getElementById('cekResult').innerHTML = ''; document.getElementById('cekError').style.display = 'none'; }
+  function closeCekModal() { document.getElementById('cekModal').classList.remove('open'); }
   function cekPesanan() {
     const id = document.getElementById('cekId').value.trim().toUpperCase();
-    const resultDiv = document.getElementById('cekResult');
     const errorEl = document.getElementById('cekError');
-    if (!id) {
-      errorEl.textContent = '⚠️ Masukkan ID pesanan.';
-      errorEl.style.display = 'block';
-      resultDiv.innerHTML = '';
-      return;
-    }
+    if (!id) { errorEl.textContent = '⚠️ Masukkan ID pesanan.'; errorEl.style.display = 'block'; return; }
+    
     const order = orders.find(o => o.id === id);
-    if (!order) {
-      errorEl.textContent = '⚠️ Pesanan tidak ditemukan.';
-      errorEl.style.display = 'block';
-      resultDiv.innerHTML = '';
-      return;
-    }
+    if (!order) { errorEl.textContent = '⚠️ Pesanan tidak ditemukan.'; errorEl.style.display = 'block'; return; }
+    
     errorEl.style.display = 'none';
-    const statusColor = order.status === 'Selesai' ? '#6a9e7a' : (order.status === 'Diproses' ? '#e6b87e' : '#d4a373');
+    const sC = order.status === 'Selesai' ? '#6a9e7a' : (order.status === 'Diproses' ? '#e6b87e' : '#d4a373');
     let html = `
-      <div class="status-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">ID</span><span style="color:#f0e6dc;font-weight:500;">${order.id}</span>
-      </div>
-      <div class="status-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">Game</span><span style="color:#f0e6dc;font-weight:500;">${order.game}</span>
-      </div>
-      <div class="status-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">Total</span><span style="color:#f0e6dc;font-weight:500;">Rp ${order.total.toLocaleString('id-ID')}</span>
-      </div>
-      <div class="status-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">Tanggal</span><span style="color:#f0e6dc;font-weight:500;">${order.tgl}</span>
-      </div>
-      <div class="status-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">Status</span><span style="color:${statusColor};font-weight:500;">${order.status}</span>
-      </div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">ID</span> <span style="float:right; color:#f0e6dc;">${order.id}</span></div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Game</span> <span style="float:right; color:#f0e6dc;">${order.game}</span></div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Item</span> <span style="float:right; color:#f0e6dc;">${order.items}</span></div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Total</span> <span style="float:right; color:#f0e6dc;">Rp ${order.total.toLocaleString('id-ID')}</span></div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Status</span> <span style="float:right; color:${sC}; font-weight:bold;">${order.status}</span></div>
     `;
-    // Timeline ringkas
-    const steps = ['Menunggu Pembayaran', 'Diproses', 'Selesai'];
-    const idx = steps.indexOf(order.status);
-    html += `<div style="margin-top:10px;">`;
-    steps.forEach((s, i) => {
-      const done = i < idx, active = i === idx;
-      const color = done ? '#6a9e7a' : (active ? '#e6b87e' : '#3d3530');
-      html += `<div style="display:flex;align-items:center;gap:8px;padding:2px 0;font-size:13px;">
-        <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${color};"></span>
-        <span style="color:${done || active ? '#f0e6dc' : '#7a6e62'};">${s}</span>
-      </div>`;
-    });
-    html += `</div>`;
     if (isAdmin && order.status !== 'Selesai') {
       html += `<button class="btn-confirm" onclick="konfirmasiPesanan('${order.id}'); cekPesanan();" style="margin-top:12px;">✅ Konfirmasi Pembayaran</button>`;
     }
-    resultDiv.innerHTML = html;
+    document.getElementById('cekResult').innerHTML = html;
   }
 
-  // ===== ADMIN KONFIRMASI =====
-  function konfirmasiPesanan(id) {
-    if (!isAdmin) { alert('❌ Anda bukan admin!'); return; }
-    const order = orders.find(o => o.id === id);
-    if (!order || order.status === 'Selesai') return;
-    order.status = 'Selesai';
-    saveOrders();
-    alert(`✅ Pesanan ${id} berhasil dikonfirmasi!`);
-    // Refresh modal yang terbuka
-    if (document.getElementById('cekModal').classList.contains('open')) cekPesanan();
-    if (document.getElementById('allOrdersModal').classList.contains('open')) showAllOrders();
-    if (document.getElementById('successModal').classList.contains('open')) {
-      const steps = ['Menunggu Pembayaran', 'Diproses', 'Selesai'];
-      document.getElementById('statusTimeline').innerHTML = steps.map((s, i) => `
-        <div class="status-step ${i<2?'done':''}">
-          <span class="dot ${i<2?'done':(i===2?'active':'')}"></span>
-          <span class="step-label ${i===2?'active-label':(i<2?'done-label':'')}">${s}</span>
-        </div>
-      `).join('');
-    }
-  }
-
-  // ===== SEMUA PESANAN ADMIN =====
   function showAllOrders() {
-    if (!isAdmin) { alert('❌ Anda bukan admin!'); return; }
-    const modal = document.getElementById('allOrdersModal');
+    if (!isAdmin) return;
     const list = document.getElementById('allOrdersList');
-    if (!orders.length) {
-      list.innerHTML = '<p style="color:#7a6e62;">Belum ada pesanan.</p>';
-    } else {
-      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Total</th><th>Tgl</th><th>Status</th><th>Aksi</th></tr></thead><tbody>`;
+    if (!orders.length) { list.innerHTML = '<p style="color:#7a6e62;">Belum ada pesanan.</p>'; } 
+    else {
+      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Item</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody>`;
       orders.forEach(o => {
-        const statusClass = o.status === 'Selesai' ? 'status-selesai' : (o.status === 'Diproses' ? 'status-diproses' : 'status-menunggu');
-        const disabled = o.status === 'Selesai' ? 'disabled' : '';
+        const sC = o.status === 'Selesai' ? 'status-selesai' : (o.status === 'Diproses' ? 'status-diproses' : 'status-menunggu');
         html += `<tr>
-          <td>${o.id}</td><td>${o.game}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td><td>${o.tgl}</td>
-          <td><span class="status-badge ${statusClass}">${o.status}</span></td>
-          <td><button class="btn-sm" ${disabled} onclick="konfirmasiPesanan('${o.id}'); showAllOrders();">${o.status === 'Selesai' ? '✅ Selesai' : '✅ Konfirm'}</button></td>
+          <td>${o.id}</td><td>${o.game}</td><td>${o.items}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td>
+          <td><span class="status-badge ${sC}">${o.status}</span></td>
+          <td><button class="btn-sm" ${o.status === 'Selesai' ? 'disabled' : ''} onclick="konfirmasiPesanan('${o.id}'); showAllOrders();">✅ ACC</button></td>
         </tr>`;
       });
-      html += `</tbody></table>`;
-      list.innerHTML = html;
+      list.innerHTML = html + `</tbody></table>`;
     }
-    modal.classList.add('open');
+    document.getElementById('allOrdersModal').classList.add('open');
   }
-  function closeAllOrdersModal() {
-    document.getElementById('allOrdersModal').classList.remove('open');
+  function closeAllOrdersModal() { document.getElementById('allOrdersModal').classList.remove('open'); }
+
+  function konfirmasiPesanan(id) {
+    const order = orders.find(o => o.id === id);
+    if (order) { order.status = 'Selesai'; saveOrders(); alert('✅ Pesanan Selesai!'); }
   }
 
-  // ===== MANAJEMEN PAKET ADMIN =====
+  // ===== KELOLA ADMIN (TAB DIAMOND & WDP) =====
   function toggleManage() {
     if (!isAdmin) { alert('Anda bukan admin!'); return; }
-    const modal = document.getElementById('manageModal');
-    if (modal.classList.contains('open')) {
-      modal.classList.remove('open');
-      return;
-    }
-    renderPackageList();
-    modal.classList.add('open');
+    manageGame = currentGame; // Default ke game yg sedang dilihat
+    switchManageGame(manageGame);
+    document.getElementById('manageModal').classList.add('open');
   }
 
-  function renderPackageList() {
+  function switchManageGame(game) {
+    manageGame = game;
+    document.getElementById('gameTabML').classList.toggle('active', game === 'ml');
+    document.getElementById('gameTabFF').classList.toggle('active', game === 'ff');
+    switchManageTab('diamond'); // Reset ke tab diamond
+  }
+
+  function switchManageTab(tab) {
+    manageTab = tab;
+    document.getElementById('tabDiamondBtn').classList.toggle('active', tab === 'diamond');
+    document.getElementById('tabWDPBtn').classList.toggle('active', tab === 'wdp');
+    document.getElementById('manageDiamondContent').style.display = tab === 'diamond' ? 'block' : 'none';
+    document.getElementById('manageWDPContent').style.display = tab === 'wdp' ? 'block' : 'none';
+    
+    if(tab === 'diamond') renderAdminPackageList();
+    if(tab === 'wdp') renderAdminWDPList();
+  }
+
+  function renderAdminPackageList() {
     const list = document.getElementById('packageList');
-    if (!packages.length) {
-      list.innerHTML = '<p style="color:#7a6e62;">Belum ada paket.</p>';
-      return;
-    }
+    const pkg = getPackages(manageGame);
+    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
     let html = '';
-    packages.forEach((p, idx) => {
-      html += `
-        <div class="manage-item">
-          <span class="info">${p.diamond} 💎 → Rp ${p.price.toLocaleString('id-ID')}</span>
-          <button class="btn-del" onclick="hapusPackage(${idx})">✕</button>
-        </div>
-      `;
+    pkg.forEach((p, idx) => {
+      html += `<div class="manage-item">
+        <span class="info">${p.diamond} 💎 → Rp ${p.price.toLocaleString('id-ID')}</span>
+        <button class="btn-del" onclick="hapusPackage(${idx})">✕</button>
+      </div>`;
     });
     list.innerHTML = html;
   }
 
   function addPackage() {
-    const dia = document.getElementById('newDiamond');
-    const prc = document.getElementById('newPrice');
-    const d = parseInt(dia.value);
-    const p = parseInt(prc.value);
-    if (!d || d < 1 || !p || p < 100) {
-      alert('Masukkan diamond (min 1) dan harga (min 100).');
-      return;
-    }
-    if (packages.some(item => item.diamond === d)) {
-      alert('Diamond sudah ada. Hapus dulu jika ingin ganti.');
-      return;
-    }
-    packages.push({ diamond: d, price: p });
-    savePackages(packages);
-    dia.value = ''; prc.value = '';
-    renderPackageList();
-    renderDetail();
-    syncCartAndGrid();
+    const d = parseInt(document.getElementById('newDiamond').value, 10);
+    const p = parseInt(document.getElementById('newPrice').value, 10);
+    if (isNaN(d) || d < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
+    
+    const pkg = getPackages(manageGame);
+    if (pkg.some(item => item.diamond === d)) return alert('Diamond sudah ada!');
+    
+    pkg.push({ diamond: d, price: p });
+    pkg.sort((a,b) => a.diamond - b.diamond);
+    savePackages(manageGame, pkg);
+    document.getElementById('newDiamond').value = ''; document.getElementById('newPrice').value = '';
+    renderAdminPackageList(); renderDetail();
   }
 
   function hapusPackage(idx) {
-    if (!confirm('Hapus paket ini?')) return;
-    packages.splice(idx, 1);
-    savePackages(packages);
-    renderPackageList();
-    renderDetail();
-    syncCartAndGrid();
+    const pkg = getPackages(manageGame);
+    hapusItemCart('diamond', pkg[idx].diamond); // Keamanan: hapus dari keranjang user yg lg aktif
+    pkg.splice(idx, 1);
+    savePackages(manageGame, pkg);
+    renderAdminPackageList(); renderDetail();
   }
 
-  // ===== INIT =====
+  function renderAdminWDPList() {
+    const list = document.getElementById('wdpList');
+    if (manageGame !== 'ml') { 
+        list.innerHTML = '<p style="color:#7a6e62;">Fitur WDP hanya untuk ML.</p>'; 
+        return; 
+    }
+    const pkg = getWDPackages(manageGame);
+    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
+    let html = '';
+    pkg.forEach((p, idx) => {
+      html += `<div class="manage-item">
+        <span class="info">${p.wdp} WDP → Rp ${p.price.toLocaleString('id-ID')}</span>
+        <button class="btn-del" onclick="hapusWDPackage(${idx})">✕</button>
+      </div>`;
+    });
+    list.innerHTML = html;
+  }
+
+  function addWDPackage() {
+    if (manageGame !== 'ml') return alert('Hanya untuk ML');
+    const w = parseInt(document.getElementById('newWDP').value, 10);
+    const p = parseInt(document.getElementById('newWDPPrice').value, 10);
+    if (isNaN(w) || w < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
+    
+    const pkg = getWDPackages(manageGame);
+    if (pkg.some(item => item.wdp === w)) return alert('Jumlah WDP sudah ada!');
+    
+    pkg.push({ wdp: w, price: p });
+    pkg.sort((a,b) => a.wdp - b.wdp);
+    saveWDPackages(manageGame, pkg);
+    document.getElementById('newWDP').value = ''; document.getElementById('newWDPPrice').value = '';
+    renderAdminWDPList(); renderDetail();
+  }
+
+  function hapusWDPackage(idx) {
+    const pkg = getWDPackages(manageGame);
+    hapusItemCart('wdp', pkg[idx].wdp); // Keamanan
+    pkg.splice(idx, 1);
+    saveWDPackages(manageGame, pkg);
+    renderAdminWDPList(); renderDetail();
+  }
+
+  // INIT
   navigateTo('home');
-  updateTotal();
-
-  // Event untuk modal
-  document.getElementById('cekModal').addEventListener('click', function(e) {
-    if (e.target === this) closeCekModal();
-  });
-  document.getElementById('successModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-  document.getElementById('allOrdersModal').addEventListener('click', function(e) {
-    if (e.target === this) closeAllOrdersModal();
-  });
-  document.getElementById('manageModal').addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-
-  console.log('✅ DRIUP dengan Admin Management aktif.');
-  console.log('🔑 Admin: klik logo 3x, kode: admin');
-  console.log('⚙️ Admin bisa kelola harga & katalog.');
 </script>
 </body>
 </html>
