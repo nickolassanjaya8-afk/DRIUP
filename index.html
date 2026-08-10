@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>DRIUP — TopUp ML & FF</title>
   <style>
-    /* ===== GLOBAL ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -23,7 +22,6 @@
       border: 1px solid #3d3530;
       box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
-    /* ===== HEADER STICKY ===== */
     .sticky-header {
       position: sticky; top: 0; background: rgba(38,33,30,0.92); backdrop-filter: blur(8px);
       z-index: 100; padding: 12px 0; border-bottom: 2px solid #3d3530;
@@ -37,7 +35,7 @@
       border-radius: 30px; margin-left: 8px; display: none; font-weight: 600;
     }
     .header .logo .admin-badge.show { display: inline-block; }
-    .nav { display: flex; gap: 16px; font-weight: 500; align-items: center; flex-wrap: wrap; }
+    .nav { display: flex; gap: 12px; font-weight: 500; align-items: center; flex-wrap: wrap; }
     .nav a { color: #a79a8e; text-decoration: none; font-size: 14px; cursor: pointer; padding: 4px 0; border-bottom: 2px solid transparent; transition: 0.2s; }
     .nav a:hover { color: #d6c9bc; }
     .nav a.active { color: #e6b87e; border-bottom-color: #e6b87e; }
@@ -49,12 +47,10 @@
     .nav .all-btn, .nav .manage-btn { display: none; }
     .nav .all-btn.show, .nav .manage-btn.show { display: inline-block; }
 
-    /* ===== PAGE ===== */
     .page { display: none; margin-top: 10px; animation: fade 0.3s ease; }
     .page.active { display: block; }
     @keyframes fade { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
 
-    /* ===== HOME ===== */
     .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
     .game-card-home { background: #2e2723; border-radius: 20px; padding: 24px 12px 20px; text-align: center; border: 1px solid #3d3530; transition: 0.2s; cursor: pointer; }
     .game-card-home:hover { transform: translateY(-3px); border-color: #5a4d44; }
@@ -64,11 +60,9 @@
     .btn-home { background: #e6b87e; border: none; padding: 10px 24px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; }
     .btn-home:hover { background: #f0ca94; }
 
-    /* ===== DETAIL & PAKET ===== */
     .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
     .detail-header h2 { font-size: 22px; font-weight: 600; color: #e6ddd6; }
     .detail-header .game-icon { font-size: 28px; }
-    
     .section-subtitle { color: #e6b87e; margin: 12px 0; font-size: 16px; font-weight: 600; }
     .package-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-bottom: 24px; }
     .package-item { background: #2e2723; border-radius: 16px; padding: 16px 8px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: 0.2s; }
@@ -76,30 +70,23 @@
     .package-item.selected { border-color: #e6b87e; background: #3d322a; }
     .package-item .diamond { font-size: 17px; font-weight: 600; color: #e6ddd6; margin-bottom: 4px; }
     .package-item .price { color: #a79a8e; font-size: 13px; margin-bottom: 12px; }
-    .package-item .check-mark { color: #e6b87e; font-weight: 600; font-size: 13px; display: none; }
-    .package-item.selected .check-mark { display: inline-block; }
     .package-item .btn-add { background: #3d3530; border: none; padding: 8px 12px; border-radius: 30px; color: #d6c9bc; font-weight: 500; font-size: 13px; cursor: pointer; width: 100%; transition: 0.2s; }
     .package-item:not(.selected) .btn-add { display: inline-block; }
     .package-item:not(.selected) .btn-add:hover { background: #4f443e; color: #f0e6dc; }
     .package-item.selected .btn-add { display: none; }
 
-    /* ===== KERANJANG ===== */
     .cart-section { background: #1e1916; border-radius: 20px; padding: 20px; border: 1px solid #3d3530; margin-bottom: 24px; }
     .cart-section .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .cart-section h3 { font-size: 17px; font-weight: 600; color: #e6b87e; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #3d3530; font-size: 14px; }
-    .cart-item:last-child { border-bottom: none; }
     .cart-item .name { color: #d6c9bc; font-weight: 500; }
     .cart-item .subtotal { color: #f0e6dc; font-weight: 600; }
-    .cart-item .remove-btn { background: none; border: none; color: #b87a6a; font-size: 16px; cursor: pointer; padding: 0 6px; transition: 0.2s; }
-    .cart-item .remove-btn:hover { color: #e8a090; }
+    .cart-item .remove-btn { background: none; border: none; color: #b87a6a; font-size: 16px; cursor: pointer; padding: 0 6px; }
     .cart-total { display: flex; justify-content: space-between; padding-top: 14px; font-size: 16px; font-weight: 600; border-top: 1px solid #3d3530; margin-top: 8px; color: #e6b87e; }
     .cart-empty { color: #7a6e62; text-align: center; padding: 16px 0; font-style: italic; font-size: 14px; }
     .btn-checkout { background: #e6b87e; border: none; padding: 12px 0; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 15px; cursor: pointer; width: 100%; margin-top: 16px; transition: 0.2s; }
-    .btn-checkout:hover:not(:disabled) { background: #f0ca94; }
     .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; background: #9c8465; }
 
-    /* ===== FORM CHECKOUT ===== */
     .form-section { background: #1e1916; border-radius: 20px; padding: 20px 16px; border: 1px solid #3d3530; }
     .form-block { margin-bottom: 24px; }
     .section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #3d3530; }
@@ -116,18 +103,16 @@
     .zone-field { display: none; }
     .zone-field.show { display: block; }
 
-    /* ===== METODE PEMBAYARAN ===== */
     .payment-options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-    .pm-item { flex: 0 0 auto; padding: 10px 24px; background: #2e2723; border-radius: 14px; text-align: center; font-size: 14px; font-weight: 500; color: #a79a8e; border: 2px solid #3d3530; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+    .pm-item { flex: 0 0 auto; padding: 10px 24px; background: #2e2723; border-radius: 14px; font-size: 14px; font-weight: 500; color: #a79a8e; border: 2px solid #3d3530; cursor: pointer; display: flex; align-items: center; gap: 8px; }
     .pm-item.active { border-color: #e6b87e; background: #3d3530; color: #f0e6dc; }
     .pm-item img { max-width: 32px; height: auto; border-radius: 6px; background: #fff; padding: 2px; }
-    .payment-detail { margin-top: 14px; padding: 16px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; display: block; }
+    .payment-detail { margin-top: 14px; padding: 16px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; }
     .payment-detail img { max-width: 150px; border-radius: 10px; border: 1px solid #3d3530; margin-bottom: 10px; }
     .payment-detail .info-text { color: #c4b5a6; font-size: 14px; line-height: 1.5; }
     .payment-detail .btn-download { background: #e6b87e; border: none; padding: 8px 16px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 8px; }
     .payment-detail .btn-download:hover { background: #f0ca94; }
 
-    /* ===== UPLOAD BUKTI ===== */
     .upload-section { margin-top: 16px; padding: 14px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; }
     .upload-section label { display: inline-block; background: #3d3530; color: #d6c9bc; padding: 8px 18px; border-radius: 30px; cursor: pointer; margin-bottom: 8px; }
     .upload-section label:hover { background: #5a4d44; }
@@ -136,16 +121,13 @@
     .upload-section .file-name { color: #a79a8e; font-size: 13px; margin-top: 4px; }
     .upload-section .btn-remove-bukti { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 6px; }
 
-    /* ===== TOTAL & TOMBOL ===== */
     .total-bar { display: flex; justify-content: space-between; align-items: center; background: #2e2723; padding: 14px 16px; border-radius: 14px; margin: 20px 0 10px; border: 1px solid #3d3530; }
     .total-bar .label { color: #c4b5a6; font-size: 15px; }
     .total-bar .amount { font-size: 19px; font-weight: 700; color: #e6b87e; }
-    .btn-order { width: 100%; padding: 14px; background: #e6b87e; border: none; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .btn-order:hover:not(:disabled) { background: #f0ca94; transform: translateY(-2px); }
+    .btn-order { width: 100%; padding: 14px; background: #e6b87e; border: none; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 16px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
     .btn-order:disabled { opacity: 0.4; cursor: not-allowed; }
     .security-note { text-align: center; color: #7a6e62; font-size: 12px; padding: 14px 0 4px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
-    /* ===== MODAL & ADMIN STYLES ===== */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 999; }
     .modal-overlay.open { display: flex; }
     .modal-box { max-width: 450px; width: 100%; max-height: 90vh; overflow-y: auto; background: #26211e; border-radius: 24px; padding: 24px 18px 18px; border: 1px solid #3d3530; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -155,12 +137,13 @@
     .modal-box h2 { font-size: 20px; font-weight: 600; color: #e6ddd6; }
     .modal-box p { color: #a79a8e; margin: 6px 0 18px; font-size: 14px; }
     .modal-box .detail-info { background: #1e1916; padding: 14px; border-radius: 14px; font-size: 14px; color: #d6c9bc; margin-bottom: 16px; border: 1px solid #3d3530; text-align: left; line-height: 1.6; }
-    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.2s; width: 100%; }
+    .modal-box .copy-btn { background: #3d3530; border: none; padding: 4px 12px; border-radius: 20px; color: #d6c9bc; font-size: 12px; cursor: pointer; margin-left: 8px; }
+    .modal-box .copy-btn:hover { background: #5a4d44; }
+    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; width: 100%; }
     .btn-close-modal:hover { background: #5a4d44; }
 
-    /* Admin Tabs */
-    .manage-tab-btn { background: #3d3530; color: #d6c9bc; border: 1px solid #5a4d44; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 5px; transition: 0.2s;}
-    .manage-tab-btn.active { background: #e6b87e; color: #1a1614; border-color: #e6b87e;}
+    .manage-tab-btn { background: #3d3530; color: #d6c9bc; border: 1px solid #5a4d44; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 5px; }
+    .manage-tab-btn.active { background: #e6b87e; color: #1a1614; border-color: #e6b87e; }
     .manage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2e2723; }
     .manage-item .info { color: #d6c9bc; font-size: 14px; }
     .manage-item .btn-del { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 12px; cursor: pointer; }
@@ -169,8 +152,7 @@
     .manage-form input { flex: 1; min-width: 80px; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 14px; outline: none; }
     .manage-form input:focus { border-color: #e6b87e; }
     .manage-form button { background: #e6b87e; border: none; padding: 10px 20px; border-radius: 40px; color: #1a1614; font-weight: 600; cursor: pointer; }
-    
-    /* Table Status Orders */
+
     .status-timeline { text-align: left; padding: 6px 0 14px; }
     .status-step { display: flex; align-items: center; gap: 14px; padding: 6px 0; position: relative; }
     .status-step:not(:last-child)::after { content: ''; position: absolute; left: 7px; top: 24px; bottom: -6px; width: 2px; background: #3d3530; }
@@ -181,7 +163,7 @@
     .status-step .step-label { color: #a79a8e; font-size: 14px; }
     .status-step .step-label.active-label { color: #f0e6dc; font-weight: 600; }
     .status-step .step-label.done-label { color: #6a9e7a; font-weight: 500; }
-    .btn-confirm { background: #6a9e7a; border: none; padding: 10px 18px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; }
+    .btn-confirm { background: #6a9e7a; border: none; padding: 10px 18px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-top: 10px; }
     .order-table { width: 100%; text-align: left; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
     .order-table th { color: #a79a8e; font-weight: 600; padding: 8px 6px; border-bottom: 2px solid #3d3530; }
     .order-table td { padding: 10px 6px; border-bottom: 1px solid #2e2723; color: #d6c9bc; }
@@ -189,9 +171,8 @@
     .order-table .status-menunggu { background: rgba(230,184,126,0.2); color: #e6b87e; }
     .order-table .status-selesai { background: rgba(106,158,122,0.2); color: #6a9e7a; }
     .order-table .btn-sm { background: #6a9e7a; border: none; padding: 5px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 11px; cursor: pointer; }
-    
+
     footer { text-align: center; color: #6a5e52; font-size: 13px; padding: 20px 0 8px; margin-top: 24px; border-top: 1px solid #2e2723; }
-    
     @media (max-width: 600px) {
       body { padding: 0; }
       .container { border-radius: 0; border: none; min-height: 100vh; padding: 12px 14px 20px; }
@@ -211,9 +192,9 @@
         <span class="admin-badge" id="adminBadge">Admin</span>
       </div>
       <nav class="nav" id="mainNav">
-        <a class="active" data-page="home">Beranda</a>
-        <a data-page="ml">ML</a>
-        <a data-page="ff">FF</a>
+        <a class="active" data-page="home" onclick="navigateTo('home')">Beranda</a>
+        <a data-page="ml" onclick="navigateTo('ml')">ML</a>
+        <a data-page="ff" onclick="navigateTo('ff')">FF</a>
         <span class="cek-btn" onclick="openCekModal()">🔍 Cek</span>
         <span class="all-btn" id="allOrdersBtn" onclick="showAllOrders()">📋 Semua</span>
         <span class="manage-btn" id="manageBtn" onclick="toggleManage()">⚙️ Kelola</span>
@@ -250,17 +231,14 @@
       <h2 id="detailTitle">Mobile Legends</h2>
     </div>
 
-    <!-- PILIH PAKET DIAMOND -->
     <div class="section-subtitle">💎 Pilih Diamond</div>
     <div class="package-grid" id="packageGrid"></div>
 
-    <!-- PILIH PAKET WDP -->
     <div id="wdpSection" style="display: none;">
       <div class="section-subtitle">🎟️ Weekly Diamond Pass (WDP)</div>
       <div class="package-grid" id="wdpGrid"></div>
     </div>
 
-    <!-- KERANJANG -->
     <div class="cart-section">
       <div class="cart-header">
         <h3>🛒 Keranjang</h3>
@@ -276,7 +254,6 @@
       </button>
     </div>
 
-    <!-- FORM CHECKOUT -->
     <div class="form-section" id="checkoutForm">
       <div class="form-block">
         <div class="section-title"><span class="icon">🎮</span><span class="text">Data Game</span></div>
@@ -321,7 +298,6 @@
         </div>
       </div>
 
-      <!-- UPLOAD BUKTI -->
       <div class="upload-section">
         <label for="buktiFile">📤 Upload Bukti Transfer</label>
         <input type="file" id="buktiFile" accept="image/*" onchange="handleBuktiUpload(event)" />
@@ -389,20 +365,14 @@
 <div class="modal-overlay" id="manageModal">
   <div class="modal-box wide">
     <h2 style="margin-bottom:16px;">⚙️ Kelola Paket & Harga</h2>
-    
-    <!-- Pilihan game -->
     <div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #3d3530; padding-bottom:10px;">
       <button class="manage-tab-btn active" id="gameTabML" onclick="switchManageGame('ml')">🎯 ML</button>
       <button class="manage-tab-btn" id="gameTabFF" onclick="switchManageGame('ff')">🔥 FF</button>
     </div>
-
-    <!-- Tabs Tipe Produk -->
     <div style="display: flex; margin-bottom: 15px;">
       <button class="manage-tab-btn active" id="tabDiamondBtn" onclick="switchManageTab('diamond')">Diamond</button>
       <button class="manage-tab-btn" id="tabWDPBtn" onclick="switchManageTab('wdp')">WDP</button>
     </div>
-
-    <!-- KONTEN TAB DIAMOND -->
     <div id="manageDiamondContent">
       <div id="packageList" style="text-align: left;"></div>
       <div class="manage-form">
@@ -411,8 +381,6 @@
         <button onclick="addPackage()">➕ Tambah</button>
       </div>
     </div>
-
-    <!-- KONTEN TAB WDP -->
     <div id="manageWDPContent" style="display: none;">
       <div id="wdpList" style="text-align: left;"></div>
       <div class="manage-form">
@@ -421,14 +389,13 @@
         <button onclick="addWDPackage()">➕ Tambah</button>
       </div>
     </div>
-
     <div style="margin-top:20px; color:#7a6e62; font-size:13px;">Klik tombol <span style="color:#b87a6a;">✕</span> untuk hapus paket.</div>
     <button class="btn-close-modal" onclick="document.getElementById('manageModal').classList.remove('open')" style="margin-top:15px;">Tutup Panel</button>
   </div>
 </div>
 
 <!-- ===== BAGIAN 2: JAVASCRIPT ===== -->
-<!-- Copy mulai dari sini sampai akhir, lalu paste di bawah penutup </body> sebelumnya -->
+<!-- Paste seluruh JavaScript di bawah ini di akhir file, sebelum </body> -->
 <script>
   // ============================================================
   //  ADMIN SYSTEM
@@ -477,7 +444,7 @@
       const data = localStorage.getItem(`driup_packages_${game}`);
       if (data) return JSON.parse(data);
     } catch(e) {}
-    return game === 'ml' ? [...DEFAULT_ML] : [...DEFAULT_FF];
+    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_ML)) : JSON.parse(JSON.stringify(DEFAULT_FF));
   }
   function savePackages(game, pkg) {
     localStorage.setItem(`driup_packages_${game}`, JSON.stringify(pkg));
@@ -488,7 +455,7 @@
       const data = localStorage.getItem(`driup_wdp_${game}`);
       if (data) return JSON.parse(data);
     } catch(e) {}
-    return game === 'ml' ? [...DEFAULT_WDP_ML] : [...DEFAULT_WDP_FF];
+    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_WDP_ML)) : JSON.parse(JSON.stringify(DEFAULT_WDP_FF));
   }
   function saveWDPackages(game, pkg) {
     localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg));
@@ -498,7 +465,7 @@
   //  STATE GLOBAL
   // ============================================================
   let currentGame = 'ml';
-  let cart = []; // { type: 'diamond'|'wdp', id: number, quantity:1 }
+  let cart = [];
   let manageGame = 'ml';
   let manageTab = 'diamond';
 
@@ -512,25 +479,23 @@
   // ============================================================
   //  NAVIGASI HALAMAN
   // ============================================================
-  const navLinks = document.querySelectorAll('.nav a');
-  const pages = { home: document.getElementById('page-home'), detail: document.getElementById('page-detail') };
-  
   function navigateTo(page) {
     if (page !== 'home' && page !== currentGame) { 
         cart = [];
     }
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === page));
+    document.querySelectorAll('.nav a').forEach(l => {
+      l.classList.toggle('active', l.dataset.page === page);
+    });
     if (page === 'home') {
-      pages.home.classList.add('active'); pages.detail.classList.remove('active');
+      document.getElementById('page-home').classList.add('active');
+      document.getElementById('page-detail').classList.remove('active');
     } else {
-      pages.home.classList.remove('active'); pages.detail.classList.add('active');
+      document.getElementById('page-home').classList.remove('active');
+      document.getElementById('page-detail').classList.add('active');
       currentGame = page; 
       renderDetail(); 
     }
   }
-  navLinks.forEach(l => l.addEventListener('click', e => {
-    e.preventDefault(); if(l.dataset.page) navigateTo(l.dataset.page);
-  }));
 
   // ============================================================
   //  RENDER DETAIL (frontend)
@@ -733,7 +698,6 @@
     if (!calculatedCart.length) return alert('Keranjang kosong/produk tidak valid!');
     if (!validateForm()) return;
 
-    // Simpan bukti ke order
     const bukti = buktiDataURL || null;
 
     const orderId = 'DRIUP-' + Date.now().toString().slice(-6);
@@ -750,13 +714,14 @@
         nama: document.getElementById('namaLengkap').value.trim(),
         wa: document.getElementById('waNumber').value.trim()
       },
-      bukti: bukti // simpan data URL bukti
+      bukti: bukti
     });
     saveOrders();
 
     // Tampil Modal Sukses
     document.getElementById('orderSummary').innerHTML = `
-      <strong>ID Pesanan:</strong> ${orderId}<br>
+      <strong>ID Pesanan:</strong> ${orderId} 
+      <button class="copy-btn" onclick="copyText('${orderId}')">📋 Copy</button><br>
       <strong>Game:</strong> ${currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire'}<br>
       <strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}
     `;
@@ -778,8 +743,8 @@
 
     document.getElementById('successModal').classList.add('open');
     cart = []; 
-    renderDetail(); // kosongkan keranjang
-    removeBukti(); // reset upload
+    renderDetail();
+    removeBukti();
     ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
   }
 
@@ -789,7 +754,32 @@
   }
 
   // ============================================================
-  //  CEK PESANAN (USER & ADMIN)
+  //  COPY TEKS
+  // ============================================================
+  function copyText(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✅ Teks berhasil disalin!');
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); alert('✅ Teks berhasil disalin!'); } catch(e) { alert('❌ Gagal menyalin.'); }
+    document.body.removeChild(ta);
+  }
+
+  // ============================================================
+  //  CEK PESANAN
   // ============================================================
   function openCekModal() { 
     document.getElementById('cekModal').classList.add('open'); 
@@ -811,13 +801,12 @@
     errorEl.style.display = 'none';
     const sC = order.status === 'Selesai' ? '#6a9e7a' : (order.status === 'Diproses' ? '#e6b87e' : '#d4a373');
     let html = `
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">ID</span> <span style="float:right; color:#f0e6dc;">${order.id}</span></div>
+      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">ID</span> <span style="float:right; color:#f0e6dc;">${order.id} <button class="copy-btn" onclick="copyText('${order.id}')">📋 Copy</button></span></div>
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Game</span> <span style="float:right; color:#f0e6dc;">${order.game}</span></div>
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Item</span> <span style="float:right; color:#f0e6dc;">${order.items}</span></div>
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Total</span> <span style="float:right; color:#f0e6dc;">Rp ${order.total.toLocaleString('id-ID')}</span></div>
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Status</span> <span style="float:right; color:${sC}; font-weight:bold;">${order.status}</span></div>
     `;
-    // Tampilkan bukti jika ada
     if (order.bukti) {
       html += `<div style="padding:8px 0; border-bottom:1px solid #2e2723;">
         <span style="color:#a79a8e;">Bukti Transfer:</span><br>
