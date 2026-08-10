@@ -124,6 +124,17 @@
     .payment-detail { margin-top: 14px; padding: 16px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; display: block; }
     .payment-detail img { max-width: 150px; border-radius: 10px; border: 1px solid #3d3530; margin-bottom: 10px; }
     .payment-detail .info-text { color: #c4b5a6; font-size: 14px; line-height: 1.5; }
+    .payment-detail .btn-download { background: #e6b87e; border: none; padding: 8px 16px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 8px; }
+    .payment-detail .btn-download:hover { background: #f0ca94; }
+
+    /* ===== UPLOAD BUKTI ===== */
+    .upload-section { margin-top: 16px; padding: 14px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; }
+    .upload-section label { display: inline-block; background: #3d3530; color: #d6c9bc; padding: 8px 18px; border-radius: 30px; cursor: pointer; margin-bottom: 8px; }
+    .upload-section label:hover { background: #5a4d44; }
+    .upload-section input[type="file"] { display: none; }
+    .upload-section .preview { max-width: 120px; max-height: 120px; border-radius: 10px; border: 1px solid #3d3530; margin-top: 6px; }
+    .upload-section .file-name { color: #a79a8e; font-size: 13px; margin-top: 4px; }
+    .upload-section .btn-remove-bukti { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 6px; }
 
     /* ===== TOTAL & TOMBOL ===== */
     .total-bar { display: flex; justify-content: space-between; align-items: center; background: #2e2723; padding: 14px 16px; border-radius: 14px; margin: 20px 0 10px; border: 1px solid #3d3530; }
@@ -306,7 +317,16 @@
         <div class="payment-detail" id="paymentDetail">
           <img src="QRIS.PNG" alt="QRIS Barcode" onerror="this.style.display='none';" />
           <div class="info-text">Scan QR berikut untuk membayar</div>
+          <button class="btn-download" onclick="downloadQRIS()">⬇️ Download QRIS</button>
         </div>
+      </div>
+
+      <!-- UPLOAD BUKTI -->
+      <div class="upload-section">
+        <label for="buktiFile">📤 Upload Bukti Transfer</label>
+        <input type="file" id="buktiFile" accept="image/*" onchange="handleBuktiUpload(event)" />
+        <div id="buktiPreview"></div>
+        <button class="btn-remove-bukti" onclick="removeBukti()" style="display:none;" id="removeBuktiBtn">✕ Hapus Bukti</button>
       </div>
 
       <div class="total-bar">
@@ -386,8 +406,8 @@
     <div id="manageDiamondContent">
       <div id="packageList" style="text-align: left;"></div>
       <div class="manage-form">
-        <input type="number" id="newDiamond" placeholder="Jml Diamond (Min 1)" min="1" />
-        <input type="number" id="newPrice" placeholder="Harga Rp (Min 100)" min="100" />
+        <input type="number" id="newDiamond" placeholder="Jml Diamond" min="1" />
+        <input type="number" id="newPrice" placeholder="Harga Rp" min="100" />
         <button onclick="addPackage()">➕ Tambah</button>
       </div>
     </div>
@@ -396,8 +416,8 @@
     <div id="manageWDPContent" style="display: none;">
       <div id="wdpList" style="text-align: left;"></div>
       <div class="manage-form">
-        <input type="number" id="newWDP" placeholder="Jml WDP (Min 1)" min="1" />
-        <input type="number" id="newWDPPrice" placeholder="Harga Rp (Min 100)" min="100" />
+        <input type="number" id="newWDP" placeholder="Jml WDP" min="1" />
+        <input type="number" id="newWDPPrice" placeholder="Harga Rp" min="100" />
         <button onclick="addWDPackage()">➕ Tambah</button>
       </div>
     </div>
@@ -407,8 +427,12 @@
   </div>
 </div>
 
+<!-- ===== BAGIAN 2: JAVASCRIPT ===== -->
+<!-- Copy mulai dari sini sampai akhir, lalu paste di bawah penutup </body> sebelumnya -->
 <script>
-  // ===== SISTEM ADMIN =====
+  // ============================================================
+  //  ADMIN SYSTEM
+  // ============================================================
   let isAdmin = false;
   const ADMIN_PASSWORD = 'admin';
   let clickCount = 0, clickTimer = null;
@@ -429,7 +453,9 @@
     }
   }
 
-  // ===== DEFAULT DATA =====
+  // ============================================================
+  //  DATA DEFAULT
+  // ============================================================
   const DEFAULT_ML = [
     { diamond: 10, price: 1500 }, { diamond: 20, price: 2800 },
     { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }
@@ -441,9 +467,11 @@
   const DEFAULT_WDP_ML = [
     { wdp: 1, price: 27000 }, { wdp: 2, price: 53000 }, { wdp: 3, price: 79000 }
   ];
-  const DEFAULT_WDP_FF = []; // FF tidak pakai WDP
+  const DEFAULT_WDP_FF = [];
 
-  // GETTER & SETTER LOCALSTORAGE
+  // ============================================================
+  //  LOCALSTORAGE GET/SET
+  // ============================================================
   function getPackages(game) {
     try {
       const data = localStorage.getItem(`driup_packages_${game}`);
@@ -466,24 +494,30 @@
     localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg));
   }
 
-  // ===== STATE GLOBAL =====
+  // ============================================================
+  //  STATE GLOBAL
+  // ============================================================
   let currentGame = 'ml';
-  let cart = []; // Format baru keamanan: { type: 'diamond'|'wdp', id: number, quantity: 1 }
+  let cart = []; // { type: 'diamond'|'wdp', id: number, quantity:1 }
   let manageGame = 'ml';
   let manageTab = 'diamond';
 
-  // ===== DATA PESANAN =====
+  // ============================================================
+  //  ORDERS
+  // ============================================================
   let orders = [];
   try { orders = JSON.parse(localStorage.getItem('driup_orders')) || []; } catch {}
   function saveOrders() { localStorage.setItem('driup_orders', JSON.stringify(orders)); }
 
-  // ===== NAVIGASI HALAMAN =====
+  // ============================================================
+  //  NAVIGASI HALAMAN
+  // ============================================================
   const navLinks = document.querySelectorAll('.nav a');
   const pages = { home: document.getElementById('page-home'), detail: document.getElementById('page-detail') };
   
   function navigateTo(page) {
     if (page !== 'home' && page !== currentGame) { 
-        cart = []; // Reset keranjang jika ganti game
+        cart = [];
     }
     navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === page));
     if (page === 'home') {
@@ -498,19 +532,25 @@
     e.preventDefault(); if(l.dataset.page) navigateTo(l.dataset.page);
   }));
 
-  // ===== RENDER DETAIL FRONTEND =====
+  // ============================================================
+  //  RENDER DETAIL (frontend)
+  // ============================================================
   function renderDetail() {
-    // Info Header Game
+    const detailIcon = document.getElementById('detailIcon');
+    const detailTitle = document.getElementById('detailTitle');
+    const zoneGroup = document.getElementById('zoneGroup');
+    const wdpSection = document.getElementById('wdpSection');
+
     if(currentGame === 'ml') {
-      document.getElementById('detailIcon').textContent = '🎯'; 
-      document.getElementById('detailTitle').textContent = 'Mobile Legends';
-      document.getElementById('zoneGroup').classList.add('show');
-      document.getElementById('wdpSection').style.display = 'block'; // Munculkan WDP
+      detailIcon.textContent = '🎯'; 
+      detailTitle.textContent = 'Mobile Legends';
+      zoneGroup.classList.add('show');
+      wdpSection.style.display = 'block';
     } else {
-      document.getElementById('detailIcon').textContent = '🔥'; 
-      document.getElementById('detailTitle').textContent = 'Free Fire';
-      document.getElementById('zoneGroup').classList.remove('show');
-      document.getElementById('wdpSection').style.display = 'none'; // Sembunyikan WDP
+      detailIcon.textContent = '🔥'; 
+      detailTitle.textContent = 'Free Fire';
+      zoneGroup.classList.remove('show');
+      wdpSection.style.display = 'none';
     }
 
     // Render Diamond Biasa
@@ -549,12 +589,14 @@
     renderCart();
   }
 
-  // ===== LOGIKA KERANJANG & KEAMANAN HARGA =====
+  // ============================================================
+  //  KERANJANG
+  // ============================================================
   function toggleItemCart(type, id) {
     const idx = cart.findIndex(i => i.type === type && i.id === id);
     if(idx >= 0) cart.splice(idx, 1);
     else cart.push({ type, id, quantity: 1 });
-    renderDetail(); // Render ulang frontend
+    renderDetail();
   }
 
   function hapusItemCart(type, id) {
@@ -562,32 +604,31 @@
     renderDetail();
   }
 
-  // SECURITY FIX: Ambil harga real-time dari database/lokal storage
   function getCartTruePrices() {
-      const pkgs = getPackages(currentGame);
-      const wdps = getWDPackages(currentGame);
-      let calculatedCart = [];
-      let total = 0;
+    const pkgs = getPackages(currentGame);
+    const wdps = getWDPackages(currentGame);
+    let calculatedCart = [];
+    let total = 0;
+    
+    cart.forEach(item => {
+      let truePrice = 0;
+      let label = '';
       
-      cart.forEach(item => {
-          let truePrice = 0;
-          let label = '';
-          
-          if (item.type === 'diamond') {
-              const f = pkgs.find(p => p.diamond === item.id);
-              if(f) { truePrice = f.price; label = `${item.id} 💎`; }
-          } else if (item.type === 'wdp') {
-              const f = wdps.find(p => p.wdp === item.id);
-              if(f) { truePrice = f.price; label = `${item.id} WDP`; }
-          }
+      if (item.type === 'diamond') {
+        const f = pkgs.find(p => p.diamond === item.id);
+        if(f) { truePrice = f.price; label = `${item.id} 💎`; }
+      } else if (item.type === 'wdp') {
+        const f = wdps.find(p => p.wdp === item.id);
+        if(f) { truePrice = f.price; label = `${item.id} WDP`; }
+      }
 
-          if(truePrice > 0) { // Abaikan produk jika terhapus dari database admin
-              const sub = truePrice * item.quantity;
-              total += sub;
-              calculatedCart.push({ ...item, label, truePrice, sub });
-          }
-      });
-      return { calculatedCart, total };
+      if(truePrice > 0) {
+        const sub = truePrice * item.quantity;
+        total += sub;
+        calculatedCart.push({ ...item, label, truePrice, sub });
+      }
+    });
+    return { calculatedCart, total };
   }
 
   function renderCart() {
@@ -624,9 +665,52 @@
     document.getElementById('btnOrder').disabled = false;
   }
 
-  function scrollToForm() { document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); }
+  function scrollToForm() { 
+    document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); 
+  }
 
-  // ===== PROSES PEMESANAN =====
+  // ============================================================
+  //  DOWNLOAD QRIS
+  // ============================================================
+  function downloadQRIS() {
+    const img = document.querySelector('#paymentDetail img');
+    if (!img) return alert('Gambar QRIS tidak ditemukan.');
+    const link = document.createElement('a');
+    link.href = img.src;
+    link.download = 'QRIS_DRIUP.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // ============================================================
+  //  UPLOAD BUKTI
+  // ============================================================
+  let buktiDataURL = null;
+
+  function handleBuktiUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      buktiDataURL = e.target.result;
+      const preview = document.getElementById('buktiPreview');
+      preview.innerHTML = `<img src="${buktiDataURL}" class="preview" /><div class="file-name">${file.name}</div>`;
+      document.getElementById('removeBuktiBtn').style.display = 'inline-block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeBukti() {
+    buktiDataURL = null;
+    document.getElementById('buktiPreview').innerHTML = '';
+    document.getElementById('buktiFile').value = '';
+    document.getElementById('removeBuktiBtn').style.display = 'none';
+  }
+
+  // ============================================================
+  //  VALIDASI FORM
+  // ============================================================
   function validateForm() {
     let ok = true;
     const fields = [document.getElementById('idGame'), document.getElementById('namaLengkap'), document.getElementById('waNumber')];
@@ -641,10 +725,16 @@
     return ok;
   }
 
+  // ============================================================
+  //  PESAN SEKARANG
+  // ============================================================
   function pesanSekarang() {
     const { calculatedCart, total } = getCartTruePrices();
     if (!calculatedCart.length) return alert('Keranjang kosong/produk tidak valid!');
     if (!validateForm()) return;
+
+    // Simpan bukti ke order
+    const bukti = buktiDataURL || null;
 
     const orderId = 'DRIUP-' + Date.now().toString().slice(-6);
     orders.unshift({
@@ -659,7 +749,8 @@
         zone: document.getElementById('zoneGame').value.trim(),
         nama: document.getElementById('namaLengkap').value.trim(),
         wa: document.getElementById('waNumber').value.trim()
-      }
+      },
+      bukti: bukti // simpan data URL bukti
     });
     saveOrders();
 
@@ -686,7 +777,9 @@
     } else { document.getElementById('adminActionArea').innerHTML = ''; }
 
     document.getElementById('successModal').classList.add('open');
-    cart = []; renderDetail(); // Kosongkan keranjang
+    cart = []; 
+    renderDetail(); // kosongkan keranjang
+    removeBukti(); // reset upload
     ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
   }
 
@@ -695,9 +788,18 @@
     navigateTo('home');
   }
 
-  // ===== CEK & KELOLA ORDER (ADMIN & USER) =====
-  function openCekModal() { document.getElementById('cekModal').classList.add('open'); document.getElementById('cekResult').innerHTML = ''; document.getElementById('cekError').style.display = 'none'; }
-  function closeCekModal() { document.getElementById('cekModal').classList.remove('open'); }
+  // ============================================================
+  //  CEK PESANAN (USER & ADMIN)
+  // ============================================================
+  function openCekModal() { 
+    document.getElementById('cekModal').classList.add('open'); 
+    document.getElementById('cekResult').innerHTML = ''; 
+    document.getElementById('cekError').style.display = 'none'; 
+  }
+  function closeCekModal() { 
+    document.getElementById('cekModal').classList.remove('open'); 
+  }
+
   function cekPesanan() {
     const id = document.getElementById('cekId').value.trim().toUpperCase();
     const errorEl = document.getElementById('cekError');
@@ -715,23 +817,35 @@
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Total</span> <span style="float:right; color:#f0e6dc;">Rp ${order.total.toLocaleString('id-ID')}</span></div>
       <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Status</span> <span style="float:right; color:${sC}; font-weight:bold;">${order.status}</span></div>
     `;
+    // Tampilkan bukti jika ada
+    if (order.bukti) {
+      html += `<div style="padding:8px 0; border-bottom:1px solid #2e2723;">
+        <span style="color:#a79a8e;">Bukti Transfer:</span><br>
+        <img src="${order.bukti}" style="max-width:150px; border-radius:8px; border:1px solid #3d3530; margin-top:4px;" />
+      </div>`;
+    }
     if (isAdmin && order.status !== 'Selesai') {
       html += `<button class="btn-confirm" onclick="konfirmasiPesanan('${order.id}'); cekPesanan();" style="margin-top:12px;">✅ Konfirmasi Pembayaran</button>`;
     }
     document.getElementById('cekResult').innerHTML = html;
   }
 
+  // ============================================================
+  //  ADMIN: LIHAT SEMUA PESANAN
+  // ============================================================
   function showAllOrders() {
     if (!isAdmin) return;
     const list = document.getElementById('allOrdersList');
     if (!orders.length) { list.innerHTML = '<p style="color:#7a6e62;">Belum ada pesanan.</p>'; } 
     else {
-      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Item</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody>`;
+      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Item</th><th>Total</th><th>Status</th><th>Bukti</th><th>Aksi</th></tr></thead><tbody>`;
       orders.forEach(o => {
         const sC = o.status === 'Selesai' ? 'status-selesai' : (o.status === 'Diproses' ? 'status-diproses' : 'status-menunggu');
+        const buktiHtml = o.bukti ? `<img src="${o.bukti}" style="max-width:60px; max-height:60px; border-radius:6px;" />` : '-';
         html += `<tr>
           <td>${o.id}</td><td>${o.game}</td><td>${o.items}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td>
           <td><span class="status-badge ${sC}">${o.status}</span></td>
+          <td>${buktiHtml}</td>
           <td><button class="btn-sm" ${o.status === 'Selesai' ? 'disabled' : ''} onclick="konfirmasiPesanan('${o.id}'); showAllOrders();">✅ ACC</button></td>
         </tr>`;
       });
@@ -739,17 +853,21 @@
     }
     document.getElementById('allOrdersModal').classList.add('open');
   }
-  function closeAllOrdersModal() { document.getElementById('allOrdersModal').classList.remove('open'); }
+  function closeAllOrdersModal() { 
+    document.getElementById('allOrdersModal').classList.remove('open'); 
+  }
 
   function konfirmasiPesanan(id) {
     const order = orders.find(o => o.id === id);
     if (order) { order.status = 'Selesai'; saveOrders(); alert('✅ Pesanan Selesai!'); }
   }
 
-  // ===== KELOLA ADMIN (TAB DIAMOND & WDP) =====
+  // ============================================================
+  //  ADMIN: KELOLA PAKET (DIAMOND & WDP)
+  // ============================================================
   function toggleManage() {
     if (!isAdmin) { alert('Anda bukan admin!'); return; }
-    manageGame = currentGame; // Default ke game yg sedang dilihat
+    manageGame = currentGame;
     switchManageGame(manageGame);
     document.getElementById('manageModal').classList.add('open');
   }
@@ -758,7 +876,7 @@
     manageGame = game;
     document.getElementById('gameTabML').classList.toggle('active', game === 'ml');
     document.getElementById('gameTabFF').classList.toggle('active', game === 'ff');
-    switchManageTab('diamond'); // Reset ke tab diamond
+    switchManageTab('diamond');
   }
 
   function switchManageTab(tab) {
@@ -803,7 +921,7 @@
 
   function hapusPackage(idx) {
     const pkg = getPackages(manageGame);
-    hapusItemCart('diamond', pkg[idx].diamond); // Keamanan: hapus dari keranjang user yg lg aktif
+    hapusItemCart('diamond', pkg[idx].diamond);
     pkg.splice(idx, 1);
     savePackages(manageGame, pkg);
     renderAdminPackageList(); renderDetail();
@@ -845,14 +963,25 @@
 
   function hapusWDPackage(idx) {
     const pkg = getWDPackages(manageGame);
-    hapusItemCart('wdp', pkg[idx].wdp); // Keamanan
+    hapusItemCart('wdp', pkg[idx].wdp);
     pkg.splice(idx, 1);
     saveWDPackages(manageGame, pkg);
     renderAdminWDPList(); renderDetail();
   }
 
-  // INIT
+  // ============================================================
+  //  INIT
+  // ============================================================
   navigateTo('home');
+
+  // Event listeners untuk modal agar tutup saat klik overlay
+  document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('open');
+    });
+  });
+
+  console.log('✅ DRIUP siap! Admin: klik logo 3x, kode: admin');
 </script>
 </body>
 </html>
