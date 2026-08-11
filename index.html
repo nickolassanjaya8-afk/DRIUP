@@ -1,56 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DRIUP — TopUp ML & FF</title>
   <style>
+    /* ===== GLOBAL ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #1a1614;
-      min-height: 100vh;
-      padding: 16px;
-      color: #e6ddd6;
-    }
-    .container {
-      max-width: 820px;
-      margin: 0 auto;
-      background: #26211e;
-      border-radius: 28px;
-      padding: 24px 20px;
-      border: 1px solid #3d3530;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-    }
-    .sticky-header {
-      position: sticky; top: 0; background: rgba(38,33,30,0.92); backdrop-filter: blur(8px);
-      z-index: 100; padding: 12px 0; border-bottom: 2px solid #3d3530;
-      margin: -24px -20px 20px -20px; padding-left: 20px; padding-right: 20px;
-      border-top-left-radius: 28px; border-top-right-radius: 28px;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1614; min-height: 100vh; padding: 16px; color: #e6ddd6; }
+    .container { max-width: 820px; margin: 0 auto; background: #26211e; border-radius: 28px; padding: 24px 20px; border: 1px solid #3d3530; box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+    .sticky-header { position: sticky; top: 0; background: rgba(38,33,30,0.92); backdrop-filter: blur(8px); z-index: 100; padding: 12px 0; border-bottom: 2px solid #3d3530; margin: -24px -20px 20px -20px; padding-left: 20px; padding-right: 20px; border-top-left-radius: 28px; border-top-right-radius: 28px; }
     .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; }
     .header .logo { font-size: 22px; font-weight: 700; color: #e6b87e; cursor: pointer; user-select: none; display: flex; align-items: center; }
-    .header .logo .admin-badge {
-      font-size: 11px; background: #6a9e7a; color: #1a1614; padding: 2px 10px;
-      border-radius: 30px; margin-left: 8px; display: none; font-weight: 600;
-    }
+    .header .logo .admin-badge { font-size: 11px; background: #6a9e7a; color: #1a1614; padding: 2px 10px; border-radius: 30px; margin-left: 8px; display: none; font-weight: 600; }
     .header .logo .admin-badge.show { display: inline-block; }
-    .nav { display: flex; gap: 12px; font-weight: 500; align-items: center; flex-wrap: wrap; }
+    .nav { display: flex; gap: 16px; font-weight: 500; align-items: center; flex-wrap: wrap; }
     .nav a { color: #a79a8e; text-decoration: none; font-size: 14px; cursor: pointer; padding: 4px 0; border-bottom: 2px solid transparent; transition: 0.2s; }
     .nav a:hover { color: #d6c9bc; }
     .nav a.active { color: #e6b87e; border-bottom-color: #e6b87e; }
-    .nav .cek-btn, .nav .all-btn, .nav .manage-btn {
-      background: #3d3530; padding: 5px 14px; border-radius: 30px; font-size: 13px;
-      color: #d6c9bc; border: 1px solid #5a4d44; cursor: pointer; transition: 0.2s;
-    }
+    .nav .cek-btn, .nav .all-btn, .nav .manage-btn { background: #3d3530; padding: 5px 14px; border-radius: 30px; font-size: 13px; color: #d6c9bc; border: 1px solid #5a4d44; cursor: pointer; transition: 0.2s; }
     .nav .cek-btn:hover, .nav .all-btn:hover, .nav .manage-btn:hover { background: #5a4d44; }
     .nav .all-btn, .nav .manage-btn { display: none; }
     .nav .all-btn.show, .nav .manage-btn.show { display: inline-block; }
-
     .page { display: none; margin-top: 10px; animation: fade 0.3s ease; }
     .page.active { display: block; }
     @keyframes fade { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
-
     .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
     .game-card-home { background: #2e2723; border-radius: 20px; padding: 24px 12px 20px; text-align: center; border: 1px solid #3d3530; transition: 0.2s; cursor: pointer; }
     .game-card-home:hover { transform: translateY(-3px); border-color: #5a4d44; }
@@ -59,7 +33,6 @@
     .game-card-home p { color: #a79a8e; font-size: 13px; margin-bottom: 16px; }
     .btn-home { background: #e6b87e; border: none; padding: 10px 24px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; }
     .btn-home:hover { background: #f0ca94; }
-
     .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
     .detail-header h2 { font-size: 22px; font-weight: 600; color: #e6ddd6; }
     .detail-header .game-icon { font-size: 28px; }
@@ -72,905 +45,327 @@
     .package-item .price { color: #a79a8e; font-size: 13px; margin-bottom: 12px; }
     .package-item .btn-add { background: #3d3530; border: none; padding: 8px 12px; border-radius: 30px; color: #d6c9bc; font-weight: 500; font-size: 13px; cursor: pointer; width: 100%; transition: 0.2s; }
     .package-item:not(.selected) .btn-add { display: inline-block; }
-    .package-item:not(.selected) .btn-add:hover { background: #4f443e; color: #f0e6dc; }
     .package-item.selected .btn-add { display: none; }
-
     .cart-section { background: #1e1916; border-radius: 20px; padding: 20px; border: 1px solid #3d3530; margin-bottom: 24px; }
     .cart-section .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .cart-section h3 { font-size: 17px; font-weight: 600; color: #e6b87e; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #3d3530; font-size: 14px; }
-    .cart-item .name { color: #d6c9bc; font-weight: 500; }
     .cart-item .subtotal { color: #f0e6dc; font-weight: 600; }
     .cart-item .remove-btn { background: none; border: none; color: #b87a6a; font-size: 16px; cursor: pointer; padding: 0 6px; }
     .cart-total { display: flex; justify-content: space-between; padding-top: 14px; font-size: 16px; font-weight: 600; border-top: 1px solid #3d3530; margin-top: 8px; color: #e6b87e; }
     .cart-empty { color: #7a6e62; text-align: center; padding: 16px 0; font-style: italic; font-size: 14px; }
-    .btn-checkout { background: #e6b87e; border: none; padding: 12px 0; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 15px; cursor: pointer; width: 100%; margin-top: 16px; transition: 0.2s; }
+    .btn-checkout { background: #e6b87e; border: none; padding: 12px 0; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 15px; cursor: pointer; width: 100%; margin-top: 16px; }
     .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; background: #9c8465; }
-
     .form-section { background: #1e1916; border-radius: 20px; padding: 20px 16px; border: 1px solid #3d3530; }
     .form-block { margin-bottom: 24px; }
     .section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #3d3530; }
-    .section-title .icon { font-size: 18px; }
     .section-title span.text { font-weight: 600; color: #e6b87e; font-size: 16px; }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 13px; font-weight: 500; color: #c4b5a6; margin-bottom: 6px; }
-    .form-group input { width: 100%; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 15px; outline: none; transition: 0.2s; }
-    .form-group input:focus { border-color: #e6b87e; box-shadow: 0 0 0 3px rgba(230,184,126,0.15); }
-    .form-group input::placeholder { color: #6a5e52; }
+    .form-group input { width: 100%; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 15px; outline: none; }
+    .form-group.error input { border-color: #d97a6a; }
     .form-group .error-message { color: #d97a6a; font-size: 12px; margin-top: 5px; display: none; }
-    .form-group.error input { border-color: #d97a6a; background: rgba(217,122,106,0.05); }
     .form-group.error .error-message { display: block; }
     .zone-field { display: none; }
     .zone-field.show { display: block; }
-
     .payment-options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-    .pm-item { flex: 0 0 auto; padding: 10px 24px; background: #2e2723; border-radius: 14px; font-size: 14px; font-weight: 500; color: #a79a8e; border: 2px solid #3d3530; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .pm-item { padding: 10px 24px; background: #2e2723; border-radius: 14px; font-size: 14px; color: #a79a8e; border: 2px solid #3d3530; display: flex; align-items: center; gap: 8px; }
     .pm-item.active { border-color: #e6b87e; background: #3d3530; color: #f0e6dc; }
-    .pm-item img { max-width: 32px; height: auto; border-radius: 6px; background: #fff; padding: 2px; }
     .payment-detail { margin-top: 14px; padding: 16px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; }
-    .payment-detail img { max-width: 150px; border-radius: 10px; border: 1px solid #3d3530; margin-bottom: 10px; }
-    .payment-detail .info-text { color: #c4b5a6; font-size: 14px; line-height: 1.5; }
-    .payment-detail .btn-download { background: #e6b87e; border: none; padding: 8px 16px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 8px; }
-    .payment-detail .btn-download:hover { background: #f0ca94; }
-
-    .upload-section { margin-top: 16px; padding: 14px; background: #2e2723; border-radius: 14px; border: 1px solid #3d3530; text-align: center; }
-    .upload-section label { display: inline-block; background: #3d3530; color: #d6c9bc; padding: 8px 18px; border-radius: 30px; cursor: pointer; margin-bottom: 8px; }
-    .upload-section label:hover { background: #5a4d44; }
-    .upload-section input[type="file"] { display: none; }
-    .upload-section .preview { max-width: 120px; max-height: 120px; border-radius: 10px; border: 1px solid #3d3530; margin-top: 6px; }
-    .upload-section .file-name { color: #a79a8e; font-size: 13px; margin-top: 4px; }
-    .upload-section .btn-remove-bukti { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; cursor: pointer; margin-top: 6px; }
-
     .total-bar { display: flex; justify-content: space-between; align-items: center; background: #2e2723; padding: 14px 16px; border-radius: 14px; margin: 20px 0 10px; border: 1px solid #3d3530; }
-    .total-bar .label { color: #c4b5a6; font-size: 15px; }
     .total-bar .amount { font-size: 19px; font-weight: 700; color: #e6b87e; }
-    .btn-order { width: 100%; padding: 14px; background: #e6b87e; border: none; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 16px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .btn-order:disabled { opacity: 0.4; cursor: not-allowed; }
-    .security-note { text-align: center; color: #7a6e62; font-size: 12px; padding: 14px 0 4px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 999; }
+    .btn-order { width: 100%; padding: 14px; background: #e6b87e; border: none; border-radius: 40px; color: #1a1614; font-weight: 700; font-size: 16px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 999; }
     .modal-overlay.open { display: flex; }
-    .modal-box { max-width: 450px; width: 100%; max-height: 90vh; overflow-y: auto; background: #26211e; border-radius: 24px; padding: 24px 18px 18px; border: 1px solid #3d3530; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .modal-box { max-width: 450px; width: 100%; background: #26211e; border-radius: 24px; padding: 24px; border: 1px solid #3d3530; text-align: center; }
     .modal-box.wide { max-width: 700px; }
-    @keyframes pop { 0% { opacity:0; transform:scale(0.9) translateY(20px); } 100% { opacity:1; transform:scale(1) translateY(0); } }
-    .modal-box .check { font-size: 48px; margin-bottom: 8px; }
-    .modal-box h2 { font-size: 20px; font-weight: 600; color: #e6ddd6; }
-    .modal-box p { color: #a79a8e; margin: 6px 0 18px; font-size: 14px; }
-    .modal-box .detail-info { background: #1e1916; padding: 14px; border-radius: 14px; font-size: 14px; color: #d6c9bc; margin-bottom: 16px; border: 1px solid #3d3530; text-align: left; line-height: 1.6; }
-    .modal-box .copy-btn { background: #3d3530; border: none; padding: 4px 12px; border-radius: 20px; color: #d6c9bc; font-size: 12px; cursor: pointer; margin-left: 8px; }
-    .modal-box .copy-btn:hover { background: #5a4d44; }
-    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; width: 100%; }
-    .btn-close-modal:hover { background: #5a4d44; }
-
-    .manage-tab-btn { background: #3d3530; color: #d6c9bc; border: 1px solid #5a4d44; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 5px; }
-    .manage-tab-btn.active { background: #e6b87e; color: #1a1614; border-color: #e6b87e; }
-    .manage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2e2723; }
-    .manage-item .info { color: #d6c9bc; font-size: 14px; }
-    .manage-item .btn-del { background: #b87a6a; border: none; padding: 4px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 12px; cursor: pointer; }
-    .manage-item .btn-del:hover { background: #d97a6a; }
-    .manage-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .manage-form input { flex: 1; min-width: 80px; padding: 10px 14px; border-radius: 12px; background: #2e2723; border: 2px solid #3d3530; color: #f0e6dc; font-size: 14px; outline: none; }
-    .manage-form input:focus { border-color: #e6b87e; }
-    .manage-form button { background: #e6b87e; border: none; padding: 10px 20px; border-radius: 40px; color: #1a1614; font-weight: 600; cursor: pointer; }
-
-    .status-timeline { text-align: left; padding: 6px 0 14px; }
-    .status-step { display: flex; align-items: center; gap: 14px; padding: 6px 0; position: relative; }
-    .status-step:not(:last-child)::after { content: ''; position: absolute; left: 7px; top: 24px; bottom: -6px; width: 2px; background: #3d3530; }
-    .status-step.done:not(:last-child)::after { background: #6a9e7a; }
-    .status-step .dot { width: 14px; height: 14px; border-radius: 50%; background: #3d3530; flex-shrink: 0; position: relative; z-index: 2; }
-    .status-step .dot.done { background: #6a9e7a; }
-    .status-step .dot.active { background: #e6b87e; box-shadow: 0 0 0 4px rgba(230,184,126,0.2); }
-    .status-step .step-label { color: #a79a8e; font-size: 14px; }
-    .status-step .step-label.active-label { color: #f0e6dc; font-weight: 600; }
-    .status-step .step-label.done-label { color: #6a9e7a; font-weight: 500; }
-    .btn-confirm { background: #6a9e7a; border: none; padding: 10px 18px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-top: 10px; }
+    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; width: 100%; margin-top: 15px; }
     .order-table { width: 100%; text-align: left; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
-    .order-table th { color: #a79a8e; font-weight: 600; padding: 8px 6px; border-bottom: 2px solid #3d3530; }
-    .order-table td { padding: 10px 6px; border-bottom: 1px solid #2e2723; color: #d6c9bc; }
-    .order-table .status-badge { padding: 3px 8px; border-radius: 30px; font-size: 11px; font-weight: 600; display: inline-block; }
-    .order-table .status-menunggu { background: rgba(230,184,126,0.2); color: #e6b87e; }
-    .order-table .status-selesai { background: rgba(106,158,122,0.2); color: #6a9e7a; }
-    .order-table .btn-sm { background: #6a9e7a; border: none; padding: 5px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 11px; cursor: pointer; }
-
+    .order-table th { color: #a79a8e; padding: 8px; border-bottom: 2px solid #3d3530; }
+    .order-table td { padding: 10px; border-bottom: 1px solid #2e2723; color: #d6c9bc; }
+    .status-badge { padding: 3px 8px; border-radius: 30px; font-size: 11px; font-weight: 600; }
+    .status-menunggu { background: rgba(230,184,126,0.2); color: #e6b87e; }
+    .status-selesai { background: rgba(106,158,122,0.2); color: #6a9e7a; }
+    .btn-sm { background: #6a9e7a; border: none; padding: 5px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 11px; cursor: pointer; }
     footer { text-align: center; color: #6a5e52; font-size: 13px; padding: 20px 0 8px; margin-top: 24px; border-top: 1px solid #2e2723; }
-    @media (max-width: 600px) {
-      body { padding: 0; }
-      .container { border-radius: 0; border: none; min-height: 100vh; padding: 12px 14px 20px; }
-      .sticky-header { margin: -12px -14px 16px -14px; padding: 14px; border-radius: 0; }
-      .package-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 10px; }
-    }
+    @media (max-width: 600px) { body { padding: 0; } .container { border-radius: 0; border: none; min-height: 100vh; padding: 12px 14px 20px; } .sticky-header { margin: -12px -14px 16px -14px; padding: 14px; border-radius: 0; } .package-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 10px; } }
   </style>
+
+  <!-- SDK FIREBASE (WAJIB ADA) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
 <div class="container">
-
-  <!-- HEADER STICKY -->
   <div class="sticky-header">
     <header class="header">
-      <div class="logo" id="logo" onclick="triggerAdmin()">
-        DRIUP
-        <span class="admin-badge" id="adminBadge">Admin</span>
-      </div>
-      <nav class="nav" id="mainNav">
-        <a class="active" data-page="home" onclick="navigateTo('home')">Beranda</a>
-        <a data-page="ml" onclick="navigateTo('ml')">ML</a>
-        <a data-page="ff" onclick="navigateTo('ff')">FF</a>
+      <div class="logo" id="logo" onclick="triggerAdmin()">DRIUP <span class="admin-badge" id="adminBadge">Admin</span></div>
+      <nav class="nav">
+        <a class="active" data-page="home">Beranda</a>
+        <a data-page="ml">ML</a>
+        <a data-page="ff">FF</a>
         <span class="cek-btn" onclick="openCekModal()">🔍 Cek</span>
         <span class="all-btn" id="allOrdersBtn" onclick="showAllOrders()">📋 Semua</span>
-        <span class="manage-btn" id="manageBtn" onclick="toggleManage()">⚙️ Kelola</span>
       </nav>
     </header>
   </div>
 
-  <!-- HALAMAN BERANDA -->
   <div class="page active" id="page-home">
-    <h2 style="font-size:22px; font-weight:600; margin-bottom:4px; color:#e6b87e;">Top Up Game Murah & Instan</h2>
+    <h2 style="font-size:22px; font-weight:600; color:#e6b87e;">Top Up Game Murah & Instan</h2>
     <p style="color:#a79a8e; margin-bottom:16px; font-size:14px;">DRIUP solusi top-up diamond Mobile Legends & Free Fire.</p>
     <div class="home-grid">
       <div class="game-card-home" onclick="navigateTo('ml')">
-        <img src="ML.PNG" alt="ML" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <div style="display:none; font-size:48px; margin-bottom:12px;">🎯</div>
-        <h3>ML</h3>
-        <p>Mobile Legends<br/>Diamond, skin, bundle</p>
-        <button class="btn-home">Top Up</button>
+        <h3>ML</h3><p>Mobile Legends</p><button class="btn-home">Top Up</button>
       </div>
       <div class="game-card-home" onclick="navigateTo('ff')">
-        <img src="FF.PNG" alt="FF" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <div style="display:none; font-size:48px; margin-bottom:12px;">🔥</div>
-        <h3>FREE FIRE</h3>
-        <p>Free Fire<br/>Diamond & bundle</p>
-        <button class="btn-home">Top Up</button>
+        <h3>FREE FIRE</h3><p>Free Fire</p><button class="btn-home">Top Up</button>
       </div>
     </div>
   </div>
 
-  <!-- HALAMAN DETAIL & CHECKOUT -->
   <div class="page" id="page-detail">
-    <div class="detail-header">
-      <span class="game-icon" id="detailIcon">🎯</span>
-      <h2 id="detailTitle">Mobile Legends</h2>
-    </div>
-
+    <div class="detail-header"><span class="game-icon" id="detailIcon">🎯</span><h2 id="detailTitle">Mobile Legends</h2></div>
     <div class="section-subtitle">💎 Pilih Diamond</div>
     <div class="package-grid" id="packageGrid"></div>
-
-    <div id="wdpSection" style="display: none;">
-      <div class="section-subtitle">🎟️ Weekly Diamond Pass (WDP)</div>
-      <div class="package-grid" id="wdpGrid"></div>
-    </div>
+    <div id="wdpSection" style="display: none;"><div class="section-subtitle">🎟️ Weekly Diamond Pass</div><div class="package-grid" id="wdpGrid"></div></div>
 
     <div class="cart-section">
-      <div class="cart-header">
-        <h3>🛒 Keranjang</h3>
-        <span style="font-size:13px; color:#7a6e62;" id="cartItemCount">0 item</span>
-      </div>
+      <div class="cart-header"><h3>🛒 Keranjang</h3><span id="cartItemCount" style="color:#7a6e62;">0 item</span></div>
       <div id="cartItems"><div class="cart-empty">Keranjang kosong</div></div>
-      <div class="cart-total">
-        <span>Total</span>
-        <span id="cartTotal">Rp 0</span>
-      </div>
-      <button class="btn-checkout" id="btnCheckout" onclick="scrollToForm()" disabled>
-        Lanjutkan Pembayaran
-      </button>
+      <div class="cart-total"><span>Total</span><span id="cartTotal">Rp 0</span></div>
+      <button class="btn-checkout" id="btnCheckout" onclick="scrollToForm()" disabled>Lanjutkan Pembayaran</button>
     </div>
 
     <div class="form-section" id="checkoutForm">
       <div class="form-block">
-        <div class="section-title"><span class="icon">🎮</span><span class="text">Data Game</span></div>
-        <div class="form-group" id="idGameGroup">
-          <label for="idGame">ID Game</label>
-          <input type="text" id="idGame" placeholder="Masukkan ID game" autocomplete="off" />
-          <div class="error-message">⚠️ ID Game wajib diisi</div>
-        </div>
-        <div class="form-group zone-field" id="zoneGroup">
-          <label for="zoneGame">Zona (khusus ML)</label>
-          <input type="text" id="zoneGame" placeholder="Contoh: 1234" autocomplete="off" />
-          <div class="error-message">⚠️ Zona wajib diisi untuk ML</div>
-        </div>
+        <div class="section-title"><span class="text">Data Game</span></div>
+        <div class="form-group"><label>ID Game</label><input type="text" id="idGame" placeholder="Masukkan ID game" /><div class="error-message">Wajib diisi</div></div>
+        <div class="form-group zone-field" id="zoneGroup"><label>Zona</label><input type="text" id="zoneGame" placeholder="Contoh: 1234" /><div class="error-message">Wajib diisi</div></div>
       </div>
-
       <div class="form-block">
-        <div class="section-title"><span class="icon">👤</span><span class="text">Data Pembeli</span></div>
-        <div class="form-group" id="namaGroup">
-          <label for="namaLengkap">Nama Lengkap</label>
-          <input type="text" id="namaLengkap" placeholder="Nama sesuai rekening" autocomplete="name" />
-          <div class="error-message">⚠️ Nama wajib diisi</div>
-        </div>
-        <div class="form-group" id="waGroup">
-          <label for="waNumber">Nomor WhatsApp</label>
-          <input type="tel" id="waNumber" placeholder="08xxxxxxxxxx" autocomplete="tel" />
-          <div class="error-message">⚠️ Nomor WhatsApp wajib diisi</div>
-        </div>
+        <div class="section-title"><span class="text">Data Pembeli</span></div>
+        <div class="form-group"><label>Nama Lengkap</label><input type="text" id="namaLengkap" placeholder="Nama" /><div class="error-message">Wajib diisi</div></div>
+        <div class="form-group"><label>Nomor WhatsApp</label><input type="tel" id="waNumber" placeholder="08..." /><div class="error-message">Wajib diisi</div></div>
       </div>
-
-      <div class="form-block">
-        <div class="section-title"><span class="icon">💳</span><span class="text">Metode Pembayaran</span></div>
-        <div class="payment-options" id="paymentOptions">
-          <div class="pm-item active" data-pm="qris">
-            <img src="QRIS.PNG" alt="QRIS" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-            <span>QRIS</span>
-          </div>
-        </div>
-        <div class="payment-detail" id="paymentDetail">
-          <img src="QRIS.PNG" alt="QRIS Barcode" onerror="this.style.display='none';" />
-          <div class="info-text">Scan QR berikut untuk membayar</div>
-          <button class="btn-download" onclick="downloadQRIS()">⬇️ Download QRIS</button>
-        </div>
-      </div>
-
-      <div class="upload-section">
-        <label for="buktiFile">📤 Upload Bukti Transfer</label>
-        <input type="file" id="buktiFile" accept="image/*" onchange="handleBuktiUpload(event)" />
-        <div id="buktiPreview"></div>
-        <button class="btn-remove-bukti" onclick="removeBukti()" style="display:none;" id="removeBuktiBtn">✕ Hapus Bukti</button>
-      </div>
-
-      <div class="total-bar">
-        <span class="label">Total Pembayaran</span>
-        <span class="amount" id="checkoutTotal">Rp 0</span>
-      </div>
-
-      <button class="btn-order" id="btnOrder" onclick="pesanSekarang()" disabled>
-        📩 Pesan Sekarang • <span id="orderButtonTotal">Rp 0</span>
-      </button>
-
-      <div class="security-note">
-        <span>🔒 Data aman & terjaga</span>
-        <span>⚡ Proses Cepat</span>
-      </div>
+      <div class="total-bar"><span class="label">Total</span><span class="amount" id="checkoutTotal">Rp 0</span></div>
+      <button class="btn-order" id="btnOrder" onclick="pesanSekarang()" disabled>📩 Pesan Sekarang</button>
     </div>
   </div>
-
   <footer>© 2026 DRIUP. All rights reserved.</footer>
 </div>
 
-<!-- MODAL SUKSES -->
-<div class="modal-overlay" id="successModal">
-  <div class="modal-box">
-    <div class="check">✅</div>
-    <h2>Pesanan Berhasil!</h2>
-    <p>Simpan Order ID untuk mengecek status.</p>
-    <div class="detail-info" id="orderSummary"></div>
-    <div class="status-timeline" id="statusTimeline"></div>
-    <div id="adminActionArea"></div>
-    <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
-  </div>
-</div>
+<!-- MODALS -->
+<div class="modal-overlay" id="successModal"><div class="modal-box"><h2>Pesanan Berhasil!</h2><div class="detail-info" id="orderSummary" style="margin:15px 0; color:#d6c9bc; text-align:left;"></div><button class="btn-close-modal" onclick="closeModal()">Tutup</button></div></div>
+<div class="modal-overlay" id="cekModal"><div class="modal-box"><h2>Cek Status Pesanan</h2><div class="form-group" style="margin-top:15px;"><input type="text" id="cekId" placeholder="ID: DRIUP-XXXXXX" /><div class="error-message" id="cekError">Tidak ditemukan</div></div><button class="btn-order" onclick="cekPesanan()">Cek</button><div id="cekResult" style="margin-top:15px; text-align:left;"></div><button class="btn-close-modal" onclick="closeCekModal()">Tutup</button></div></div>
+<div class="modal-overlay" id="allOrdersModal"><div class="modal-box wide"><h2>Daftar Semua Pesanan (Global)</h2><div id="allOrdersList" style="max-height:300px; overflow-y:auto; margin:15px 0;"></div><button class="btn-close-modal" onclick="closeAllOrdersModal()">Tutup</button></div></div>
 
-<!-- MODAL CEK STATUS -->
-<div class="modal-overlay" id="cekModal">
-  <div class="modal-box">
-    <h2 style="margin-bottom:12px;">🔍 Cek Status Pesanan</h2>
-    <div class="form-group">
-      <label for="cekId">Masukkan ID Pesanan</label>
-      <input type="text" id="cekId" placeholder="Contoh: DRIUP-000001" />
-      <div class="error-message" id="cekError">⚠️ ID pesanan tidak ditemukan.</div>
-    </div>
-    <button class="btn-order" onclick="cekPesanan()">Cek Sekarang</button>
-    <div id="cekResult" style="margin-top:16px; text-align:left;"></div>
-    <button class="btn-close-modal" onclick="closeCekModal()" style="margin-top:10px;">Tutup</button>
-  </div>
-</div>
-
-<!-- MODAL SEMUA PESANAN ADMIN -->
-<div class="modal-overlay" id="allOrdersModal">
-  <div class="modal-box wide">
-    <h2 style="margin-bottom:14px;">📋 Daftar Semua Pesanan</h2>
-    <div id="allOrdersList"></div>
-    <button class="btn-close-modal" onclick="closeAllOrdersModal()" style="margin-top:15px;">Tutup</button>
-  </div>
-</div>
-
-<!-- MODAL MANAJEMEN PAKET + WDP (ADMIN) -->
-<div class="modal-overlay" id="manageModal">
-  <div class="modal-box wide">
-    <h2 style="margin-bottom:16px;">⚙️ Kelola Paket & Harga</h2>
-    <div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #3d3530; padding-bottom:10px;">
-      <button class="manage-tab-btn active" id="gameTabML" onclick="switchManageGame('ml')">🎯 ML</button>
-      <button class="manage-tab-btn" id="gameTabFF" onclick="switchManageGame('ff')">🔥 FF</button>
-    </div>
-    <div style="display: flex; margin-bottom: 15px;">
-      <button class="manage-tab-btn active" id="tabDiamondBtn" onclick="switchManageTab('diamond')">Diamond</button>
-      <button class="manage-tab-btn" id="tabWDPBtn" onclick="switchManageTab('wdp')">WDP</button>
-    </div>
-    <div id="manageDiamondContent">
-      <div id="packageList" style="text-align: left;"></div>
-      <div class="manage-form">
-        <input type="number" id="newDiamond" placeholder="Jml Diamond" min="1" />
-        <input type="number" id="newPrice" placeholder="Harga Rp" min="100" />
-        <button onclick="addPackage()">➕ Tambah</button>
-      </div>
-    </div>
-    <div id="manageWDPContent" style="display: none;">
-      <div id="wdpList" style="text-align: left;"></div>
-      <div class="manage-form">
-        <input type="number" id="newWDP" placeholder="Jml WDP" min="1" />
-        <input type="number" id="newWDPPrice" placeholder="Harga Rp" min="100" />
-        <button onclick="addWDPackage()">➕ Tambah</button>
-      </div>
-    </div>
-    <div style="margin-top:20px; color:#7a6e62; font-size:13px;">Klik tombol <span style="color:#b87a6a;">✕</span> untuk hapus paket.</div>
-    <button class="btn-close-modal" onclick="document.getElementById('manageModal').classList.remove('open')" style="margin-top:15px;">Tutup Panel</button>
-  </div>
-</div>
-
-<!-- ===== BAGIAN 2: JAVASCRIPT ===== -->
-<!-- Paste seluruh JavaScript di bawah ini di akhir file, sebelum </body> -->
 <script>
-  // ============================================================
-  //  ADMIN SYSTEM
-  // ============================================================
-  let isAdmin = false;
-  const ADMIN_PASSWORD = 'admin';
-  let clickCount = 0, clickTimer = null;
+  // ==========================================
+  // KONFIGURASI FIREBASE (SUDAH DIUPDATE)
+  // ==========================================
+  const firebaseConfig = {
+    apiKey: "AIzaSyAk_mtMOOt2EFmmG4gEYsd6GD0YFKaGtTE",
+    authDomain: "driup-39411.firebaseapp.com",
+    databaseURL: "https://driup-39411-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "driup-39411",
+    storageBucket: "driup-39411.firebasestorage.app",
+    messagingSenderId: "86225140009",
+    appId: "1:86225140009:web:7bba10e6a426a269f81f38",
+    measurementId: "G-VVRTEFFVXV"
+  };
   
+  // INISIALISASI DATABASE
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  let isAdmin = false;
+  let clickCount = 0, clickTimer = null;
   function triggerAdmin() {
-    clickCount++;
-    clearTimeout(clickTimer);
+    clickCount++; clearTimeout(clickTimer);
     clickTimer = setTimeout(() => clickCount = 0, 800);
     if (clickCount >= 3 && !isAdmin) {
-      const pwd = prompt('🔑 Kode Admin:');
-      if (pwd === ADMIN_PASSWORD) {
+      const pwd = prompt('Kode Admin:');
+      if (pwd === 'admin') {
         isAdmin = true;
         document.getElementById('adminBadge').classList.add('show');
         document.getElementById('allOrdersBtn').classList.add('show');
-        document.getElementById('manageBtn').classList.add('show');
-        alert('✅ Mode Admin Aktif!');
-      } else if (pwd !== null) alert('❌ Salah kode!');
+        alert('Mode Admin Aktif!');
+      }
     }
   }
 
-  // ============================================================
-  //  DATA DEFAULT
-  // ============================================================
-  const DEFAULT_ML = [
-    { diamond: 10, price: 1500 }, { diamond: 20, price: 2800 },
-    { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }
-  ];
-  const DEFAULT_FF = [
-    { diamond: 10, price: 1200 }, { diamond: 20, price: 2400 },
-    { diamond: 50, price: 5800 }, { diamond: 100, price: 11000 }
-  ];
-  const DEFAULT_WDP_ML = [
-    { wdp: 1, price: 27000 }, { wdp: 2, price: 53000 }, { wdp: 3, price: 79000 }
-  ];
-  const DEFAULT_WDP_FF = [];
+  const DEFAULT_ML = [{ diamond: 10, price: 1500 }, { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }];
+  const DEFAULT_FF = [{ diamond: 10, price: 1200 }, { diamond: 50, price: 5800 }, { diamond: 100, price: 11000 }];
+  const DEFAULT_WDP_ML = [{ wdp: 1, price: 27000 }];
 
-  // ============================================================
-  //  LOCALSTORAGE GET/SET
-  // ============================================================
-  function getPackages(game) {
-    try {
-      const data = localStorage.getItem(`driup_packages_${game}`);
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_ML)) : JSON.parse(JSON.stringify(DEFAULT_FF));
-  }
-  function savePackages(game, pkg) {
-    localStorage.setItem(`driup_packages_${game}`, JSON.stringify(pkg));
-  }
-
-  function getWDPackages(game) {
-    try {
-      const data = localStorage.getItem(`driup_wdp_${game}`);
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_WDP_ML)) : JSON.parse(JSON.stringify(DEFAULT_WDP_FF));
-  }
-  function saveWDPackages(game, pkg) {
-    localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg));
-  }
-
-  // ============================================================
-  //  STATE GLOBAL
-  // ============================================================
   let currentGame = 'ml';
   let cart = [];
-  let manageGame = 'ml';
-  let manageTab = 'diamond';
 
-  // ============================================================
-  //  ORDERS
-  // ============================================================
-  let orders = [];
-  try { orders = JSON.parse(localStorage.getItem('driup_orders')) || []; } catch {}
-  function saveOrders() { localStorage.setItem('driup_orders', JSON.stringify(orders)); }
-
-  // ============================================================
-  //  NAVIGASI HALAMAN
-  // ============================================================
+  const navLinks = document.querySelectorAll('.nav a');
+  const pages = { home: document.getElementById('page-home'), detail: document.getElementById('page-detail') };
+  
   function navigateTo(page) {
-    if (page !== 'home' && page !== currentGame) { 
-        cart = [];
-    }
-    document.querySelectorAll('.nav a').forEach(l => {
-      l.classList.toggle('active', l.dataset.page === page);
-    });
+    if (page !== 'home' && page !== currentGame) cart = [];
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === page));
     if (page === 'home') {
-      document.getElementById('page-home').classList.add('active');
-      document.getElementById('page-detail').classList.remove('active');
+      pages.home.classList.add('active'); pages.detail.classList.remove('active');
     } else {
-      document.getElementById('page-home').classList.remove('active');
-      document.getElementById('page-detail').classList.add('active');
-      currentGame = page; 
-      renderDetail(); 
+      pages.home.classList.remove('active'); pages.detail.classList.add('active');
+      currentGame = page; renderDetail(); 
     }
   }
+  navLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); if(l.dataset.page) navigateTo(l.dataset.page); }));
 
-  // ============================================================
-  //  RENDER DETAIL (frontend)
-  // ============================================================
   function renderDetail() {
-    const detailIcon = document.getElementById('detailIcon');
-    const detailTitle = document.getElementById('detailTitle');
-    const zoneGroup = document.getElementById('zoneGroup');
-    const wdpSection = document.getElementById('wdpSection');
-
     if(currentGame === 'ml') {
-      detailIcon.textContent = '🎯'; 
-      detailTitle.textContent = 'Mobile Legends';
-      zoneGroup.classList.add('show');
-      wdpSection.style.display = 'block';
+      document.getElementById('detailIcon').textContent = '🎯'; 
+      document.getElementById('detailTitle').textContent = 'Mobile Legends';
+      document.getElementById('zoneGroup').classList.add('show');
+      document.getElementById('wdpSection').style.display = 'block';
     } else {
-      detailIcon.textContent = '🔥'; 
-      detailTitle.textContent = 'Free Fire';
-      zoneGroup.classList.remove('show');
-      wdpSection.style.display = 'none';
+      document.getElementById('detailIcon').textContent = '🔥'; 
+      document.getElementById('detailTitle').textContent = 'Free Fire';
+      document.getElementById('zoneGroup').classList.remove('show');
+      document.getElementById('wdpSection').style.display = 'none';
     }
 
-    // Render Diamond Biasa
     const packageGrid = document.getElementById('packageGrid');
     packageGrid.innerHTML = '';
-    getPackages(currentGame).forEach(pkg => {
-      const sel = cart.some(i => i.type === 'diamond' && i.id === pkg.diamond);
+    const pkgs = currentGame === 'ml' ? DEFAULT_ML : DEFAULT_FF;
+    pkgs.forEach(pkg => {
+      const sel = cart.some(i => i.id === pkg.diamond);
       const el = document.createElement('div');
       el.className = `package-item ${sel ? 'selected' : ''}`;
-      el.innerHTML = `
-        <div class="diamond">${pkg.diamond} 💎</div>
-        <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
-        <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
-      `;
-      el.addEventListener('click', () => toggleItemCart('diamond', pkg.diamond));
+      el.innerHTML = `<div class="diamond">${pkg.diamond} 💎</div><div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div><button class="btn-add">${sel ? 'Batal' : 'Pilih'}</button>`;
+      el.addEventListener('click', () => toggleCart(pkg.diamond, pkg.price));
       packageGrid.appendChild(el);
     });
-
-    // Render WDP 
-    if(currentGame === 'ml') {
-      const wdpGrid = document.getElementById('wdpGrid');
-      wdpGrid.innerHTML = '';
-      getWDPackages(currentGame).forEach(pkg => {
-        const sel = cart.some(i => i.type === 'wdp' && i.id === pkg.wdp);
-        const el = document.createElement('div');
-        el.className = `package-item ${sel ? 'selected' : ''}`;
-        el.innerHTML = `
-          <div class="diamond">${pkg.wdp} WDP</div>
-          <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
-          <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
-        `;
-        el.addEventListener('click', () => toggleItemCart('wdp', pkg.wdp));
-        wdpGrid.appendChild(el);
-      });
-    }
     renderCart();
   }
 
-  // ============================================================
-  //  KERANJANG
-  // ============================================================
-  function toggleItemCart(type, id) {
-    const idx = cart.findIndex(i => i.type === type && i.id === id);
-    if(idx >= 0) cart.splice(idx, 1);
-    else cart.push({ type, id, quantity: 1 });
+  function toggleCart(id, price) {
+    const idx = cart.findIndex(i => i.id === id);
+    if(idx >= 0) cart.splice(idx, 1); else cart.push({ id, price, quantity: 1 });
     renderDetail();
-  }
-
-  function hapusItemCart(type, id) {
-    cart = cart.filter(i => !(i.type === type && i.id === id));
-    renderDetail();
-  }
-
-  function getCartTruePrices() {
-    const pkgs = getPackages(currentGame);
-    const wdps = getWDPackages(currentGame);
-    let calculatedCart = [];
-    let total = 0;
-    
-    cart.forEach(item => {
-      let truePrice = 0;
-      let label = '';
-      
-      if (item.type === 'diamond') {
-        const f = pkgs.find(p => p.diamond === item.id);
-        if(f) { truePrice = f.price; label = `${item.id} 💎`; }
-      } else if (item.type === 'wdp') {
-        const f = wdps.find(p => p.wdp === item.id);
-        if(f) { truePrice = f.price; label = `${item.id} WDP`; }
-      }
-
-      if(truePrice > 0) {
-        const sub = truePrice * item.quantity;
-        total += sub;
-        calculatedCart.push({ ...item, label, truePrice, sub });
-      }
-    });
-    return { calculatedCart, total };
   }
 
   function renderCart() {
     const cartItemsDiv = document.getElementById('cartItems');
-    const { calculatedCart, total } = getCartTruePrices();
-
-    if(!calculatedCart.length) {
-      cartItemsDiv.innerHTML = `<div class="cart-empty">Belum ada pilihan</div>`;
-      document.getElementById('cartTotal').textContent = 'Rp 0'; 
+    if(!cart.length) {
+      cartItemsDiv.innerHTML = `<div class="cart-empty">Keranjang kosong</div>`;
+      document.getElementById('cartTotal').textContent = 'Rp 0';
       document.getElementById('checkoutTotal').textContent = 'Rp 0';
-      document.getElementById('orderButtonTotal').textContent = 'Rp 0';
-      document.getElementById('cartItemCount').textContent = '0 item';
       document.getElementById('btnCheckout').disabled = true;
       document.getElementById('btnOrder').disabled = true;
       return;
     }
-
-    let html = '';
-    calculatedCart.forEach(i => {
-      html += `<div class="cart-item">
-        <span class="name">${i.label}</span>
-        <span class="subtotal">Rp ${i.sub.toLocaleString('id-ID')}</span>
-        <button class="remove-btn" onclick="hapusItemCart('${i.type}', ${i.id})">✕</button>
-      </div>`;
+    let total = 0, html = '';
+    cart.forEach(i => {
+      total += i.price;
+      html += `<div class="cart-item"><span>${i.id} 💎</span><span class="subtotal">Rp ${i.price.toLocaleString('id-ID')}</span></div>`;
     });
-
     cartItemsDiv.innerHTML = html;
-    const totalStr = `Rp ${total.toLocaleString('id-ID')}`;
-    document.getElementById('cartTotal').textContent = totalStr;
-    document.getElementById('checkoutTotal').textContent = totalStr;
-    document.getElementById('orderButtonTotal').textContent = totalStr;
-    document.getElementById('cartItemCount').textContent = `${calculatedCart.length} item`;
+    document.getElementById('cartTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    document.getElementById('checkoutTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
     document.getElementById('btnCheckout').disabled = false;
     document.getElementById('btnOrder').disabled = false;
   }
 
-  function scrollToForm() { 
-    document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); 
-  }
+  function scrollToForm() { document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); }
 
-  // ============================================================
-  //  DOWNLOAD QRIS
-  // ============================================================
-  function downloadQRIS() {
-    const img = document.querySelector('#paymentDetail img');
-    if (!img) return alert('Gambar QRIS tidak ditemukan.');
-    const link = document.createElement('a');
-    link.href = img.src;
-    link.download = 'QRIS_DRIUP.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  // ============================================================
-  //  UPLOAD BUKTI
-  // ============================================================
-  let buktiDataURL = null;
-
-  function handleBuktiUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      buktiDataURL = e.target.result;
-      const preview = document.getElementById('buktiPreview');
-      preview.innerHTML = `<img src="${buktiDataURL}" class="preview" /><div class="file-name">${file.name}</div>`;
-      document.getElementById('removeBuktiBtn').style.display = 'inline-block';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function removeBukti() {
-    buktiDataURL = null;
-    document.getElementById('buktiPreview').innerHTML = '';
-    document.getElementById('buktiFile').value = '';
-    document.getElementById('removeBuktiBtn').style.display = 'none';
-  }
-
-  // ============================================================
-  //  VALIDASI FORM
-  // ============================================================
-  function validateForm() {
-    let ok = true;
-    const fields = [document.getElementById('idGame'), document.getElementById('namaLengkap'), document.getElementById('waNumber')];
-    if (currentGame === 'ml') fields.push(document.getElementById('zoneGame'));
-    
-    fields.forEach(inp => {
-      const g = inp.closest('.form-group');
-      if (!inp.value.trim()) { ok = false; g.classList.add('error'); }
-      else g.classList.remove('error');
-      inp.oninput = () => g.classList.remove('error');
-    });
-    return ok;
-  }
-
-  // ============================================================
-  //  PESAN SEKARANG
-  // ============================================================
   function pesanSekarang() {
-    const { calculatedCart, total } = getCartTruePrices();
-    if (!calculatedCart.length) return alert('Keranjang kosong/produk tidak valid!');
-    if (!validateForm()) return;
-
-    const bukti = buktiDataURL || null;
+    const idg = document.getElementById('idGame').value.trim();
+    const zone = document.getElementById('zoneGame').value.trim();
+    const nama = document.getElementById('namaLengkap').value.trim();
+    const wa = document.getElementById('waNumber').value.trim();
+    if(!idg || !nama || !wa) return alert('Semua data wajib diisi!');
 
     const orderId = 'DRIUP-' + Date.now().toString().slice(-6);
-    orders.unshift({
-      id: orderId,
-      game: currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire',
-      items: calculatedCart.map(c => c.label).join(', '),
-      total: total,
-      status: 'Menunggu Pembayaran',
-      tgl: new Date().toLocaleDateString('id-ID'),
-      data: {
-        idg: document.getElementById('idGame').value.trim(),
-        zone: document.getElementById('zoneGame').value.trim(),
-        nama: document.getElementById('namaLengkap').value.trim(),
-        wa: document.getElementById('waNumber').value.trim()
-      },
-      bukti: bukti
+    const total = cart.reduce((s, i) => s + i.price, 0);
+    const gameName = currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire';
+    const itemsBeli = cart.map(c => `${c.id} 💎`).join(', ');
+
+    const orderData = {
+      id: orderId, game: gameName, items: itemsBeli, total: total,
+      status: 'Menunggu Pembayaran', tgl: new Date().toLocaleString('id-ID'),
+      data: { idg, zone, nama, wa }
+    };
+
+    // SIMPAN KE FIREBASE (DATABASE GLOBAL)
+    db.ref('orders/' + orderId).set(orderData).then(() => {
+      
+      // KIRIM KE API VERCEL UNTUK NOTIFIKASI TELEGRAM
+      fetch('/api/telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone })
+      }).catch(e => console.log('Proses Telegram berjalan di background'));
+
+      document.getElementById('orderSummary').innerHTML = `<strong>ID:</strong> ${orderId}<br><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}`;
+      document.getElementById('successModal').classList.add('open');
+      cart = []; renderDetail();
+      ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
     });
-    saveOrders();
-
-    // Tampil Modal Sukses
-    document.getElementById('orderSummary').innerHTML = `
-      <strong>ID Pesanan:</strong> ${orderId} 
-      <button class="copy-btn" onclick="copyText('${orderId}')">📋 Copy</button><br>
-      <strong>Game:</strong> ${currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire'}<br>
-      <strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}
-    `;
-    
-    const steps = ['Menunggu Pembayaran', 'Diproses', 'Selesai'];
-    document.getElementById('statusTimeline').innerHTML = steps.map((s, i) => `
-      <div class="status-step ${i===0?'done':''}">
-        <span class="dot ${i===0?'done active':''}"></span>
-        <span class="step-label ${i===0?'active-label':''}">${s}</span>
-      </div>
-    `).join('');
-    
-    if (isAdmin) {
-      document.getElementById('adminActionArea').innerHTML = `
-        <button class="btn-confirm" onclick="konfirmasiPesanan('${orderId}'); closeModal();">
-          ✅ Tandai Selesai (Admin)
-        </button>`;
-    } else { document.getElementById('adminActionArea').innerHTML = ''; }
-
-    document.getElementById('successModal').classList.add('open');
-    cart = []; 
-    renderDetail();
-    removeBukti();
-    ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
   }
 
-  function closeModal() {
-    document.getElementById('successModal').classList.remove('open');
-    navigateTo('home');
-  }
+  function closeModal() { document.getElementById('successModal').classList.remove('open'); navigateTo('home'); }
+  function openCekModal() { document.getElementById('cekModal').classList.add('open'); document.getElementById('cekResult').innerHTML = ''; }
+  function closeCekModal() { document.getElementById('cekModal').classList.remove('open'); }
 
-  // ============================================================
-  //  COPY TEKS
-  // ============================================================
-  function copyText(text) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('✅ Teks berhasil disalin!');
-      }).catch(() => {
-        fallbackCopy(text);
-      });
-    } else {
-      fallbackCopy(text);
-    }
-  }
-
-  function fallbackCopy(text) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed'; ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); alert('✅ Teks berhasil disalin!'); } catch(e) { alert('❌ Gagal menyalin.'); }
-    document.body.removeChild(ta);
-  }
-
-  // ============================================================
-  //  CEK PESANAN
-  // ============================================================
-  function openCekModal() { 
-    document.getElementById('cekModal').classList.add('open'); 
-    document.getElementById('cekResult').innerHTML = ''; 
-    document.getElementById('cekError').style.display = 'none'; 
-  }
-  function closeCekModal() { 
-    document.getElementById('cekModal').classList.remove('open'); 
-  }
-
+  // CEK PESANAN DARI DATABASE GLOBAL FIREBASE
   function cekPesanan() {
     const id = document.getElementById('cekId').value.trim().toUpperCase();
-    const errorEl = document.getElementById('cekError');
-    if (!id) { errorEl.textContent = '⚠️ Masukkan ID pesanan.'; errorEl.style.display = 'block'; return; }
-    
-    const order = orders.find(o => o.id === id);
-    if (!order) { errorEl.textContent = '⚠️ Pesanan tidak ditemukan.'; errorEl.style.display = 'block'; return; }
-    
-    errorEl.style.display = 'none';
-    const sC = order.status === 'Selesai' ? '#6a9e7a' : (order.status === 'Diproses' ? '#e6b87e' : '#d4a373');
-    let html = `
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">ID</span> <span style="float:right; color:#f0e6dc;">${order.id} <button class="copy-btn" onclick="copyText('${order.id}')">📋 Copy</button></span></div>
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Game</span> <span style="float:right; color:#f0e6dc;">${order.game}</span></div>
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Item</span> <span style="float:right; color:#f0e6dc;">${order.items}</span></div>
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Total</span> <span style="float:right; color:#f0e6dc;">Rp ${order.total.toLocaleString('id-ID')}</span></div>
-      <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Status</span> <span style="float:right; color:${sC}; font-weight:bold;">${order.status}</span></div>
-    `;
-    if (order.bukti) {
-      html += `<div style="padding:8px 0; border-bottom:1px solid #2e2723;">
-        <span style="color:#a79a8e;">Bukti Transfer:</span><br>
-        <img src="${order.bukti}" style="max-width:150px; border-radius:8px; border:1px solid #3d3530; margin-top:4px;" />
-      </div>`;
-    }
-    if (isAdmin && order.status !== 'Selesai') {
-      html += `<button class="btn-confirm" onclick="konfirmasiPesanan('${order.id}'); cekPesanan();" style="margin-top:12px;">✅ Konfirmasi Pembayaran</button>`;
-    }
-    document.getElementById('cekResult').innerHTML = html;
+    if(!id) return;
+    db.ref('orders/' + id).once('value', (snapshot) => {
+      const order = snapshot.val();
+      const resDiv = document.getElementById('cekResult');
+      if(!order) {
+        resDiv.innerHTML = '<span style="color:#d97a6a;">Pesanan tidak ditemukan.</span>';
+        return;
+      }
+      resDiv.innerHTML = `<b>ID:</b> ${order.id}<br><b>Game:</b> ${order.game}<br><b>Status: <span style="color:#e6b87e;">${order.status}</span></b>`;
+    });
   }
 
-  // ============================================================
-  //  ADMIN: LIHAT SEMUA PESANAN
-  // ============================================================
+  // TAMPILKAN SEMUA ORDER (UNTUK ADMIN) DARI FIREBASE
   function showAllOrders() {
-    if (!isAdmin) return;
-    const list = document.getElementById('allOrdersList');
-    if (!orders.length) { list.innerHTML = '<p style="color:#7a6e62;">Belum ada pesanan.</p>'; } 
-    else {
-      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Item</th><th>Total</th><th>Status</th><th>Bukti</th><th>Aksi</th></tr></thead><tbody>`;
-      orders.forEach(o => {
-        const sC = o.status === 'Selesai' ? 'status-selesai' : (o.status === 'Diproses' ? 'status-diproses' : 'status-menunggu');
-        const buktiHtml = o.bukti ? `<img src="${o.bukti}" style="max-width:60px; max-height:60px; border-radius:6px;" />` : '-';
+    db.ref('orders').once('value', (snapshot) => {
+      const orders = snapshot.val();
+      const list = document.getElementById('allOrdersList');
+      if(!orders) { list.innerHTML = 'Belum ada pesanan.'; return; }
+      let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody>`;
+      
+      // Mengubah object firebase menjadi array agar bisa dibalik (terbaru di atas)
+      const ordersArray = Object.keys(orders).map(key => orders[key]);
+      
+      ordersArray.reverse().forEach(o => {
+        let statusColor = o.status === 'Selesai' ? 'status-selesai' : 'status-menunggu';
+        let disabledBtn = o.status === 'Selesai' ? 'disabled' : '';
         html += `<tr>
-          <td>${o.id}</td><td>${o.game}</td><td>${o.items}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td>
-          <td><span class="status-badge ${sC}">${o.status}</span></td>
-          <td>${buktiHtml}</td>
-          <td><button class="btn-sm" ${o.status === 'Selesai' ? 'disabled' : ''} onclick="konfirmasiPesanan('${o.id}'); showAllOrders();">✅ ACC</button></td>
+          <td>${o.id}</td>
+          <td>${o.game}</td>
+          <td>Rp ${o.total.toLocaleString('id-ID')}</td>
+          <td><span class="status-badge ${statusColor}">${o.status}</span></td>
+          <td><button class="btn-sm" ${disabledBtn} onclick="accOrder('${o.id}')">✅ ACC</button></td>
         </tr>`;
       });
       list.innerHTML = html + `</tbody></table>`;
-    }
-    document.getElementById('allOrdersModal').classList.add('open');
-  }
-  function closeAllOrdersModal() { 
-    document.getElementById('allOrdersModal').classList.remove('open'); 
-  }
-
-  function konfirmasiPesanan(id) {
-    const order = orders.find(o => o.id === id);
-    if (order) { order.status = 'Selesai'; saveOrders(); alert('✅ Pesanan Selesai!'); }
-  }
-
-  // ============================================================
-  //  ADMIN: KELOLA PAKET (DIAMOND & WDP)
-  // ============================================================
-  function toggleManage() {
-    if (!isAdmin) { alert('Anda bukan admin!'); return; }
-    manageGame = currentGame;
-    switchManageGame(manageGame);
-    document.getElementById('manageModal').classList.add('open');
-  }
-
-  function switchManageGame(game) {
-    manageGame = game;
-    document.getElementById('gameTabML').classList.toggle('active', game === 'ml');
-    document.getElementById('gameTabFF').classList.toggle('active', game === 'ff');
-    switchManageTab('diamond');
-  }
-
-  function switchManageTab(tab) {
-    manageTab = tab;
-    document.getElementById('tabDiamondBtn').classList.toggle('active', tab === 'diamond');
-    document.getElementById('tabWDPBtn').classList.toggle('active', tab === 'wdp');
-    document.getElementById('manageDiamondContent').style.display = tab === 'diamond' ? 'block' : 'none';
-    document.getElementById('manageWDPContent').style.display = tab === 'wdp' ? 'block' : 'none';
-    
-    if(tab === 'diamond') renderAdminPackageList();
-    if(tab === 'wdp') renderAdminWDPList();
-  }
-
-  function renderAdminPackageList() {
-    const list = document.getElementById('packageList');
-    const pkg = getPackages(manageGame);
-    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
-    let html = '';
-    pkg.forEach((p, idx) => {
-      html += `<div class="manage-item">
-        <span class="info">${p.diamond} 💎 → Rp ${p.price.toLocaleString('id-ID')}</span>
-        <button class="btn-del" onclick="hapusPackage(${idx})">✕</button>
-      </div>`;
+      document.getElementById('allOrdersModal').classList.add('open');
     });
-    list.innerHTML = html;
   }
+  function closeAllOrdersModal() { document.getElementById('allOrdersModal').classList.remove('open'); }
 
-  function addPackage() {
-    const d = parseInt(document.getElementById('newDiamond').value, 10);
-    const p = parseInt(document.getElementById('newPrice').value, 10);
-    if (isNaN(d) || d < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
-    
-    const pkg = getPackages(manageGame);
-    if (pkg.some(item => item.diamond === d)) return alert('Diamond sudah ada!');
-    
-    pkg.push({ diamond: d, price: p });
-    pkg.sort((a,b) => a.diamond - b.diamond);
-    savePackages(manageGame, pkg);
-    document.getElementById('newDiamond').value = ''; document.getElementById('newPrice').value = '';
-    renderAdminPackageList(); renderDetail();
-  }
-
-  function hapusPackage(idx) {
-    const pkg = getPackages(manageGame);
-    hapusItemCart('diamond', pkg[idx].diamond);
-    pkg.splice(idx, 1);
-    savePackages(manageGame, pkg);
-    renderAdminPackageList(); renderDetail();
-  }
-
-  function renderAdminWDPList() {
-    const list = document.getElementById('wdpList');
-    if (manageGame !== 'ml') { 
-        list.innerHTML = '<p style="color:#7a6e62;">Fitur WDP hanya untuk ML.</p>'; 
-        return; 
-    }
-    const pkg = getWDPackages(manageGame);
-    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
-    let html = '';
-    pkg.forEach((p, idx) => {
-      html += `<div class="manage-item">
-        <span class="info">${p.wdp} WDP → Rp ${p.price.toLocaleString('id-ID')}</span>
-        <button class="btn-del" onclick="hapusWDPackage(${idx})">✕</button>
-      </div>`;
+  // ADMIN ACC ORDERAN
+  function accOrder(id) {
+    if(!confirm(`Konfirmasi pembayaran pesanan ${id}?`)) return;
+    db.ref('orders/' + id).update({ status: 'Selesai' }).then(() => {
+      alert('Pesanan dikonfirmasi selesai!');
+      showAllOrders(); // Refresh tampilan tabel
     });
-    list.innerHTML = html;
   }
 
-  function addWDPackage() {
-    if (manageGame !== 'ml') return alert('Hanya untuk ML');
-    const w = parseInt(document.getElementById('newWDP').value, 10);
-    const p = parseInt(document.getElementById('newWDPPrice').value, 10);
-    if (isNaN(w) || w < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
-    
-    const pkg = getWDPackages(manageGame);
-    if (pkg.some(item => item.wdp === w)) return alert('Jumlah WDP sudah ada!');
-    
-    pkg.push({ wdp: w, price: p });
-    pkg.sort((a,b) => a.wdp - b.wdp);
-    saveWDPackages(manageGame, pkg);
-    document.getElementById('newWDP').value = ''; document.getElementById('newWDPPrice').value = '';
-    renderAdminWDPList(); renderDetail();
-  }
-
-  function hapusWDPackage(idx) {
-    const pkg = getWDPackages(manageGame);
-    hapusItemCart('wdp', pkg[idx].wdp);
-    pkg.splice(idx, 1);
-    saveWDPackages(manageGame, pkg);
-    renderAdminWDPList(); renderDetail();
-  }
-
-  // ============================================================
-  //  INIT
-  // ============================================================
+  // Mulai
   navigateTo('home');
-
-  // Event listeners untuk modal agar tutup saat klik overlay
-  document.querySelectorAll('.modal-overlay').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
-    });
-  });
-
-  console.log('✅ DRIUP siap! Admin: klik logo 3x, kode: admin');
 </script>
 </body>
 </html>
