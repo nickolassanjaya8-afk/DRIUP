@@ -736,7 +736,7 @@
       fetch('/api/telegram', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone })
+        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti }) // <--- Tambahkan 'bukti' di sini
       }).catch(e => console.log('Notifikasi background berjalan'));
 
       // Tampil Modal Sukses
