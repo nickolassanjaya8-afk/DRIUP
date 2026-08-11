@@ -234,7 +234,7 @@
   <!-- HALAMAN DETAIL & CHECKOUT -->
   <div class="page" id="page-detail">
     <div class="detail-header">
-      <span class="game-icon" id="detailIcon">🎯</span>
+      <span class="game-icon" id="detailIcon">ML.PNG</span>
       <h2 id="detailTitle">Mobile Legends</h2>
     </div>
 
@@ -471,7 +471,7 @@
   }
 
   function renderDetail() {
-    document.getElementById('detailIcon').textContent = currentGame === 'ml' ? '🎯' : '🔥';
+    document.getElementById('detailIcon').textContent = currentGame === 'ml' ? 'ML.PNG' : 'FF.PNG';
     document.getElementById('detailTitle').textContent = currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire';
     document.getElementById('zoneGroup').classList.toggle('show', currentGame === 'ml');
     document.getElementById('wdpSection').style.display = currentGame === 'ml' ? 'block' : 'none';
