@@ -139,7 +139,7 @@
     .modal-box .detail-info { background: #1e1916; padding: 14px; border-radius: 14px; font-size: 14px; color: #d6c9bc; margin-bottom: 16px; border: 1px solid #3d3530; text-align: left; line-height: 1.6; }
     .modal-box .copy-btn { background: #3d3530; border: none; padding: 4px 12px; border-radius: 20px; color: #d6c9bc; font-size: 12px; cursor: pointer; margin-left: 8px; }
     .modal-box .copy-btn:hover { background: #5a4d44; }
-    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; width: 100%; }
+    .btn-close-modal { background: #3d3530; border: none; padding: 10px 20px; border-radius: 40px; color: #f0e6dc; font-weight: 600; cursor: pointer; font-size: 14px; width: 100%; margin-top:10px; }
     .btn-close-modal:hover { background: #5a4d44; }
 
     .manage-tab-btn { background: #3d3530; color: #d6c9bc; border: 1px solid #5a4d44; padding: 8px 16px; cursor: pointer; border-radius: 20px; font-size: 13px; font-weight: bold; margin-right: 5px; }
@@ -164,13 +164,16 @@
     .status-step .step-label.active-label { color: #f0e6dc; font-weight: 600; }
     .status-step .step-label.done-label { color: #6a9e7a; font-weight: 500; }
     .btn-confirm { background: #6a9e7a; border: none; padding: 10px 18px; border-radius: 40px; color: #1a1614; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-top: 10px; }
+    
     .order-table { width: 100%; text-align: left; font-size: 13px; border-collapse: collapse; margin-top: 10px; }
     .order-table th { color: #a79a8e; font-weight: 600; padding: 8px 6px; border-bottom: 2px solid #3d3530; }
     .order-table td { padding: 10px 6px; border-bottom: 1px solid #2e2723; color: #d6c9bc; }
     .order-table .status-badge { padding: 3px 8px; border-radius: 30px; font-size: 11px; font-weight: 600; display: inline-block; }
     .order-table .status-menunggu { background: rgba(230,184,126,0.2); color: #e6b87e; }
     .order-table .status-selesai { background: rgba(106,158,122,0.2); color: #6a9e7a; }
+    .order-table .status-batal { background: rgba(217,122,106,0.2); color: #d97a6a; }
     .order-table .btn-sm { background: #6a9e7a; border: none; padding: 5px 12px; border-radius: 30px; color: #1a1614; font-weight: 600; font-size: 11px; cursor: pointer; }
+    .order-table .btn-sm:disabled { background: #4f443e; color: #8e8071; cursor: not-allowed; }
 
     footer { text-align: center; color: #6a5e52; font-size: 13px; padding: 20px 0 8px; margin-top: 24px; border-top: 1px solid #2e2723; }
     @media (max-width: 600px) {
@@ -352,7 +355,7 @@
     </div>
     <button class="btn-order" onclick="cekPesanan()">Cek Sekarang</button>
     <div id="cekResult" style="margin-top:16px; text-align:left;"></div>
-    <button class="btn-close-modal" onclick="closeCekModal()" style="margin-top:10px;">Tutup</button>
+    <button class="btn-close-modal" onclick="closeCekModal()">Tutup</button>
   </div>
 </div>
 
@@ -361,7 +364,7 @@
   <div class="modal-box wide">
     <h2 style="margin-bottom:14px;">📋 Daftar Semua Pesanan</h2>
     <div id="allOrdersList"></div>
-    <button class="btn-close-modal" onclick="closeAllOrdersModal()" style="margin-top:15px;">Tutup</button>
+    <button class="btn-close-modal" onclick="closeAllOrdersModal()">Tutup</button>
   </div>
 </div>
 
@@ -394,7 +397,7 @@
       </div>
     </div>
     <div style="margin-top:20px; color:#7a6e62; font-size:13px;">Klik tombol <span style="color:#b87a6a;">✕</span> untuk hapus paket.</div>
-    <button class="btn-close-modal" onclick="document.getElementById('manageModal').classList.remove('open')" style="margin-top:15px;">Tutup Panel</button>
+    <button class="btn-close-modal" onclick="document.getElementById('manageModal').classList.remove('open')">Tutup Panel</button>
   </div>
 </div>
 
@@ -416,20 +419,17 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // ============================================================
-  //  ADMIN SYSTEM
-  // ============================================================
   let isAdmin = false;
-  const ADMIN_PASSWORD = 'admin';
   let clickCount = 0, clickTimer = null;
-  
+  let activeIntervals = []; // Menyimpan interval timer hitung mundur
+
   function triggerAdmin() {
     clickCount++;
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => clickCount = 0, 800);
     if (clickCount >= 3 && !isAdmin) {
       const pwd = prompt('🔑 Kode Admin:');
-      if (pwd === ADMIN_PASSWORD) {
+      if (pwd === 'admin') {
         isAdmin = true;
         document.getElementById('adminBadge').classList.add('show');
         document.getElementById('allOrdersBtn').classList.add('show');
@@ -442,93 +442,39 @@
   // ============================================================
   //  DATA DEFAULT
   // ============================================================
-  const DEFAULT_ML = [
-    { diamond: 10, price: 1500 }, { diamond: 20, price: 2800 },
-    { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }
-  ];
-  const DEFAULT_FF = [
-    { diamond: 10, price: 1200 }, { diamond: 20, price: 2400 },
-    { diamond: 50, price: 5800 }, { diamond: 100, price: 11000 }
-  ];
-  const DEFAULT_WDP_ML = [
-    { wdp: 1, price: 27000 }, { wdp: 2, price: 53000 }, { wdp: 3, price: 79000 }
-  ];
+  const DEFAULT_ML = [{ diamond: 10, price: 1500 }, { diamond: 20, price: 2800 }, { diamond: 50, price: 6500 }, { diamond: 100, price: 12000 }];
+  const DEFAULT_FF = [{ diamond: 10, price: 1200 }, { diamond: 20, price: 2400 }, { diamond: 50, price: 5800 }, { diamond: 100, price: 11000 }];
+  const DEFAULT_WDP_ML = [{ wdp: 1, price: 27000 }, { wdp: 2, price: 53000 }, { wdp: 3, price: 79000 }];
   const DEFAULT_WDP_FF = [];
 
-  // ============================================================
-  //  LOCALSTORAGE GET/SET
-  // ============================================================
-  function getPackages(game) {
-    try {
-      const data = localStorage.getItem(`driup_packages_${game}`);
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_ML)) : JSON.parse(JSON.stringify(DEFAULT_FF));
-  }
-  function savePackages(game, pkg) {
-    localStorage.setItem(`driup_packages_${game}`, JSON.stringify(pkg));
-  }
+  function getPackages(game) { try { const data = localStorage.getItem(`driup_packages_${game}`); if (data) return JSON.parse(data); } catch(e) {} return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_ML)) : JSON.parse(JSON.stringify(DEFAULT_FF)); }
+  function savePackages(game, pkg) { localStorage.setItem(`driup_packages_${game}`, JSON.stringify(pkg)); }
+  function getWDPackages(game) { try { const data = localStorage.getItem(`driup_wdp_${game}`); if (data) return JSON.parse(data); } catch(e) {} return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_WDP_ML)) : JSON.parse(JSON.stringify(DEFAULT_WDP_FF)); }
+  function saveWDPackages(game, pkg) { localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg)); }
 
-  function getWDPackages(game) {
-    try {
-      const data = localStorage.getItem(`driup_wdp_${game}`);
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return game === 'ml' ? JSON.parse(JSON.stringify(DEFAULT_WDP_ML)) : JSON.parse(JSON.stringify(DEFAULT_WDP_FF));
-  }
-  function saveWDPackages(game, pkg) {
-    localStorage.setItem(`driup_wdp_${game}`, JSON.stringify(pkg));
-  }
-
-  // ============================================================
-  //  STATE GLOBAL
-  // ============================================================
   let currentGame = 'ml';
   let cart = [];
   let manageGame = 'ml';
   let manageTab = 'diamond';
 
-  // ============================================================
-  //  NAVIGASI HALAMAN
-  // ============================================================
   function navigateTo(page) {
-    if (page !== 'home' && page !== currentGame) { 
-        cart = [];
-    }
-    document.querySelectorAll('.nav a').forEach(l => {
-      l.classList.toggle('active', l.dataset.page === page);
-    });
+    if (page !== 'home' && page !== currentGame) cart = [];
+    document.querySelectorAll('.nav a').forEach(l => l.classList.toggle('active', l.dataset.page === page));
     if (page === 'home') {
       document.getElementById('page-home').classList.add('active');
       document.getElementById('page-detail').classList.remove('active');
     } else {
       document.getElementById('page-home').classList.remove('active');
       document.getElementById('page-detail').classList.add('active');
-      currentGame = page; 
-      renderDetail(); 
+      currentGame = page; renderDetail(); 
     }
   }
 
-  // ============================================================
-  //  RENDER DETAIL (frontend)
-  // ============================================================
   function renderDetail() {
-    const detailIcon = document.getElementById('detailIcon');
-    const detailTitle = document.getElementById('detailTitle');
-    const zoneGroup = document.getElementById('zoneGroup');
-    const wdpSection = document.getElementById('wdpSection');
-
-    if(currentGame === 'ml') {
-      detailIcon.textContent = '🎯'; 
-      detailTitle.textContent = 'Mobile Legends';
-      zoneGroup.classList.add('show');
-      wdpSection.style.display = 'block';
-    } else {
-      detailIcon.textContent = '🔥'; 
-      detailTitle.textContent = 'Free Fire';
-      zoneGroup.classList.remove('show');
-      wdpSection.style.display = 'none';
-    }
+    document.getElementById('detailIcon').textContent = currentGame === 'ml' ? '🎯' : '🔥';
+    document.getElementById('detailTitle').textContent = currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire';
+    document.getElementById('zoneGroup').classList.toggle('show', currentGame === 'ml');
+    document.getElementById('wdpSection').style.display = currentGame === 'ml' ? 'block' : 'none';
 
     const packageGrid = document.getElementById('packageGrid');
     packageGrid.innerHTML = '';
@@ -536,11 +482,7 @@
       const sel = cart.some(i => i.type === 'diamond' && i.id === pkg.diamond);
       const el = document.createElement('div');
       el.className = `package-item ${sel ? 'selected' : ''}`;
-      el.innerHTML = `
-        <div class="diamond">${pkg.diamond} 💎</div>
-        <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
-        <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
-      `;
+      el.innerHTML = `<div class="diamond">${pkg.diamond} 💎</div><div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div><button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>`;
       el.addEventListener('click', () => toggleItemCart('diamond', pkg.diamond));
       packageGrid.appendChild(el);
     });
@@ -552,11 +494,7 @@
         const sel = cart.some(i => i.type === 'wdp' && i.id === pkg.wdp);
         const el = document.createElement('div');
         el.className = `package-item ${sel ? 'selected' : ''}`;
-        el.innerHTML = `
-          <div class="diamond">${pkg.wdp} WDP</div>
-          <div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div>
-          <button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>
-        `;
+        el.innerHTML = `<div class="diamond">${pkg.wdp} WDP</div><div class="price">Rp ${pkg.price.toLocaleString('id-ID')}</div><button class="btn-add">${sel ? '- Batal' : '+ Pilih'}</button>`;
         el.addEventListener('click', () => toggleItemCart('wdp', pkg.wdp));
         wdpGrid.appendChild(el);
       });
@@ -564,44 +502,22 @@
     renderCart();
   }
 
-  // ============================================================
-  //  KERANJANG
-  // ============================================================
   function toggleItemCart(type, id) {
     const idx = cart.findIndex(i => i.type === type && i.id === id);
-    if(idx >= 0) cart.splice(idx, 1);
-    else cart.push({ type, id, quantity: 1 });
+    if(idx >= 0) cart.splice(idx, 1); else cart.push({ type, id, quantity: 1 });
     renderDetail();
   }
 
-  function hapusItemCart(type, id) {
-    cart = cart.filter(i => !(i.type === type && i.id === id));
-    renderDetail();
-  }
+  function hapusItemCart(type, id) { cart = cart.filter(i => !(i.type === type && i.id === id)); renderDetail(); }
 
   function getCartTruePrices() {
-    const pkgs = getPackages(currentGame);
-    const wdps = getWDPackages(currentGame);
-    let calculatedCart = [];
-    let total = 0;
-    
+    const pkgs = getPackages(currentGame), wdps = getWDPackages(currentGame);
+    let calculatedCart = [], total = 0;
     cart.forEach(item => {
-      let truePrice = 0;
-      let label = '';
-      
-      if (item.type === 'diamond') {
-        const f = pkgs.find(p => p.diamond === item.id);
-        if(f) { truePrice = f.price; label = `${item.id} 💎`; }
-      } else if (item.type === 'wdp') {
-        const f = wdps.find(p => p.wdp === item.id);
-        if(f) { truePrice = f.price; label = `${item.id} WDP`; }
-      }
-
-      if(truePrice > 0) {
-        const sub = truePrice * item.quantity;
-        total += sub;
-        calculatedCart.push({ ...item, label, truePrice, sub });
-      }
+      let truePrice = 0, label = '';
+      if (item.type === 'diamond') { const f = pkgs.find(p => p.diamond === item.id); if(f) { truePrice = f.price; label = `${item.id} 💎`; } } 
+      else if (item.type === 'wdp') { const f = wdps.find(p => p.wdp === item.id); if(f) { truePrice = f.price; label = `${item.id} WDP`; } }
+      if(truePrice > 0) { const sub = truePrice * item.quantity; total += sub; calculatedCart.push({ ...item, label, truePrice, sub }); }
     });
     return { calculatedCart, total };
   }
@@ -609,99 +525,71 @@
   function renderCart() {
     const cartItemsDiv = document.getElementById('cartItems');
     const { calculatedCart, total } = getCartTruePrices();
-
     if(!calculatedCart.length) {
       cartItemsDiv.innerHTML = `<div class="cart-empty">Belum ada pilihan</div>`;
-      document.getElementById('cartTotal').textContent = 'Rp 0'; 
-      document.getElementById('checkoutTotal').textContent = 'Rp 0';
-      document.getElementById('orderButtonTotal').textContent = 'Rp 0';
-      document.getElementById('cartItemCount').textContent = '0 item';
-      document.getElementById('btnCheckout').disabled = true;
-      document.getElementById('btnOrder').disabled = true;
+      document.getElementById('cartTotal').textContent = 'Rp 0'; document.getElementById('checkoutTotal').textContent = 'Rp 0'; document.getElementById('orderButtonTotal').textContent = 'Rp 0';
+      document.getElementById('cartItemCount').textContent = '0 item'; document.getElementById('btnCheckout').disabled = true; document.getElementById('btnOrder').disabled = true;
       return;
     }
-
     let html = '';
-    calculatedCart.forEach(i => {
-      html += `<div class="cart-item">
-        <span class="name">${i.label}</span>
-        <span class="subtotal">Rp ${i.sub.toLocaleString('id-ID')}</span>
-        <button class="remove-btn" onclick="hapusItemCart('${i.type}', ${i.id})">✕</button>
-      </div>`;
-    });
-
+    calculatedCart.forEach(i => { html += `<div class="cart-item"><span class="name">${i.label}</span><span class="subtotal">Rp ${i.sub.toLocaleString('id-ID')}</span><button class="remove-btn" onclick="hapusItemCart('${i.type}', ${i.id})">✕</button></div>`; });
     cartItemsDiv.innerHTML = html;
     const totalStr = `Rp ${total.toLocaleString('id-ID')}`;
-    document.getElementById('cartTotal').textContent = totalStr;
-    document.getElementById('checkoutTotal').textContent = totalStr;
-    document.getElementById('orderButtonTotal').textContent = totalStr;
-    document.getElementById('cartItemCount').textContent = `${calculatedCart.length} item`;
-    document.getElementById('btnCheckout').disabled = false;
-    document.getElementById('btnOrder').disabled = false;
+    document.getElementById('cartTotal').textContent = totalStr; document.getElementById('checkoutTotal').textContent = totalStr; document.getElementById('orderButtonTotal').textContent = totalStr;
+    document.getElementById('cartItemCount').textContent = `${calculatedCart.length} item`; document.getElementById('btnCheckout').disabled = false; document.getElementById('btnOrder').disabled = false;
   }
 
-  function scrollToForm() { 
-    document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); 
-  }
+  function scrollToForm() { document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth' }); }
+  function downloadQRIS() { const img = document.querySelector('#paymentDetail img'); if (!img) return alert('Gambar QRIS tidak ditemukan.'); const link = document.createElement('a'); link.href = img.src; link.download = 'QRIS_DRIUP.png'; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
 
-  // ============================================================
-  //  DOWNLOAD QRIS
-  // ============================================================
-  function downloadQRIS() {
-    const img = document.querySelector('#paymentDetail img');
-    if (!img) return alert('Gambar QRIS tidak ditemukan.');
-    const link = document.createElement('a');
-    link.href = img.src;
-    link.download = 'QRIS_DRIUP.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  // ============================================================
-  //  UPLOAD BUKTI
-  // ============================================================
   let buktiDataURL = null;
-
   function handleBuktiUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    const file = event.target.files[0]; if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
-      buktiDataURL = e.target.result;
-      const preview = document.getElementById('buktiPreview');
-      preview.innerHTML = `<img src="${buktiDataURL}" class="preview" /><div class="file-name">${file.name}</div>`;
-      document.getElementById('removeBuktiBtn').style.display = 'inline-block';
-    };
+    reader.onload = function(e) { buktiDataURL = e.target.result; document.getElementById('buktiPreview').innerHTML = `<img src="${buktiDataURL}" class="preview" /><div class="file-name">${file.name}</div>`; document.getElementById('removeBuktiBtn').style.display = 'inline-block'; };
     reader.readAsDataURL(file);
   }
-
-  function removeBukti() {
-    buktiDataURL = null;
-    document.getElementById('buktiPreview').innerHTML = '';
-    document.getElementById('buktiFile').value = '';
-    document.getElementById('removeBuktiBtn').style.display = 'none';
-  }
-
-  // ============================================================
-  //  VALIDASI FORM
-  // ============================================================
+  function removeBukti() { buktiDataURL = null; document.getElementById('buktiPreview').innerHTML = ''; document.getElementById('buktiFile').value = ''; document.getElementById('removeBuktiBtn').style.display = 'none'; }
+  
   function validateForm() {
     let ok = true;
     const fields = [document.getElementById('idGame'), document.getElementById('namaLengkap'), document.getElementById('waNumber')];
     if (currentGame === 'ml') fields.push(document.getElementById('zoneGame'));
-    
-    fields.forEach(inp => {
-      const g = inp.closest('.form-group');
-      if (!inp.value.trim()) { ok = false; g.classList.add('error'); }
-      else g.classList.remove('error');
-      inp.oninput = () => g.classList.remove('error');
-    });
+    fields.forEach(inp => { const g = inp.closest('.form-group'); if (!inp.value.trim()) { ok = false; g.classList.add('error'); } else g.classList.remove('error'); inp.oninput = () => g.classList.remove('error'); });
     return ok;
   }
 
   // ============================================================
-  //  PESAN SEKARANG (FIREBASE + VERCEL API TELEGRAM)
+  //  FITUR HITUNG MUNDUR (COUNTDOWN TIMER)
+  // ============================================================
+  function clearTimers() { activeIntervals.forEach(clearInterval); activeIntervals = []; }
+  
+  function startCountdown(expireTime, elementId, orderId, status) {
+    const el = document.getElementById(elementId);
+    if (!el || status !== 'Proses') return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const diff = expireTime - now;
+
+      if (diff <= 0) {
+        clearInterval(interval);
+        el.innerHTML = '<span style="color:#d97a6a; font-weight:bold;">Waktu Habis (Kadaluarsa)</span>';
+        // Otomatis ubah status di database jika waktu habis
+        db.ref('orders/' + orderId).update({ status: 'Kadaluarsa' }); 
+      } else {
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        el.innerHTML = `<div style="background:rgba(230,184,126,0.1); padding:8px 12px; border-radius:8px; margin-top:12px; border:1px solid #e6b87e;">
+          ⏳ Sisa waktu bayar: <span style="color:#e6b87e; font-weight:bold; font-size:16px;">${m}m ${s}s</span>
+        </div>`;
+      }
+    }, 1000);
+    activeIntervals.push(interval);
+  }
+
+  // ============================================================
+  //  PESAN SEKARANG
   // ============================================================
   function pesanSekarang() {
     const { calculatedCart, total } = getCartTruePrices();
@@ -714,103 +602,57 @@
     const wa = document.getElementById('waNumber').value.trim();
     const gameName = currentGame === 'ml' ? 'Mobile Legends' : 'Free Fire';
     const itemsBeli = calculatedCart.map(c => c.label).join(', ');
-    const bukti = buktiDataURL || null;
-
     const orderId = 'DRIUP-' + Date.now().toString().slice(-6);
     
+    // Set kadaluarsa 1 Jam (3.600.000 ms) dari sekarang
+    const expiredAt = Date.now() + 3600000; 
+
     const orderData = {
-      id: orderId,
-      game: gameName,
-      items: itemsBeli,
-      total: total,
-      status: 'Menunggu Pembayaran',
-      tgl: new Date().toLocaleDateString('id-ID'),
-      data: { idg, zone, nama, wa },
-      bukti: bukti
+      id: orderId, game: gameName, items: itemsBeli, total: total, status: 'Proses', tgl: new Date().toLocaleDateString('id-ID'),
+      data: { idg, zone, nama, wa }, bukti: buktiDataURL || null, expiredAt: expiredAt
     };
 
-    // SIMPAN KE FIREBASE (DATABASE GLOBAL)
+    // SIMPAN KE FIREBASE
     db.ref('orders/' + orderId).set(orderData).then(() => {
-      
-      // KIRIM KE VERCEL API TELEGRAM SECARA AMAN
+      // KIRIM KE API TELEGRAM
       fetch('/api/telegram', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti }) // <--- Tambahkan 'bukti' di sini
-      }).catch(e => console.log('Notifikasi background berjalan'));
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti: buktiDataURL, expiredAt })
+      }).catch(e => console.log('Notif bg berjalan'));
 
-      // Tampil Modal Sukses
       document.getElementById('orderSummary').innerHTML = `
-        <strong>ID Pesanan:</strong> ${orderId} 
-        <button class="copy-btn" onclick="copyText('${orderId}')">📋 Copy</button><br>
-        <strong>Game:</strong> ${gameName}<br>
-        <strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}
+        <strong>ID Pesanan:</strong> ${orderId} <button class="copy-btn" onclick="copyText('${orderId}')">📋 Copy</button><br>
+        <strong>Game:</strong> ${gameName}<br><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}
+        <div id="successTimer_${orderId}"></div>
       `;
       
-      const steps = ['Menunggu Pembayaran', 'Diproses', 'Selesai'];
-      document.getElementById('statusTimeline').innerHTML = steps.map((s, i) => `
-        <div class="status-step ${i===0?'done':''}">
-          <span class="dot ${i===0?'done active':''}"></span>
-          <span class="step-label ${i===0?'active-label':''}">${s}</span>
-        </div>
-      `).join('');
+      const steps = ['Proses', 'Sukses'];
+      document.getElementById('statusTimeline').innerHTML = steps.map((s, i) => `<div class="status-step ${i===0?'done':''}"><span class="dot ${i===0?'done active':''}"></span><span class="step-label ${i===0?'active-label':''}">${s}</span></div>`).join('');
       
-      if (isAdmin) {
-        document.getElementById('adminActionArea').innerHTML = `
-          <button class="btn-confirm" onclick="accOrder('${orderId}'); closeModal();">
-            ✅ Tandai Selesai (Admin)
-          </button>`;
-      } else { document.getElementById('adminActionArea').innerHTML = ''; }
+      if (isAdmin) document.getElementById('adminActionArea').innerHTML = `<button class="btn-confirm" onclick="accOrder('${orderId}'); closeModal();">✅ ACC Sukses (Admin)</button>`;
+      else document.getElementById('adminActionArea').innerHTML = '';
 
       document.getElementById('successModal').classList.add('open');
-      cart = []; 
-      renderDetail();
-      removeBukti();
-      ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
-    }).catch(err => {
-      alert('Gagal membuat pesanan ke database: ' + err.message);
-    });
+      
+      clearTimers();
+      startCountdown(expiredAt, `successTimer_${orderId}`, orderId, 'Proses');
+
+      cart = []; renderDetail(); removeBukti(); ['idGame','zoneGame','namaLengkap','waNumber'].forEach(i => document.getElementById(i).value = '');
+    }).catch(err => alert('Gagal membuat pesanan: ' + err.message));
   }
 
-  function closeModal() {
-    document.getElementById('successModal').classList.remove('open');
-    navigateTo('home');
-  }
+  function closeModal() { document.getElementById('successModal').classList.remove('open'); clearTimers(); navigateTo('home'); }
+  function copyText(text) { if (navigator.clipboard) { navigator.clipboard.writeText(text).then(() => alert('✅ Teks berhasil disalin!')).catch(() => fallbackCopy(text)); } else { fallbackCopy(text); } }
+  function fallbackCopy(text) { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); alert('✅ Teks disalin!'); } catch(e) {} document.body.removeChild(ta); }
 
-  // ============================================================
-  //  COPY TEKS
-  // ============================================================
-  function copyText(text) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('✅ Teks berhasil disalin!');
-      }).catch(() => fallbackCopy(text));
-    } else { fallbackCopy(text); }
-  }
-
-  function fallbackCopy(text) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed'; ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); alert('✅ Teks berhasil disalin!'); } catch(e) { alert('❌ Gagal menyalin.'); }
-    document.body.removeChild(ta);
-  }
+  function openCekModal() { document.getElementById('cekModal').classList.add('open'); document.getElementById('cekResult').innerHTML = ''; document.getElementById('cekError').style.display = 'none'; clearTimers(); }
+  function closeCekModal() { document.getElementById('cekModal').classList.remove('open'); clearTimers(); }
 
   // ============================================================
-  //  CEK PESANAN (DARI FIREBASE)
+  //  CEK PESANAN (Menampilkan Status & Timer)
   // ============================================================
-  function openCekModal() { 
-    document.getElementById('cekModal').classList.add('open'); 
-    document.getElementById('cekResult').innerHTML = ''; 
-    document.getElementById('cekError').style.display = 'none'; 
-  }
-  function closeCekModal() { 
-    document.getElementById('cekModal').classList.remove('open'); 
-  }
-
   function cekPesanan() {
+    clearTimers();
     const id = document.getElementById('cekId').value.trim().toUpperCase();
     const errorEl = document.getElementById('cekError');
     const resDiv = document.getElementById('cekResult');
@@ -818,192 +660,71 @@
     
     db.ref('orders/' + id).once('value', (snapshot) => {
       const order = snapshot.val();
-      if (!order) {
-        errorEl.textContent = '⚠️ Pesanan tidak ditemukan.';
-        errorEl.style.display = 'block';
-        resDiv.innerHTML = '';
-        return;
-      }
+      if (!order) { errorEl.textContent = '⚠️ Pesanan tidak ditemukan.'; errorEl.style.display = 'block'; resDiv.innerHTML = ''; return; }
       
       errorEl.style.display = 'none';
-      const sC = order.status === 'Selesai' ? '#6a9e7a' : '#e6b87e';
+      let sC = order.status === 'Sukses' ? '#6a9e7a' : (order.status === 'Kadaluarsa' ? '#d97a6a' : '#e6b87e');
+      
       let html = `
         <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">ID</span> <span style="float:right; color:#f0e6dc;">${order.id} <button class="copy-btn" onclick="copyText('${order.id}')">📋 Copy</button></span></div>
         <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Game</span> <span style="float:right; color:#f0e6dc;">${order.game}</span></div>
         <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Item</span> <span style="float:right; color:#f0e6dc;">${order.items}</span></div>
         <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Total</span> <span style="float:right; color:#f0e6dc;">Rp ${order.total.toLocaleString('id-ID')}</span></div>
         <div style="border-bottom:1px solid #2e2723; padding:5px 0"><span style="color:#a79a8e;">Status</span> <span style="float:right; color:${sC}; font-weight:bold;">${order.status}</span></div>
+        <div id="cekTimer_${order.id}"></div>
       `;
-      if (order.bukti) {
-        html += `<div style="padding:8px 0; border-bottom:1px solid #2e2723;">
-          <span style="color:#a79a8e;">Bukti Transfer:</span><br>
-          <img src="${order.bukti}" style="max-width:150px; border-radius:8px; border:1px solid #3d3530; margin-top:4px;" />
-        </div>`;
-      }
-      if (isAdmin && order.status !== 'Selesai') {
-        html += `<button class="btn-confirm" onclick="accOrder('${order.id}'); cekPesanan();" style="margin-top:12px;">✅ Konfirmasi Pembayaran</button>`;
-      }
+      if (order.bukti) html += `<div style="padding:8px 0; border-bottom:1px solid #2e2723;"><span style="color:#a79a8e;">Bukti Transfer:</span><br><img src="${order.bukti}" style="max-width:150px; border-radius:8px; border:1px solid #3d3530; margin-top:4px;" /></div>`;
+      if (isAdmin && order.status === 'Proses') html += `<button class="btn-confirm" onclick="accOrder('${order.id}'); cekPesanan();" style="margin-top:12px;">✅ ACC (Sukses)</button>`;
+      
       resDiv.innerHTML = html;
+      
+      // Jalankan hitung mundur jika status masih Proses
+      if (order.status === 'Proses' && order.expiredAt) {
+        startCountdown(order.expiredAt, `cekTimer_${order.id}`, order.id, order.status);
+      }
     });
   }
 
-  // ============================================================
-  //  ADMIN: LIHAT SEMUA PESANAN (GLOBAL FIREBASE)
-  // ============================================================
   function showAllOrders() {
     if (!isAdmin) return;
     db.ref('orders').once('value', (snapshot) => {
-      const orders = snapshot.val();
-      const list = document.getElementById('allOrdersList');
+      const orders = snapshot.val(), list = document.getElementById('allOrdersList');
       if (!orders) { list.innerHTML = '<p style="color:#7a6e62;">Belum ada pesanan.</p>'; } 
       else {
-        let html = `<table class="order-table"><thead><tr><th>ID</th><th>Game</th><th>Item</th><th>Total</th><th>Status</th><th>Bukti</th><th>Aksi</th></tr></thead><tbody>`;
-        const ordersArray = Object.keys(orders).map(key => orders[key]);
-        ordersArray.reverse().forEach(o => {
-          const sC = o.status === 'Selesai' ? 'status-selesai' : 'status-menunggu';
-          const buktiHtml = o.bukti ? `<img src="${o.bukti}" style="max-width:60px; max-height:60px; border-radius:6px;" />` : '-';
-          html += `<tr>
-            <td>${o.id}</td><td>${o.game}</td><td>${o.items}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td>
-            <td><span class="status-badge ${sC}">${o.status}</span></td>
-            <td>${buktiHtml}</td>
-            <td><button class="btn-sm" ${o.status === 'Selesai' ? 'disabled' : ''} onclick="accOrder('${o.id}'); showAllOrders();">✅ ACC</button></td>
-          </tr>`;
+        let html = `<table class="order-table"><thead><tr><th>ID</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody>`;
+        Object.keys(orders).map(k => orders[k]).reverse().forEach(o => {
+          const sC = o.status === 'Sukses' ? 'status-selesai' : (o.status === 'Kadaluarsa' ? 'status-batal' : 'status-menunggu');
+          html += `<tr><td>${o.id}</td><td>Rp ${o.total.toLocaleString('id-ID')}</td><td><span class="status-badge ${sC}">${o.status}</span></td><td><button class="btn-sm" ${o.status !== 'Proses' ? 'disabled' : ''} onclick="accOrder('${o.id}'); showAllOrders();">✅ ACC</button></td></tr>`;
         });
         list.innerHTML = html + `</tbody></table>`;
       }
       document.getElementById('allOrdersModal').classList.add('open');
     });
   }
+  function closeAllOrdersModal() { document.getElementById('allOrdersModal').classList.remove('open'); }
   
-  function closeAllOrdersModal() { 
-    document.getElementById('allOrdersModal').classList.remove('open'); 
+  function accOrder(id) { 
+    if(!confirm(`ACC pesanan ${id} menjadi SUKSES?`)) return; 
+    db.ref('orders/' + id).update({ status: 'Sukses' }).then(() => { 
+      alert('✅ Pesanan Berhasil Berstatus Sukses!'); 
+      if (document.getElementById('allOrdersModal').classList.contains('open')) showAllOrders(); 
+    }); 
   }
 
-  function accOrder(id) {
-    if(!confirm(`Konfirmasi pesanan ${id} menjadi Selesai?`)) return;
-    db.ref('orders/' + id).update({ status: 'Selesai' }).then(() => {
-      alert('✅ Pesanan Berhasil Diselesaikan!');
-      if (document.getElementById('allOrdersModal').classList.contains('open')) showAllOrders();
-    });
-  }
+  function toggleManage() { if (!isAdmin) return alert('Bukan admin!'); manageGame = currentGame; switchManageGame(manageGame); document.getElementById('manageModal').classList.add('open'); }
+  function switchManageGame(game) { manageGame = game; document.getElementById('gameTabML').classList.toggle('active', game === 'ml'); document.getElementById('gameTabFF').classList.toggle('active', game === 'ff'); switchManageTab('diamond'); }
+  function switchManageTab(tab) { manageTab = tab; document.getElementById('tabDiamondBtn').classList.toggle('active', tab === 'diamond'); document.getElementById('tabWDPBtn').classList.toggle('active', tab === 'wdp'); document.getElementById('manageDiamondContent').style.display = tab === 'diamond' ? 'block' : 'none'; document.getElementById('manageWDPContent').style.display = tab === 'wdp' ? 'block' : 'none'; if(tab === 'diamond') renderAdminPackageList(); if(tab === 'wdp') renderAdminWDPList(); }
+  
+  function renderAdminPackageList() { const list = document.getElementById('packageList'), pkg = getPackages(manageGame); if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; } let html = ''; pkg.forEach((p, idx) => { html += `<div class="manage-item"><span class="info">${p.diamond} 💎 → Rp ${p.price.toLocaleString('id-ID')}</span><button class="btn-del" onclick="hapusPackage(${idx})">✕</button></div>`; }); list.innerHTML = html; }
+  function addPackage() { const d = parseInt(document.getElementById('newDiamond').value, 10), p = parseInt(document.getElementById('newPrice').value, 10); if (isNaN(d) || d < 1 || isNaN(p) || p < 100) return alert('Input angka valid.'); const pkg = getPackages(manageGame); if (pkg.some(item => item.diamond === d)) return alert('Ada!'); pkg.push({ diamond: d, price: p }); pkg.sort((a,b) => a.diamond - b.diamond); savePackages(manageGame, pkg); document.getElementById('newDiamond').value = ''; document.getElementById('newPrice').value = ''; renderAdminPackageList(); renderDetail(); }
+  function hapusPackage(idx) { const pkg = getPackages(manageGame); hapusItemCart('diamond', pkg[idx].diamond); pkg.splice(idx, 1); savePackages(manageGame, pkg); renderAdminPackageList(); renderDetail(); }
+  
+  function renderAdminWDPList() { const list = document.getElementById('wdpList'); if (manageGame !== 'ml') { list.innerHTML = '<p style="color:#7a6e62;">Fitur WDP hanya untuk ML.</p>'; return; } const pkg = getWDPackages(manageGame); if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; } let html = ''; pkg.forEach((p, idx) => { html += `<div class="manage-item"><span class="info">${p.wdp} WDP → Rp ${p.price.toLocaleString('id-ID')}</span><button class="btn-del" onclick="hapusWDPackage(${idx})">✕</button></div>`; }); list.innerHTML = html; }
+  function addWDPackage() { if (manageGame !== 'ml') return alert('Hanya ML'); const w = parseInt(document.getElementById('newWDP').value, 10), p = parseInt(document.getElementById('newWDPPrice').value, 10); if (isNaN(w) || w < 1 || isNaN(p) || p < 100) return alert('Input angka valid.'); const pkg = getWDPackages(manageGame); if (pkg.some(item => item.wdp === w)) return alert('Ada!'); pkg.push({ wdp: w, price: p }); pkg.sort((a,b) => a.wdp - b.wdp); saveWDPackages(manageGame, pkg); document.getElementById('newWDP').value = ''; document.getElementById('newWDPPrice').value = ''; renderAdminWDPList(); renderDetail(); }
+  function hapusWDPackage(idx) { const pkg = getWDPackages(manageGame); hapusItemCart('wdp', pkg[idx].wdp); pkg.splice(idx, 1); saveWDPackages(manageGame, pkg); renderAdminWDPList(); renderDetail(); }
 
-  // ============================================================
-  //  ADMIN: KELOLA PAKET (DIAMOND & WDP)
-  // ============================================================
-  function toggleManage() {
-    if (!isAdmin) { alert('Anda bukan admin!'); return; }
-    manageGame = currentGame;
-    switchManageGame(manageGame);
-    document.getElementById('manageModal').classList.add('open');
-  }
-
-  function switchManageGame(game) {
-    manageGame = game;
-    document.getElementById('gameTabML').classList.toggle('active', game === 'ml');
-    document.getElementById('gameTabFF').classList.toggle('active', game === 'ff');
-    switchManageTab('diamond');
-  }
-
-  function switchManageTab(tab) {
-    manageTab = tab;
-    document.getElementById('tabDiamondBtn').classList.toggle('active', tab === 'diamond');
-    document.getElementById('tabWDPBtn').classList.toggle('active', tab === 'wdp');
-    document.getElementById('manageDiamondContent').style.display = tab === 'diamond' ? 'block' : 'none';
-    document.getElementById('manageWDPContent').style.display = tab === 'wdp' ? 'block' : 'none';
-    
-    if(tab === 'diamond') renderAdminPackageList();
-    if(tab === 'wdp') renderAdminWDPList();
-  }
-
-  function renderAdminPackageList() {
-    const list = document.getElementById('packageList');
-    const pkg = getPackages(manageGame);
-    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
-    let html = '';
-    pkg.forEach((p, idx) => {
-      html += `<div class="manage-item">
-        <span class="info">${p.diamond} 💎 → Rp ${p.price.toLocaleString('id-ID')}</span>
-        <button class="btn-del" onclick="hapusPackage(${idx})">✕</button>
-      </div>`;
-    });
-    list.innerHTML = html;
-  }
-
-  function addPackage() {
-    const d = parseInt(document.getElementById('newDiamond').value, 10);
-    const p = parseInt(document.getElementById('newPrice').value, 10);
-    if (isNaN(d) || d < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
-    
-    const pkg = getPackages(manageGame);
-    if (pkg.some(item => item.diamond === d)) return alert('Diamond sudah ada!');
-    
-    pkg.push({ diamond: d, price: p });
-    pkg.sort((a,b) => a.diamond - b.diamond);
-    savePackages(manageGame, pkg);
-    document.getElementById('newDiamond').value = ''; document.getElementById('newPrice').value = '';
-    renderAdminPackageList(); renderDetail();
-  }
-
-  function hapusPackage(idx) {
-    const pkg = getPackages(manageGame);
-    hapusItemCart('diamond', pkg[idx].diamond);
-    pkg.splice(idx, 1);
-    savePackages(manageGame, pkg);
-    renderAdminPackageList(); renderDetail();
-  }
-
-  function renderAdminWDPList() {
-    const list = document.getElementById('wdpList');
-    if (manageGame !== 'ml') { 
-        list.innerHTML = '<p style="color:#7a6e62;">Fitur WDP hanya untuk ML.</p>'; 
-        return; 
-    }
-    const pkg = getWDPackages(manageGame);
-    if (!pkg.length) { list.innerHTML = '<p style="color:#7a6e62;">Kosong.</p>'; return; }
-    let html = '';
-    pkg.forEach((p, idx) => {
-      html += `<div class="manage-item">
-        <span class="info">${p.wdp} WDP → Rp ${p.price.toLocaleString('id-ID')}</span>
-        <button class="btn-del" onclick="hapusWDPackage(${idx})">✕</button>
-      </div>`;
-    });
-    list.innerHTML = html;
-  }
-
-  function addWDPackage() {
-    if (manageGame !== 'ml') return alert('Hanya untuk ML');
-    const w = parseInt(document.getElementById('newWDP').value, 10);
-    const p = parseInt(document.getElementById('newWDPPrice').value, 10);
-    if (isNaN(w) || w < 1 || isNaN(p) || p < 100) return alert('Input angka valid (Min harga 100).');
-    
-    const pkg = getWDPackages(manageGame);
-    if (pkg.some(item => item.wdp === w)) return alert('Jumlah WDP sudah ada!');
-    
-    pkg.push({ wdp: w, price: p });
-    pkg.sort((a,b) => a.wdp - b.wdp);
-    saveWDPackages(manageGame, pkg);
-    document.getElementById('newWDP').value = ''; document.getElementById('newWDPPrice').value = '';
-    renderAdminWDPList(); renderDetail();
-  }
-
-  function hapusWDPackage(idx) {
-    const pkg = getWDPackages(manageGame);
-    hapusItemCart('wdp', pkg[idx].wdp);
-    pkg.splice(idx, 1);
-    saveWDPackages(manageGame, pkg);
-    renderAdminWDPList(); renderDetail();
-  }
-
-  // ============================================================
-  //  INIT
-  // ============================================================
   navigateTo('home');
-
-  document.querySelectorAll('.modal-overlay').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
-    });
-  });
+  document.querySelectorAll('.modal-overlay').forEach(modal => { modal.addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('open'); clearTimers(); } }); });
 </script>
 </body>
 </html>
