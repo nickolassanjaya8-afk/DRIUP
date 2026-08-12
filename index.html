@@ -305,7 +305,7 @@
         </div>
 
         <!-- Tombol Lanjut (Menggantikan tombol Pesan Sekarang di tahap 1) -->
-        <button class="btn-order" id="btnLanjut" onclick="lanjutPembayaran()" disabled>
+        <button class="btn-order" id="btnLanjut" onclick="lanjutPembayaran()">
           Lanjut ke Pembayaran ➔
         </button>
       </div>
@@ -673,11 +673,8 @@
 
     // SIMPAN KE FIREBASE
     db.ref('orders/' + orderId).set(orderData).then(() => {
-      // KIRIM KE API TELEGRAM
-      fetch('/api/telegram', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti: buktiDataURL, expiredAt })
-      }).catch(e => console.log('Notif bg berjalan'));
+      // KIRIM KE API TELEGRAM (jika ada)
+      // fetch('/api/telegram', ...) // opsional
 
       document.getElementById('orderSummary').innerHTML = `
         <strong>ID Pesanan:</strong> ${orderId} <button class="copy-btn" onclick="copyText('${orderId}')">📋 Copy</button><br>
@@ -786,6 +783,7 @@
   function addWDPackage() { if (manageGame !== 'ml') return alert('Hanya ML'); const w = parseInt(document.getElementById('newWDP').value, 10), p = parseInt(document.getElementById('newWDPPrice').value, 10); if (isNaN(w) || w < 1 || isNaN(p) || p < 100) return alert('Input angka valid.'); const pkg = getWDPackages(manageGame); if (pkg.some(item => item.wdp === w)) return alert('Ada!'); pkg.push({ wdp: w, price: p }); pkg.sort((a,b) => a.wdp - b.wdp); saveWDPackages(manageGame, pkg); document.getElementById('newWDP').value = ''; document.getElementById('newWDPPrice').value = ''; renderAdminWDPList(); renderDetail(); }
   function hapusWDPackage(idx) { const pkg = getWDPackages(manageGame); hapusItemCart('wdp', pkg[idx].wdp); pkg.splice(idx, 1); saveWDPackages(manageGame, pkg); renderAdminWDPList(); renderDetail(); }
 
+  // Inisialisasi
   navigateTo('home');
   document.querySelectorAll('.modal-overlay').forEach(modal => { modal.addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('open'); clearTimers(); } }); });
 </script>
