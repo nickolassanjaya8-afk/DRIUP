@@ -1,36 +1,35 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method tidak diizinkan' });
+  if (req.method !== 'POST') return res.status(405).send();
 
   try {
-    const data = req.body; // Terima data langsung dari frontend
-    const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-    const CHAT_ID_ENV = process.env.CHAT_ID;
+    const update = req.body;
+    if (update.callback_query && update.callback_query.data.startsWith('ACC_')) {
+      const orderId = update.callback_query.data.replace('ACC_', '');
+      const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
-    // Ambil data (perhatikan data.data.idg karena data berada dalam objek 'data')
-    const orderId = data.id;
-    const gameName = data.game;
-    const itemsBeli = data.items;
-    const total = data.total;
-    const nama = data.data?.nama || '-';
-    const wa = data.data?.wa || '-';
-    const idg = data.data?.idg || '-';
-    const zone = data.data?.zone || '-';
+      // Update Firebase
+      const firebaseUrl = `https://driup-39411-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${orderId}.json`;
+      await fetch(firebaseUrl, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'Sukses' })
+      });
 
-    const caption = `🔔 *PESANAN BARU MASUK!* 🔔\n\n*ID:* \`${orderId}\`\n*Game:* ${gameName}\n*Item:* ${itemsBeli}\n*Total:* Rp ${total.toLocaleString('id-ID')}\n\n👤 Nama: ${nama}\n📱 WA: ${wa}\n🎮 ID Game: \`${idg}\`\n📍 Zona: \`${zone}\``;
-
-    const replyMarkup = { inline_keyboard: [[{ text: '✅ ACC Pesanan', callback_data: `ACC_${orderId}` }]] };
-
-    const chatIds = CHAT_ID_ENV.split(',').map(id => id.trim());
-    await Promise.all(chatIds.map(chatId => 
-      fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      // Update Pesan Telegram (tambahkan status sukses)
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/editMessageCaption`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: caption, parse_mode: 'Markdown', reply_markup: replyMarkup })
-      })
-    ));
-
-    res.status(200).json({ success: true });
+        body: JSON.stringify({
+          chat_id: update.callback_query.message.chat.id,
+          message_id: update.callback_query.message.message_id,
+          caption: update.callback_query.message.caption + "\n\n✅ *STATUS: SUKSES (Telah di-ACC)*",
+          parse_mode: 'Markdown',
+          reply_markup: { inline_keyboard: [] } 
+        })
+      });
+    }
+    res.status(200).send("OK");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).send(error.message);
   }
 }
