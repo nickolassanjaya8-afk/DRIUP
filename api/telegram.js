@@ -1,56 +1,83 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  const { orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti, expiredAt } = req.body;
-  const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-  const CHAT_ID = process.env.CHAT_ID;
-
-  if (!TELEGRAM_TOKEN || !CHAT_ID) return res.status(500).json({ error: 'Token belum diatur' });
-
-  // Format jam kadaluarsa (WIB)
-  const expireDate = new Date(expiredAt).toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
-
-  const textTelegram = `🔔 *PESANAN BARU!* 🔔
-
-*ID:* ${orderId}
-*Game:* ${gameName}
-*Item:* ${itemsBeli}
-*Total:* Rp ${total.toLocaleString('id-ID')}
-
-⏳ *Batas Waktu:* 1 Jam (Hingga ${expireDate} WIB)
-
-👤 *Pembeli:* ${nama}
-📱 *WA:* ${wa}
-🎮 *ID Game:* ${idg} / ${zone || '-'}`;
-
-  const replyMarkup = {
-    inline_keyboard: [[{ text: "✅ ACC Pesanan (Sukses)", callback_data: `acc_${orderId}` }]]
-  };
+  // Hanya menerima metode POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method tidak diizinkan' });
+  }
 
   try {
-    if (bukti && bukti.startsWith('data:image')) {
-      const base64Data = bukti.split(',')[1];
-      const buffer = Buffer.from(base64Data, 'base64');
-      const blob = new Blob([buffer], { type: 'image/jpeg' });
+    const { orderId, gameName, itemsBeli, total, nama, wa, idg, zone, bukti } = req.body;
+    
+    const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
+    const CHAT_ID = process.env.CHAT_ID;
 
-      const formData = new FormData();
-      formData.append('chat_id', CHAT_ID);
-      formData.append('photo', blob, 'bukti.jpg');
-      formData.append('caption', textTelegram);
-      formData.append('parse_mode', 'Markdown');
-      formData.append('reply_markup', JSON.stringify(replyMarkup));
-
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
-    } else {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: textTelegram, parse_mode: 'Markdown', reply_markup: replyMarkup })
-      });
+    // Pastikan variabel lingkungan sudah ada
+    if (!TELEGRAM_TOKEN || !CHAT_ID) {
+      return res.status(500).json({ error: 'Token atau Chat ID belum disetting di Vercel.' });
     }
-    return res.status(200).json({ success: true });
+
+    // Susun pesan notifikasi
+    const caption = `
+🔔 *PESANAN BARU MASUK!* 🔔
+
+*ID Pesanan:* \`${orderId}\`
+*Game:* ${gameName}
+*Item:* ${itemsBeli}
+*Total Harga:* Rp ${total.toLocaleString('id-ID')}
+
+*Data Pembeli:*
+👤 Nama: ${nama}
+📱 WA: ${wa}
+
+*Data Game:*
+🎮 ID Game: \`${idg}\`
+📍 Zona: \`${zone || '-'}\`
+
+Silakan cek bukti transfer di bawah ini 👇
+    `;
+
+    // 1. TERJEMAHKAN BUKTI (BASE64) MENJADI FILE GAMBAR (BUFFER)
+    // Hapus header data base64 (misal: "data:image/jpeg;base64,")
+    const base64Data = bukti.replace(/^data:image\/\w+;base64,/, "");
+    // Ubah jadi buffer
+    const imageBuffer = Buffer.from(base64Data, 'base64');
+    // Ubah jadi blob (format yang bisa dikirim via Fetch)
+    const blob = new Blob([imageBuffer], { type: 'image/jpeg' });
+
+    // 2. SIAPKAN PENGIRIMAN MULTIPART FORM-DATA KE TELEGRAM
+    const formData = new FormData();
+    formData.append('chat_id', CHAT_ID);
+    formData.append('caption', caption);
+    formData.append('parse_mode', 'Markdown');
+    formData.append('photo', blob, 'bukti_transfer.jpg');
+    
+    // 3. TAMBAHKAN TOMBOL ACC (Webhook)
+    const replyMarkup = {
+      inline_keyboard: [
+        [{ text: '✅ ACC Pesanan (Sukses)', callback_data: `ACC_${orderId}` }]
+      ]
+    };
+    formData.append('reply_markup', JSON.stringify(replyMarkup));
+
+    // 4. KIRIM KE TELEGRAM
+    const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`;
+
+    const response = await fetch(telegramUrl, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      console.error('Error dari Telegram:', data);
+      return res.status(500).json({ error: 'Gagal kirim ke Telegram', details: data });
+    }
+
+    // Jika berhasil
+    res.status(200).json({ success: true, message: 'Notifikasi berhasil terkirim!' });
+
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Gagal' });
+    console.error('Server Error:', error);
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 }
