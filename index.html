@@ -35,7 +35,29 @@
     @keyframes slideUp { 0% { opacity: 0; transform: translateY(15px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 
     /* =================== SLIDER BANNER =================== */
-    .slider-wrapper { margin: -24px -20px 20px -20px; border-top-left-radius: 28px; border-top-right-radius: 28px; overflow: hidden; background: #1a1614; border-bottom: 2px solid #3d3530; height: 180px; position: relative; }
+    /* Update CSS Banner agar tidak terpotong */
+.slider-wrapper { 
+  margin: -24px -20px 20px -20px; 
+  border-top-left-radius: 28px; 
+  border-top-right-radius: 28px; 
+  overflow: hidden; 
+  background: #1a1614; 
+  border-bottom: 2px solid #3d3530; 
+  height: 200px; /* Ditinggikan dari 180 ke 200 */
+  position: relative; 
+}
+.slide { 
+  width: 100%; 
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  opacity: 0; 
+  transition: opacity 0.8s ease-in-out; 
+  object-fit: contain; /* Menggunakan contain agar seluruh gambar terlihat */
+  background-color: #1a1614; 
+}
+ { margin: -24px -20px 20px -20px; border-top-left-radius: 28px; border-top-right-radius: 28px; overflow: hidden; background: #1a1614; border-bottom: 2px solid #3d3530; height: 180px; position: relative; }
     .slide { width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease-in-out; object-fit: cover; }
     .slide.active { opacity: 1; z-index: 2; }
 
