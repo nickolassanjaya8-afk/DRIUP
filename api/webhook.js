@@ -1,58 +1,61 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(200).send('OK');
-
-  const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-  const FIREBASE_DB_URL = "https://driup-39411-default-rtdb.asia-southeast1.firebasedatabase.app";
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Hanya POST' });
 
   try {
-    const body = req.body;
-    if (body.callback_query) {
-      const callbackQuery = body.callback_query;
-      const data = callbackQuery.data;
-      const chatId = callbackQuery.message.chat.id;
-      const messageId = callbackQuery.message.message_id;
+    const update = req.body;
+    const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
+
+    // Cek apakah aksi ini berasal dari klik tombol (callback_query)
+    if (update.callback_query) {
+      const callbackQuery = update.callback_query;
+      const data = callbackQuery.data; // Contoh: "ACC_DRIUP-123456"
+      const message = callbackQuery.message;
+      const chatId = message.chat.id;
+      const messageId = message.message_id;
       const callbackQueryId = callbackQuery.id;
 
-      if (data.startsWith('acc_')) {
-        const orderId = data.split('_')[1];
+      // Jika tombol yang diklik adalah tombol ACC
+      if (data.startsWith('ACC_')) {
+        const orderId = data.replace('ACC_', '');
 
-        // 1. Update status di Firebase jadi 'Sukses'
-        await fetch(`${FIREBASE_DB_URL}/orders/${orderId}.json`, {
+        // 1. UPDATE STATUS DI FIREBASE MENJADI "Sukses"
+        // Menggunakan REST API Firebase bawaan
+        const firebaseUrl = `https://driup-39411-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${orderId}.json`;
+        await fetch(firebaseUrl, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: 'Sukses' })
         });
 
-        // 2. Hentikan loading error di tombol Telegram
+        // 2. UBAH PESAN DI TELEGRAM (Hapus Tombol & Tambah Cap Sukses)
+        const newCaption = message.caption + '\n\n✅ *STATUS: SUKSES (Telah di-ACC oleh Admin)*';
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/editMessageCaption`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            message_id: messageId,
+            caption: newCaption,
+            parse_mode: 'Markdown',
+            reply_markup: { inline_keyboard: [] } // Ini akan menghilangkan tombol ACC agar tidak bisa diklik 2x
+          })
+        });
+
+        // 3. JAWAB CALLBACK AGAR TOMBOL BERHENTI LOADING (MUTER)
         await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/answerCallbackQuery`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ callback_query_id: callbackQueryId, text: 'Pesanan Sukses di-ACC!' })
+          body: JSON.stringify({
+            callback_query_id: callbackQueryId,
+            text: `Mantap! Pesanan ${orderId} berhasil di-ACC.`
+          })
         });
-
-        // 3. Ubah tulisan pesan di Telegram
-        const isPhoto = callbackQuery.message.photo !== undefined;
-        const oldText = isPhoto ? callbackQuery.message.caption : callbackQuery.message.text;
-        const newText = oldText + "\n\n✅ *STATUS: SUKSES (Di-ACC via Telegram)*";
-
-        if (isPhoto) {
-          await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/editMessageCaption`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatId, message_id: messageId, caption: newText, parse_mode: 'Markdown' })
-          });
-        } else {
-          await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/editMessageText`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatId, message_id: messageId, text: newText, parse_mode: 'Markdown' })
-          });
-        }
       }
     }
-    return res.status(200).send('OK');
+
+    res.status(200).json({ ok: true });
   } catch (error) {
-    console.error(error);
-    return res.status(500).send('Error');
+    console.error('Webhook Error:', error);
+    res.status(500).json({ error: 'Webhook gagal dieksekusi' });
   }
 }
